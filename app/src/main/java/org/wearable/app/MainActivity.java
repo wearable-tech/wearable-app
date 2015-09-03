@@ -1,9 +1,19 @@
 package org.wearable.app;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.IOException;
 
 public class MainActivity extends Activity {
 
@@ -11,6 +21,35 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    makeRequest();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        t.start();
+    }
+
+    @SuppressLint("LongLogTag")
+    private void makeRequest() throws IOException {
+        HttpClient client = new DefaultHttpClient();
+        HttpGet request = new HttpGet("http://10.0.2.2:4567/test?v1=1");
+
+        HttpResponse response;
+
+        try {
+            response = client.execute(request);
+
+            Log.d("Resposta da requisicao feita", response.toString());
+        } catch (ClientProtocolException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     @Override
