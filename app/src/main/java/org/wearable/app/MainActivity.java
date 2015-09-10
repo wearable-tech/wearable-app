@@ -10,10 +10,20 @@ import android.view.MenuItem;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URIUtils;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends Activity {
 
@@ -29,6 +39,8 @@ public class MainActivity extends Activity {
                     makeRequest();
                 } catch (IOException e) {
                     e.printStackTrace();
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -36,20 +48,21 @@ public class MainActivity extends Activity {
     }
 
     @SuppressLint("LongLogTag")
-    private void makeRequest() throws IOException {
-        HttpClient client = new DefaultHttpClient();
-        HttpGet request = new HttpGet("http://10.0.2.2:4567/test?v1=1");
+    private void makeRequest() throws IOException, URISyntaxException {
+        URI url = URIUtils.createURI("http", "10.0.2.2", 4567,
+                "/methodPost", null, null);
+        HttpPost post = new HttpPost(url);
 
-        HttpResponse response;
+        List params = new ArrayList();
+        params.add(new BasicNameValuePair("p1", "111"));
+        params.add(new BasicNameValuePair("p2", "222"));
+        post.setEntity(new UrlEncodedFormEntity(params));
 
-        try {
-            response = client.execute(request);
+        DefaultHttpClient hc = new DefaultHttpClient();
+        HttpResponse response = hc.execute(post);
 
-            Log.d("Resposta da requisicao feita", response.toString());
-        } catch (ClientProtocolException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        String responseString = EntityUtils.toString(response.getEntity());
+        Log.d("Resposta da requisicao feita", responseString);
     }
 
     @Override
