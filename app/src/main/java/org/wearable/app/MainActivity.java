@@ -10,11 +10,19 @@ import android.view.MenuItem;
 import org.apache.http.HttpResponse;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.eclipse.paho.android.service.MqttAndroidClient;
+import org.eclipse.paho.client.mqttv3.IMqttActionListener;
+import org.eclipse.paho.client.mqttv3.IMqttToken;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.MqttPersistenceException;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class MainActivity extends Activity {
 
@@ -23,7 +31,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        doPost();
+//        doPost();
+        publish();
     }
 
     @Override
@@ -55,6 +64,7 @@ public class MainActivity extends Activity {
                 List params = new ArrayList();
                 params.add(new BasicNameValuePair("p1", "111"));
                 params.add(new BasicNameValuePair("p2", "222"));
+
                 HttpResponse response = null;
 
                 try {
@@ -71,6 +81,56 @@ public class MainActivity extends Activity {
                 }
 
                 return responseString;
+            }
+        };
+        postTask.execute();
+    }
+
+    private void publish() {
+        AsyncTask<Void, Void, String> postTask = new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... voids) {
+                MemoryPersistence mPer = new MemoryPersistence();
+                String clientId = UUID.randomUUID().toString();
+                String url = "tcp://10.0.2.2:1883";
+
+                final MqttAndroidClient client = new MqttAndroidClient(getApplicationContext(), url, clientId, mPer);
+
+                try {
+                    client.connect(getApplicationContext(), new IMqttActionListener() {
+
+                        @Override
+                        public void onSuccess(IMqttToken iMqttToken) {
+                            Log.i("TAG", "CLIENTE CONECTADO.....................");
+
+                            MqttMessage message = new MqttMessage("MQTT Message Publish.".getBytes());
+                            message.setQos(2);
+                            message.setRetained(false);
+
+                            try {
+                                client.publish("test", message);
+                                Log.i("TAG", "Menssagem publicada");
+
+                                client.disconnect();
+                                Log.i("TAG", "cliente desconectado");
+                            } catch (MqttPersistenceException e) {
+                                e.printStackTrace();
+                            } catch (MqttException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(IMqttToken iMqttToken, Throwable throwable) {
+                            Log.i("TAG", "FALHA NA CONEXÃO.....................");
+                            Log.i("ERROR", throwable.getMessage());
+                        }
+                    });
+                } catch (MqttException e) {
+                    e.printStackTrace();
+                }
+
+                return "Finsish Connection";
             }
         };
         postTask.execute();
