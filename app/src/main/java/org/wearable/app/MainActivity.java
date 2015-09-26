@@ -1,6 +1,7 @@
 package org.wearable.app;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,7 +33,11 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
 //        doPost();
-        publish();
+        Log.i("TAG", "Criando Serviço");
+        Intent intent = new Intent(this, SubscribeService.class);
+        startService(intent);
+        Log.i("TAG", "Serviço criado!!!");
+//        publish();
     }
 
     @Override
