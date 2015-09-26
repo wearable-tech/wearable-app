@@ -37,7 +37,7 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, SubscribeService.class);
         startService(intent);
         Log.i("TAG", "Serviço criado!!!");
-//        publish();
+        publish();
     }
 
     @Override
