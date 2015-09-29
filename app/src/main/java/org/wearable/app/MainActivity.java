@@ -18,6 +18,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.MqttPersistenceException;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+import org.wearable.app.services.MqttService;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -34,7 +35,7 @@ public class MainActivity extends Activity {
 
 //        doPost();
         Log.i("TAG", "Criando Serviço");
-        Intent intent = new Intent(this, SubscribeService.class);
+        Intent intent = new Intent(this, MqttService.class);
         startService(intent);
         Log.i("TAG", "Serviço criado!!!");
         publish();

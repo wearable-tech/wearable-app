@@ -17,7 +17,7 @@
         <service android:name="org.eclipse.paho.android.service.MqttService" >
         </service>
 
-        <service android:name=".SubscribeService" >
+        <service android:name=".services.MqttService" >
         </service>
 
         <!-- Main Activity -->

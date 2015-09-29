@@ -1,4 +1,4 @@
-package org.wearable.app;
+package org.wearable.app.services;
 
 import org.eclipse.paho.client.mqttv3.IMqttAsyncClient;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -23,13 +23,10 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Binder;
-import android.os.Build;
-import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
-public class SubscribeService extends Service {
+public class MqttService extends Service {
 
     private static final String TAG = "MQTTService";
     private static boolean hasWifi = false;
@@ -80,8 +77,8 @@ public class SubscribeService extends Service {
     };
 
     public class MQTTBinder extends Binder {
-        public SubscribeService getService(){
-            return SubscribeService.this;
+        public MqttService getService(){
+            return MqttService.this;
         }
     }
 
