@@ -8,9 +8,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
@@ -20,10 +17,6 @@ import org.eclipse.paho.client.mqttv3.MqttPersistenceException;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.wearable.app.services.MqttService;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public class MainActivity extends Activity {
@@ -33,12 +26,12 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        doPost();
-        Log.i("TAG", "Criando Serviço");
+        Log.i("TAG", "Init Service");
         Intent intent = new Intent(this, MqttService.class);
         startService(intent);
-        Log.i("TAG", "Serviço criado!!!");
-        publish();
+        Log.i("TAG", "Service Created!!!");
+
+//        publish();
     }
 
     @Override
@@ -61,35 +54,6 @@ public class MainActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void doPost() {
-        AsyncTask<Void, Void, String> postTask = new AsyncTask<Void, Void, String>() {
-            @Override
-            protected String doInBackground(Void... voids) {
-                List params = new ArrayList();
-                params.add(new BasicNameValuePair("p1", "111"));
-                params.add(new BasicNameValuePair("p2", "222"));
-
-                HttpResponse response = null;
-
-                try {
-                    response = Web.doPost(params);
-                } catch (URISyntaxException e) {
-                    e.printStackTrace();
-                }
-
-                String responseString = null;
-                try {
-                    responseString = EntityUtils.toString(response.getEntity());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                return responseString;
-            }
-        };
-        postTask.execute();
     }
 
     private void publish() {
