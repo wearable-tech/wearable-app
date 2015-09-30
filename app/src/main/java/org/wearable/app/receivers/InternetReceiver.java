@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
+import org.wearable.app.Location;
 import org.wearable.app.communications.Publish;
 import org.wearable.app.communications.Subscribe;
 
@@ -40,6 +41,8 @@ public class InternetReceiver extends BroadcastReceiver {
 
             Publish publish = new Publish();
             publish.doPublish("test", "Send Android Message", 2);
+            publish.doPublish("test", "Latitude: " + Location.LATITUDE, 2);
+            publish.doPublish("test", "Longitude: " + Location.LONGITUDE, 2);
         }
     }
 }
