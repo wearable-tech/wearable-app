@@ -20,7 +20,7 @@ public class MqttService extends Service {
 
     @Override
     public void onCreate() {
-        Log.i("SERVICE", "ONCREATE");
+        Log.i("MQTT_SERVICE", "ONCREATE");
         registerReceiver(new InternetReceiver(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 

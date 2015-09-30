@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import org.wearable.app.services.LocationService;
 import org.wearable.app.services.MqttService;
 
 public class MainActivity extends Activity {
@@ -17,7 +18,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         Log.i("TAG", "Init Service");
-        Intent intent = new Intent(this, MqttService.class);
+        Intent intent = new Intent(this, LocationService.class);
         startService(intent);
         Log.i("TAG", "Service Created!!!");
     }
