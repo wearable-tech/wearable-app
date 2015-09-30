@@ -2,22 +2,12 @@ package org.wearable.app;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import org.eclipse.paho.android.service.MqttAndroidClient;
-import org.eclipse.paho.client.mqttv3.IMqttActionListener;
-import org.eclipse.paho.client.mqttv3.IMqttToken;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.eclipse.paho.client.mqttv3.MqttPersistenceException;
-import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.wearable.app.services.MqttService;
-
-import java.util.UUID;
 
 public class MainActivity extends Activity {
 
@@ -52,55 +42,5 @@ public class MainActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void publish() {
-        AsyncTask<Void, Void, String> postTask = new AsyncTask<Void, Void, String>() {
-            @Override
-            protected String doInBackground(Void... voids) {
-                MemoryPersistence mPer = new MemoryPersistence();
-                String clientId = UUID.randomUUID().toString();
-                String url = "tcp://10.0.2.2:1883";
-
-                final MqttAndroidClient client = new MqttAndroidClient(getApplicationContext(), url, clientId, mPer);
-
-                try {
-                    client.connect(getApplicationContext(), new IMqttActionListener() {
-
-                        @Override
-                        public void onSuccess(IMqttToken iMqttToken) {
-                            Log.i("TAG", "CLIENTE CONECTADO.....................");
-
-                            MqttMessage message = new MqttMessage("MQTT Message Publish.".getBytes());
-                            message.setQos(2);
-                            message.setRetained(false);
-
-                            try {
-                                client.publish("test", message);
-                                Log.i("TAG", "Menssagem publicada");
-
-                                client.disconnect();
-                                Log.i("TAG", "cliente desconectado");
-                            } catch (MqttPersistenceException e) {
-                                e.printStackTrace();
-                            } catch (MqttException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(IMqttToken iMqttToken, Throwable throwable) {
-                            Log.i("TAG", "FALHA NA CONEXÃO.....................");
-                            Log.i("ERROR", throwable.getMessage());
-                        }
-                    });
-                } catch (MqttException e) {
-                    e.printStackTrace();
-                }
-
-                return "Finsish Connection";
-            }
-        };
-        postTask.execute();
     }
 }

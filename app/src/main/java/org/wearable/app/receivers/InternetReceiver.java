@@ -37,10 +37,9 @@ public class InternetReceiver extends BroadcastReceiver {
 
             Subscribe subscribe = new Subscribe();
             subscribe.doSubscribe("test", 2);
-            subscribe.doSubscribe("test2", 2);
 
             Publish publish = new Publish();
-            publish.doPublish("android", "Send Android Message", 2);
+            publish.doPublish("test", "Send Android Message", 2);
         }
     }
 }

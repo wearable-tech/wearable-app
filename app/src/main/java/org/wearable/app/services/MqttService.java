@@ -21,8 +21,6 @@ public class MqttService extends Service {
     @Override
     public void onCreate() {
         Log.i("SERVICE", "ONCREATE");
-        IntentFilter intentf = new IntentFilter();
-        intentf.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(new InternetReceiver(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
