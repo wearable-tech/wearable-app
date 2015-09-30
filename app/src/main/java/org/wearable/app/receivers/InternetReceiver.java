@@ -41,8 +41,7 @@ public class InternetReceiver extends BroadcastReceiver {
 
             Publish publish = new Publish();
             publish.doPublish("test", "Send Android Message", 2);
-            publish.doPublish("test", "Latitude: " + Location.LATITUDE, 2);
-            publish.doPublish("test", "Longitude: " + Location.LONGITUDE, 2);
+            publish.doPublish("location", String.valueOf(Location.LATITUDE) + "," + String.valueOf(Location.LONGITUDE), 2);
         }
     }
 }
