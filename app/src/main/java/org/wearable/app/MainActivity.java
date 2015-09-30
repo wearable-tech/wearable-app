@@ -30,8 +30,6 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, MqttService.class);
         startService(intent);
         Log.i("TAG", "Service Created!!!");
-
-//        publish();
     }
 
     @Override

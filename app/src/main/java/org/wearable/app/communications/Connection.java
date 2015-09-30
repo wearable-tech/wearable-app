@@ -1,4 +1,4 @@
-package org.wearable.app.connections;
+package org.wearable.app.communications;
 
 import android.util.Log;
 
@@ -31,6 +31,10 @@ public class Connection {
         return connection;
     }
 
+    public IMqttAsyncClient getMqttClient() {
+        return this.mqttClient;
+    }
+
     public void doConnect() {
         if (mqttClient != null && mqttClient.isConnected()) {
             return;
@@ -50,37 +54,6 @@ public class Connection {
         } catch (MqttException e) {
             Log.e("MQTTException", e.getMessage());
             e.printStackTrace();
-        }
-    }
-
-    public void doSubscribe() {
-        if (mqttClient == null || !mqttClient.isConnected()) {
-            return;
-        }
-
-        mqttClient.setCallback(new MqttEventCallback());
-
-        IMqttToken token = null;
-        try {
-            token = mqttClient.subscribe("test", 2);
-            token.waitForCompletion(5000);
-        } catch (MqttException e) {
-            Log.e("MQTTException", e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private class MqttEventCallback implements MqttCallback {
-        @Override
-        public void connectionLost(Throwable arg0) { }
-
-        @Override
-        public void deliveryComplete(IMqttDeliveryToken arg0) { }
-
-        @Override
-        public void messageArrived(String topic, final MqttMessage msg) throws Exception {
-            Log.i("MESSAGE_ARRIVED", "Message arrived from topic: " + topic);
-            Log.i("MESSAGE_ARRIVED", "Messagem: " + msg.toString());
         }
     }
 }

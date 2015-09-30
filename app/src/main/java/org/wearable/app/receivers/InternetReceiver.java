@@ -7,7 +7,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
-import org.wearable.app.connections.Connection;
+import org.wearable.app.communications.Publish;
+import org.wearable.app.communications.Subscribe;
 
 public class InternetReceiver extends BroadcastReceiver {
     private boolean hasMmobile = false;
@@ -34,9 +35,12 @@ public class InternetReceiver extends BroadcastReceiver {
         if (connectivity) {
             Log.i("CONNECTIVITY", "Internet connected");
 
-            Connection connection = Connection.getConnection();
-            connection.doConnect();
-            connection.doSubscribe();
+            Subscribe subscribe = new Subscribe();
+            subscribe.doSubscribe("test", 2);
+            subscribe.doSubscribe("test2", 2);
+
+            Publish publish = new Publish();
+            publish.doPublish("android", "Send Android Message", 2);
         }
     }
 }
