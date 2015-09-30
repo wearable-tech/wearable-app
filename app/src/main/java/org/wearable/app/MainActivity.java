@@ -1,8 +1,7 @@
 package org.wearable.app;
 
 import android.app.Activity;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,7 +15,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.MqttPersistenceException;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
-import org.wearable.app.receivers.InternetReceiver;
+import org.wearable.app.services.MqttService;
 
 import java.util.UUID;
 
@@ -27,17 +26,12 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        Log.i("TAG", "Init Service");
-//        Intent intent = new Intent(this, MqttService.class);
-//        startService(intent);
-//        Log.i("TAG", "Service Created!!!");
+        Log.i("TAG", "Init Service");
+        Intent intent = new Intent(this, MqttService.class);
+        startService(intent);
+        Log.i("TAG", "Service Created!!!");
 
 //        publish();
-
-        Log.i("TESTE", "INICIANDO.....................");
-        IntentFilter intentf = new IntentFilter();
-        intentf.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(new InternetReceiver(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
     @Override

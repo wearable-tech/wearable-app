@@ -20,13 +20,6 @@
         <service android:name=".services.MqttService" >
         </service>
 
-        <!--Internet Receiver-->
-        <receiver android:name=".receivers.InternetReceiver" >
-            <intent-filter>
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
-            </intent-filter>
-        </receiver>
-
         <!-- Main Activity -->
         <activity
             android:name=".MainActivity"
