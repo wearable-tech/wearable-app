@@ -16,7 +16,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 public class Connection {
     private static Connection connection;
     private static final String SCHEME = "tcp";
-    private static final String HOST = "10.0.2.2";
+    private static final String HOST = "15.0.106.220";
     private static final int PORT = 1883;
     private static final String DEVICE_ID = "TEST";
     private volatile IMqttAsyncClient mqttClient;
