@@ -29,7 +29,6 @@
             android:name=".MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -37,15 +36,12 @@
         <!-- Bluetooth Connection -->
         <activity
             android:label="@string/app_name"
-            android:name=".communications.bluetooth.AppBT1">
+            android:name=".BluetoothActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:label="AppBT1: Paired Devices List"
-            android:name=".communications.bluetooth.DeviceListActivity" />
     </application>
 
 </manifest>
