@@ -1,6 +1,5 @@
 package org.wearable.app;
 
-import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -19,11 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Set;
-import java.util.UUID;
 
 public class BluetoothActivity extends Activity {
     private static final int REQUEST_ENABLE_BT = 1;
@@ -36,7 +31,7 @@ public class BluetoothActivity extends Activity {
     private Set<BluetoothDevice> pairedDevices;
     private ListView myListView;
     private ArrayAdapter<String> BTArrayAdapter;
-    private BluetoothSocket socket;
+    private DeviceConnector mDeviceConnector = new NullDeviceConnector();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +57,7 @@ public class BluetoothActivity extends Activity {
                 text.setText("Status: Disabled");
             }
 
-            onBtn = (Button)findViewById(R.id.turnOn);
+            onBtn = (Button) findViewById(R.id.turnOn);
             onBtn.setOnClickListener(new OnClickListener() {
 
                 @Override
@@ -72,7 +67,7 @@ public class BluetoothActivity extends Activity {
                 }
             });
 
-            offBtn = (Button)findViewById(R.id.turnOff);
+            offBtn = (Button) findViewById(R.id.turnOff);
             offBtn.setOnClickListener(new OnClickListener() {
 
                 @Override
@@ -82,7 +77,7 @@ public class BluetoothActivity extends Activity {
                 }
             });
 
-            listBtn = (Button)findViewById(R.id.paired);
+            listBtn = (Button) findViewById(R.id.paired);
             listBtn.setOnClickListener(new OnClickListener() {
 
                 @Override
@@ -92,7 +87,7 @@ public class BluetoothActivity extends Activity {
                 }
             });
 
-            findBtn = (Button)findViewById(R.id.search);
+            findBtn = (Button) findViewById(R.id.search);
             findBtn.setOnClickListener(new OnClickListener() {
 
                 @Override
@@ -102,40 +97,28 @@ public class BluetoothActivity extends Activity {
                 }
             });
 
-            myListView = (ListView)findViewById(R.id.listView1);
+            myListView = (ListView) findViewById(R.id.listView1);
 
             // create the arrayAdapter that contains the BTDevices, and set it to the ListView
             BTArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
             myListView.setAdapter(BTArrayAdapter);
 
-            /* connection device (needs refactoring) */
+            registerReceiver(bReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
+
+            // connection device
+            // TODO: Refactoring
             myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
-                    myBluetoothAdapter.cancelDiscovery();
                     final String info = ((TextView) view).getText().toString();
                     String name = info.substring(0, info.length() - 17);
                     String address = info.substring(info.length() - 17);
+
                     Log.i("BT", "name: " + name);
                     Log.i("BT", "address: " + address);
 
-                    BluetoothDevice connect_device = myBluetoothAdapter.getRemoteDevice(address);
-                    try {
-                        Method m = connect_device.getClass().getMethod("createInsecureRfcommSocket", int.class);
-                        socket = (BluetoothSocket) m.invoke(connect_device, 1);
-                        socket.connect();
-                    } catch (IOException e) {
-                        Log.i("SocketError", String.valueOf(e));
-                        try {
-                            socket.close();
-                        } catch (IOException e1) {
-                            Log.i("SocketError", String.valueOf(e1));
-                        }
-                    } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-                        Log.i("SocketError", String.valueOf(e));
-                    }
-
-                    Log.i("Socket", "Connected!");
+                    mDeviceConnector = new BluetoothDeviceConnector(address);
+                    mDeviceConnector.connect();
                 }
             });
         }
@@ -156,7 +139,6 @@ public class BluetoothActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // TODO Auto-generated method stub
         if (requestCode == REQUEST_ENABLE_BT) {
             if (myBluetoothAdapter.isEnabled()) {
                 text.setText("Status: Enabled");
@@ -201,7 +183,6 @@ public class BluetoothActivity extends Activity {
             BTArrayAdapter.clear();
             myBluetoothAdapter.startDiscovery();
 
-            registerReceiver(bReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
         }
     }
 
@@ -217,8 +198,7 @@ public class BluetoothActivity extends Activity {
     protected void onDestroy() {
         // TODO Auto-generated method stub
         super.onDestroy();
-        try {
-            unregisterReceiver(bReceiver);
-        } catch (IllegalArgumentException e) {}
+        mDeviceConnector.disconnect();
+        unregisterReceiver(bReceiver);
     }
 }
