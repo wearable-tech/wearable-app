@@ -22,14 +22,8 @@ import java.util.Set;
 
 public class BluetoothActivity extends Activity {
     private static final int REQUEST_ENABLE_BT = 1;
-    private Button onBtn;
-    private Button offBtn;
-    private Button listBtn;
-    private Button findBtn;
     private TextView text;
     private BluetoothAdapter myBluetoothAdapter;
-    private Set<BluetoothDevice> pairedDevices;
-    private ListView myListView;
     private ArrayAdapter<String> BTArrayAdapter;
     private DeviceConnector mDeviceConnector = new NullDeviceConnector();
 
@@ -39,6 +33,42 @@ public class BluetoothActivity extends Activity {
         setContentView(R.layout.activity_main);
         text = (TextView) findViewById(R.id.text);
 
+        Button onBtn = (Button) findViewById(R.id.turnOn);
+        onBtn.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                on(v);
+            }
+        });
+
+        Button offBtn = (Button) findViewById(R.id.turnOff);
+        offBtn.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                off(v);
+            }
+        });
+
+        Button listBtn = (Button) findViewById(R.id.paired);
+        listBtn.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                list(v);
+            }
+        });
+
+        Button findBtn = (Button) findViewById(R.id.search);
+        findBtn.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                find(v);
+            }
+        });
+
         // take an instance of BluetoothAdapter - Bluetooth radio
         myBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (myBluetoothAdapter == null) {
@@ -46,7 +76,7 @@ public class BluetoothActivity extends Activity {
             offBtn.setEnabled(false);
             listBtn.setEnabled(false);
             findBtn.setEnabled(false);
-            text.setText("Status: not supported");
+            text.setText("Status: BT not supported");
 
             Toast.makeText(getApplicationContext(), "Your device does not support Bluetooth",
                     Toast.LENGTH_LONG).show();
@@ -57,56 +87,15 @@ public class BluetoothActivity extends Activity {
                 text.setText("Status: Disabled");
             }
 
-            onBtn = (Button) findViewById(R.id.turnOn);
-            onBtn.setOnClickListener(new OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    // TODO Auto-generated method stub
-                    on(v);
-                }
-            });
-
-            offBtn = (Button) findViewById(R.id.turnOff);
-            offBtn.setOnClickListener(new OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    // TODO Auto-generated method stub
-                    off(v);
-                }
-            });
-
-            listBtn = (Button) findViewById(R.id.paired);
-            listBtn.setOnClickListener(new OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    // TODO Auto-generated method stub
-                    list(v);
-                }
-            });
-
-            findBtn = (Button) findViewById(R.id.search);
-            findBtn.setOnClickListener(new OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    // TODO Auto-generated method stub
-                    find(v);
-                }
-            });
-
-            myListView = (ListView) findViewById(R.id.listView1);
+            ListView myListView = (ListView) findViewById(R.id.listView1);
 
             // create the arrayAdapter that contains the BTDevices, and set it to the ListView
-            BTArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+            BTArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
             myListView.setAdapter(BTArrayAdapter);
 
             registerReceiver(bReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
 
-            // connection device
-            // TODO: Refactoring
+            // connecting device
             myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
@@ -150,7 +139,7 @@ public class BluetoothActivity extends Activity {
 
     public void list(View view) {
         // get paired devices
-        pairedDevices = myBluetoothAdapter.getBondedDevices();
+        Set<BluetoothDevice> pairedDevices = myBluetoothAdapter.getBondedDevices();
 
         // put it's one to the adapter
         for (BluetoothDevice device : pairedDevices)
@@ -196,9 +185,10 @@ public class BluetoothActivity extends Activity {
 
     @Override
     protected void onDestroy() {
-        // TODO Auto-generated method stub
         super.onDestroy();
         mDeviceConnector.disconnect();
-        unregisterReceiver(bReceiver);
+        try {
+            unregisterReceiver(bReceiver);
+        } catch (IllegalArgumentException ignored) {}
     }
 }

@@ -28,8 +28,6 @@ public class BluetoothDeviceConnector implements DeviceConnector {
     }
 
     public synchronized void connect(BluetoothDevice device) {
-        Log.i("BT", "connect to: " + device);
-
         if (mConnectedThread != null) {
             mConnectedThread.cancel();
             mConnectedThread = null;
@@ -106,9 +104,10 @@ public class BluetoothDeviceConnector implements DeviceConnector {
 
             // Do work to manage the connection (in a separate thread)
             manageConnectedSocket(mmSocket);
+            Log.i("BT", "Connected!");
         }
 
-        /* Will cancel an in-progress connection, and close the socket */
+        // Will cancel an in-progress connection, and close the socket
         public void cancel() {
             try {
                 mmSocket.close();
