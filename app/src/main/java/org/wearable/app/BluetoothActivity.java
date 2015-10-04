@@ -190,26 +190,28 @@ public class BluetoothActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_activity_actions, menu);
+        inflater.inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle presses on the action bar items
-        switch (item.getItemId()) {
-            case R.id.mqtt_connection:
-                // Do MQTT connection
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        // Handle presses on the action bar to open MQTT connection
+        if (item.getItemId() == R.id.mqtt_connection) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            return true;
         }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mDeviceConnector.disconnect();
+
+        // Ignore exception if BT is not supported
         try {
             unregisterReceiver(bReceiver);
         } catch (IllegalArgumentException ignored) {}
