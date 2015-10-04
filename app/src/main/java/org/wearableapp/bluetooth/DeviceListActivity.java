@@ -27,7 +27,7 @@ public class DeviceListActivity extends Activity {
     private DeviceConnector mDeviceConnector = new NullDeviceConnector();
     private ArrayAdapter<String> mNewDevicesArrayAdapter;
     private Button scanBtn;
-    private final Set<String> mNewDevicesSet = new HashSet<String>();
+    private final Set<String> mNewDevicesSet = new HashSet<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

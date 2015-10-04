@@ -9,7 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,7 +21,6 @@ public class BluetoothActivity extends Activity {
     private static final int REQUEST_ENABLE_BT = 2;
     private TextView mText;
     private BluetoothAdapter mBluetoothAdapter;
-    private ArrayAdapter<String> mArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,28 +98,17 @@ public class BluetoothActivity extends Activity {
         }
     }
 
-    public void list(View view) {
-        Intent intent = new Intent(this, DeviceListActivity.class);
-        startActivityForResult(intent, REQUEST_CONNECT_DEVICE);
-    }
-
-    public void find(View view) {
-        if (mBluetoothAdapter.isDiscovering()) {
-            // the button is pressed when it discovers, so cancel the discovery
-            mBluetoothAdapter.cancelDiscovery();
-        } else {
-            mArrayAdapter.clear();
-            mBluetoothAdapter.startDiscovery();
-
-        }
-    }
-
     public void off(View view) {
         mBluetoothAdapter.disable();
         mText.setText("Status: Disabled");
 
         Toast.makeText(getApplicationContext(), "Bluetooth turned off",
                 Toast.LENGTH_LONG).show();
+    }
+
+    public void list(View view) {
+        Intent intent = new Intent(this, DeviceListActivity.class);
+        startActivityForResult(intent, REQUEST_CONNECT_DEVICE);
     }
 
     @Override
@@ -142,16 +129,5 @@ public class BluetoothActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-//        mDeviceConnector.disconnect();
-
-        // Ignore exception if BT is not supported
-//        try {
-//            unregisterReceiver(mReceiver);
-//        } catch (IllegalArgumentException ignored) {}
     }
 }
