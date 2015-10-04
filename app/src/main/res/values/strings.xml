@@ -8,5 +8,6 @@
     <string name="off">Turn Off</string>
     <string name="List">List paired Devices</string>
     <string name="Find">Search new Devices / Cancel</string>
+    <string name="mqtt">MQTT Connection</string>
 
 </resources>
