@@ -1,16 +1,17 @@
-package org.wearable.app.services;
+package org.wearableapp.services;
 
 import android.app.Service;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import org.wearable.app.receivers.InternetReceiver;
+import org.wearableapp.receivers.GPSReceiver;
 
-public class MqttService extends Service {
+public class LocationService extends Service {
 
     @Nullable
     @Override
@@ -20,8 +21,12 @@ public class MqttService extends Service {
 
     @Override
     public void onCreate() {
-        Log.i("MQTT_SERVICE", "ONCREATE");
-        registerReceiver(new InternetReceiver(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        Log.i("LOCATION_SERVICE", "ONCREATE");
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(LocationManager.PROVIDERS_CHANGED_ACTION);
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+
+        registerReceiver(new GPSReceiver(), filter);
     }
 
     @Override

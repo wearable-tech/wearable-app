@@ -1,4 +1,4 @@
-package org.wearable.app.communications;
+package org.wearableapp.communications;
 
 import android.util.Log;
 

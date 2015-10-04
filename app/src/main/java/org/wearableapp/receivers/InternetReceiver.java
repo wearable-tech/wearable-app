@@ -1,4 +1,4 @@
-package org.wearable.app.receivers;
+package org.wearableapp.receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -7,9 +7,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
-import org.wearable.app.Location;
-import org.wearable.app.communications.Publish;
-import org.wearable.app.communications.Subscribe;
+import org.wearableapp.Location;
+import org.wearableapp.communications.Publish;
+import org.wearableapp.communications.Subscribe;
 
 public class InternetReceiver extends BroadcastReceiver {
     private boolean hasMmobile = false;

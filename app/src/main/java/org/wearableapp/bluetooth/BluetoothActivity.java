@@ -1,30 +1,21 @@
-package org.wearable.app.bluetooth;
+package org.wearableapp.bluetooth;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.wearable.app.MainActivity;
-import org.wearable.app.R;
-
-import java.util.Set;
+import org.wearableapp.MainActivity;
+import org.wearableapp.R;
 
 public class BluetoothActivity extends Activity {
     private static final int REQUEST_CONNECT_DEVICE = 1;

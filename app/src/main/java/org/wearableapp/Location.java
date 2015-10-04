@@ -1,4 +1,4 @@
-package org.wearable.app;
+package org.wearableapp;
 
 public class Location {
 

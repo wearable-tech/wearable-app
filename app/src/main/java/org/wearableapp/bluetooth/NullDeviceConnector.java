@@ -1,4 +1,4 @@
-package org.wearable.app.bluetooth;
+package org.wearableapp.bluetooth;
 
 public class NullDeviceConnector implements DeviceConnector {
 

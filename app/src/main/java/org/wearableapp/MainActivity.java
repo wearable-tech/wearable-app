@@ -1,14 +1,12 @@
-package org.wearable.app;
+package org.wearableapp;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 
-import org.wearable.app.services.LocationService;
-import org.wearable.app.services.MqttService;
+import org.wearableapp.services.LocationService;
+import org.wearableapp.services.MqttService;
 
 public class MainActivity extends Activity {
 
