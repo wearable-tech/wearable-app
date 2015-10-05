@@ -62,6 +62,8 @@ public class DeviceListActivity extends Activity {
 
                     mDeviceConnector = new BluetoothDeviceConnector(address);
                     mDeviceConnector.connect();
+                    setResult(Activity.RESULT_OK);
+                    finish();
                 }
             });
 
@@ -95,6 +97,8 @@ public class DeviceListActivity extends Activity {
 
                 mDeviceConnector = new BluetoothDeviceConnector(address);
                 mDeviceConnector.connect();
+                setResult(Activity.RESULT_OK);
+                finish();
             }
         });
 
