@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.wearableapp.R;
 
@@ -107,8 +108,14 @@ public class DeviceListActivity extends Activity {
         scanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                doDiscovery();
-                view.setVisibility(View.GONE);
+                if (mBluetoothAdapter.isEnabled()) {
+                    doDiscovery();
+                    view.setVisibility(View.GONE);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Bluetooth was turned off",
+                            Toast.LENGTH_LONG).show();
+                    view.setVisibility(View.VISIBLE);
+                }
             }
         });
     }
