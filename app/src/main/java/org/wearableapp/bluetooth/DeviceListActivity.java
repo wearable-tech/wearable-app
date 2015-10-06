@@ -25,7 +25,7 @@ import java.util.Set;
 
 public class DeviceListActivity extends Activity {
     private BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-    private DeviceConnector mDeviceConnector = new NullDeviceConnector();
+    private DeviceConnector mDeviceConnector;
     private ArrayAdapter<String> mNewDevicesArrayAdapter;
     private Button scanBtn;
     private final Set<String> mNewDevicesSet = new HashSet<>();
