@@ -8,6 +8,7 @@ import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.wearableapp.Location;
 
 public class Subscribe {
 
@@ -48,6 +49,10 @@ public class Subscribe {
         public void messageArrived(String topic, final MqttMessage msg) throws Exception {
             Log.i("MESSAGE_ARRIVED", "Message arrived from topic: " + topic);
             Log.i("MESSAGE_ARRIVED", "Messagem: " + msg.toString());
+
+            Log.i("LOCATION", "Send my location");
+            Publish publish = new Publish();
+            publish.doPublish("location", String.valueOf(Location.LATITUDE) + "," + String.valueOf(Location.LONGITUDE), 2);
         }
     }
 }
