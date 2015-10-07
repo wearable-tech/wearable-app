@@ -19,7 +19,7 @@ import org.wearableapp.R;
 public class BluetoothActivity extends Activity {
     private static final int REQUEST_CONNECT_DEVICE = 1;
     private static final int REQUEST_ENABLE_BT = 2;
-    private TextView mText;
+    private TextView mStatus;
     private BluetoothAdapter mBluetoothAdapter;
     private Button mlistBtn;
 
@@ -27,7 +27,7 @@ public class BluetoothActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mText = (TextView) findViewById(R.id.text);
+        mStatus = (TextView) findViewById(R.id.btstatus);
 
         Button onBtn = (Button) findViewById(R.id.turnOn);
         onBtn.setOnClickListener(new OnClickListener() {
@@ -58,7 +58,7 @@ public class BluetoothActivity extends Activity {
                     Toast.makeText(getApplicationContext(), "Bluetooth was turned off",
                             Toast.LENGTH_LONG).show();
                     mlistBtn.setEnabled(false);
-                    mText.setText("Status: Disabled");
+                    mStatus.setText("Status: disabled");
                 }
             }
         });
@@ -69,15 +69,15 @@ public class BluetoothActivity extends Activity {
             onBtn.setEnabled(false);
             offBtn.setEnabled(false);
             mlistBtn.setEnabled(false);
-            mText.setText("Status: BT not supported");
+            mStatus.setText("Status: BT not supported");
 
             Toast.makeText(getApplicationContext(), "Your device does not support Bluetooth",
                     Toast.LENGTH_LONG).show();
         } else if (mBluetoothAdapter.isEnabled()) {
-            mText.setText("Status: Enabled");
+            mStatus.setText("Status: enabled");
         } else {
             mlistBtn.setEnabled(false);
-            mText.setText("Status: Disabled");
+            mStatus.setText("Status: disabled");
         }
     }
 
@@ -88,9 +88,9 @@ public class BluetoothActivity extends Activity {
                 Toast.makeText(getApplicationContext(), "Bluetooth turned on" ,
                         Toast.LENGTH_LONG).show();
                 mlistBtn.setEnabled(true);
-                mText.setText("Status: Enabled");
+                mStatus.setText("Status: enabled");
             } else {
-                mText.setText("Status: Disabled");
+                mStatus.setText("Status: disabled");
             }
         }
     }
@@ -100,6 +100,7 @@ public class BluetoothActivity extends Activity {
             Intent turnOnIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(turnOnIntent, REQUEST_ENABLE_BT);
         } else {
+            mlistBtn.setEnabled(true);
             Toast.makeText(getApplicationContext(), "Bluetooth is already on",
                     Toast.LENGTH_LONG).show();
         }
@@ -107,7 +108,8 @@ public class BluetoothActivity extends Activity {
 
     public void off(View view) {
         mBluetoothAdapter.disable();
-        mText.setText("Status: Disabled");
+        mStatus.setText("Status: disabled");
+        mlistBtn.setEnabled(false);
 
         Toast.makeText(getApplicationContext(), "Bluetooth turned off",
                 Toast.LENGTH_LONG).show();
