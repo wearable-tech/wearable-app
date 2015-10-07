@@ -18,14 +18,11 @@
         android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
 
         <!-- Mqtt Service -->
-        <service android:name="org.eclipse.paho.android.service.MqttService" >
-        </service>
+        <service android:name="org.eclipse.paho.android.service.MqttService" />
+        <service android:name=".services.MqttService" />
 
-        <service android:name=".services.MqttService" >
-        </service>
-
-        <service android:name=".services.LocationService" >
-        </service>
+        <!--Location Service-->
+        <service android:name=".services.LocationService" />
 
         <!-- Main Activity -->
         <activity

@@ -8,7 +8,6 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 import org.wearableapp.communications.Connection;
-import org.wearableapp.communications.Subscribe;
 
 public class InternetReceiver extends BroadcastReceiver {
     private boolean hasMmobile = false;
