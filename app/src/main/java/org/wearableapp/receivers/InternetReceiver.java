@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
+import org.wearableapp.communications.Connection;
 import org.wearableapp.communications.Subscribe;
 
 public class InternetReceiver extends BroadcastReceiver {
@@ -33,9 +34,11 @@ public class InternetReceiver extends BroadcastReceiver {
 
         if (connectivity) {
             Log.i("CONNECTIVITY", "Internet connected");
-
-            Subscribe subscribe = new Subscribe();
-            subscribe.doSubscribe("test", 2);
+            Connection.enableConnection();
+        }
+        else {
+            Log.i("CONNECTIVITY", "Internet disconnected");
+            Connection.disableConnection();
         }
     }
 }

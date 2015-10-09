@@ -13,10 +13,11 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 public class Connection {
     private static Connection connection;
     private static final String SCHEME = "tcp";
-    private static final String HOST = "15.0.106.220";
+    private static final String HOST = "10.11.8.98";
     private static final int PORT = 1883;
     private static final String DEVICE_ID = "TEST";
     private volatile IMqttAsyncClient mqttClient;
+    private static boolean connectivity;
 
     private Connection() {};
 
@@ -30,6 +31,14 @@ public class Connection {
 
     public IMqttAsyncClient getMqttClient() {
         return this.mqttClient;
+    }
+
+    public static void enableConnection() {
+        connectivity = true;
+    }
+
+    public static void disableConnection() {
+        connectivity = false;
     }
 
     public void doConnect() {

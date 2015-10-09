@@ -1,10 +1,15 @@
 package org.wearableapp;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
+import org.wearableapp.communications.Notify;
+import org.wearableapp.communications.Subscribe;
 import org.wearableapp.services.LocationService;
 import org.wearableapp.services.MqttService;
 
@@ -26,6 +31,18 @@ public class MainActivity extends Activity {
         intent = new Intent(this, LocationService.class);
         startService(intent);
         Log.i("TAG", "Location Service Created!!!");
-    }
 
+        final Context context = this;
+
+        Button onBtn = (Button) findViewById(R.id.turnOn);
+        onBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Log.i("BUTTON", "BUTTON CLICKED......");
+                Subscribe subscribe = new Subscribe(context);
+                subscribe.doSubscribe("test", 2);
+            }
+        });
+    }
 }
