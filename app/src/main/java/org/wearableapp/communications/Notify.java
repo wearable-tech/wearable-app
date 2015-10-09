@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.util.Log;
 
+import org.wearableapp.R;
+
 public class Notify {
     private static int notificationId = 0;
 
@@ -25,14 +27,14 @@ public class Notify {
                 .setContentIntent(pendingIntent)
                 .setContentText(message)
                 .setTicker(ticker)
-                .setWhen(when);
-        Log.i("NOTIFICATION", "Builder");
+                .setWhen(when)
+                .setSmallIcon(R.drawable.ic_launcher);
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
         notificationManager.notify(notificationId, notificationBuilder.build());
-
         notificationId++;
-        Log.i("NOTIFICATION", "Fim");
+
+        Log.i("NOTIFICATION", "Notification sended...");
     }
 
 
