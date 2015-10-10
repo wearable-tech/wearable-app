@@ -12,9 +12,6 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 public class Connection {
     private static Connection connection;
-    private static final String SCHEME = "tcp";
-    private static final String HOST = "192.168.1.7";
-    private static final int PORT = 1883;
     private static final String DEVICE_ID = "TEST";
     private volatile IMqttAsyncClient mqttClient;
     private static boolean connectivity;
@@ -52,7 +49,8 @@ public class Connection {
         options.setCleanSession(true);
 
         try {
-            mqttClient = new MqttAsyncClient(SCHEME + "://" + HOST + ":" + PORT, DEVICE_ID, new MemoryPersistence());
+            mqttClient = new MqttAsyncClient(Server.SCHEME_MQTT + "://" + Server.HOST + ":" +
+                    Server.PORT_MQTT, DEVICE_ID, new MemoryPersistence());
             IMqttToken token = mqttClient.connect();
             token.waitForCompletion(3500);
         } catch (MqttSecurityException e) {

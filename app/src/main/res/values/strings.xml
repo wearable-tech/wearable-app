@@ -14,5 +14,8 @@
     <string name="title_other_devices">Other Available Devices</string>
     <string name="label_scanning">Scanning...</string>
     <string name="btstatus_not_connected">Status: -</string>
+    <string name="title_activity_register_user">RegisterUserActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 
 </resources>
