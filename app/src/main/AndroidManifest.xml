@@ -24,6 +24,9 @@
         <!--Location Service-->
         <service android:name=".services.LocationService" />
 
+        <!--Subscribe Service-->
+        <service android:name=".services.SubscribeService" />
+
         <!-- Main Activity -->
         <activity
             android:name="org.wearableapp.MainActivity"

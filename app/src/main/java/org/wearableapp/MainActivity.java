@@ -8,10 +8,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import org.wearableapp.communications.Notify;
-import org.wearableapp.communications.Subscribe;
 import org.wearableapp.services.LocationService;
 import org.wearableapp.services.MqttService;
+import org.wearableapp.services.SubscribeService;
 
 public class MainActivity extends Activity {
 
@@ -40,8 +39,10 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Log.i("BUTTON", "BUTTON CLICKED......");
-                Subscribe subscribe = new Subscribe(context);
-                subscribe.doSubscribe("test", 2);
+                Log.i("TAG", "Init Subscribe Service");
+                Intent intent = new Intent(context, SubscribeService.class);
+                startService(intent);
+                Log.i("TAG", "Subscribe Service Created!!!");
             }
         });
     }
