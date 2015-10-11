@@ -18,20 +18,20 @@ import org.wearableapp.communications.HttpRequests;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RegisterUserActivity extends Activity {
+public class LoginActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_user);
+        setContentView(R.layout.activity_login);
 
-        saveUser(this);
+        newUser(this);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_register_user, menu);
+        getMenuInflater().inflate(R.menu.menu_login, menu);
         return true;
     }
 
@@ -50,23 +50,23 @@ public class RegisterUserActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void saveUser(final Context context) {
+    private void getUser(final Context context) {
         Button save = (Button) findViewById(R.id.saveUser);
         save.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                EditText email = (EditText) findViewById(R.id.emailUser);
-                EditText password = (EditText) findViewById(R.id.passwordUser);
+                EditText email = (EditText) findViewById(R.id.emailLogin);
+                EditText password = (EditText) findViewById(R.id.passwordLogin);
 
-                Log.i("USER_SAVE", "Email: " + email.getText().toString());
-                Log.i("USER_SAVE", "Password: " + password.getText().toString());
+                Log.i("USER_GET", "Email: " + email.getText().toString());
+                Log.i("USER_GET", "Password: " + password.getText().toString());
 
                 List params = new ArrayList();
                 params.add(new BasicNameValuePair("email", email.getText().toString()));
                 params.add(new BasicNameValuePair("password", password.getText().toString()));
 
-                if (HttpRequests.doPost(params, "/user/save")) {
+                if (HttpRequests.doPost(params, "/user/get")) {
                     Log.i("CREATE_USER", "Create user success");
                     Intent intent = new Intent(context, MainActivity.class);
                     startActivity(intent);
@@ -76,6 +76,19 @@ public class RegisterUserActivity extends Activity {
                     Log.e("CREATE_USER", "Create user error");
                     Toast.makeText(getApplicationContext(), "Erro, tente novamente!", Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+    }
+
+    private void newUser(final Context context) {
+        Button save = (Button) findViewById(R.id.newUser);
+        save.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Log.i("NEW_USER", "Calling new user");
+                Intent intent = new Intent(context, RegisterUserActivity.class);
+                startActivity(intent);
             }
         });
     }

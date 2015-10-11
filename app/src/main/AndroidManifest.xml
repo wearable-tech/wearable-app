@@ -49,10 +49,19 @@
             android:label="@string/title_select_device"
             android:theme="@android:style/Theme.Dialog" />
 
-        <!--Register User Activity-->
+        <!-- Register User Activity -->
         <activity
             android:name=".RegisterUserActivity"
             android:label="@string/title_activity_register_user" >
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--Login Activity-->
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
