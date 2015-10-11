@@ -25,6 +25,7 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        getUser(this);
         newUser(this);
     }
 
@@ -51,7 +52,7 @@ public class LoginActivity extends Activity {
     }
 
     private void getUser(final Context context) {
-        Button save = (Button) findViewById(R.id.saveUser);
+        Button save = (Button) findViewById(R.id.login);
         save.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -67,14 +68,13 @@ public class LoginActivity extends Activity {
                 params.add(new BasicNameValuePair("password", password.getText().toString()));
 
                 if (HttpRequests.doPost(params, "/user/get")) {
-                    Log.i("CREATE_USER", "Create user success");
+                    Log.i("LOGIN", "Login success");
                     Intent intent = new Intent(context, MainActivity.class);
                     startActivity(intent);
-                    Toast.makeText(getApplicationContext(), "Usuário cadastrado!", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    Log.e("CREATE_USER", "Create user error");
-                    Toast.makeText(getApplicationContext(), "Erro, tente novamente!", Toast.LENGTH_LONG).show();
+                    Log.e("LOGIN", "Login fail");
+                    Toast.makeText(getApplicationContext(), "Email e/ou senha inválidos!", Toast.LENGTH_LONG).show();
                 }
             }
         });

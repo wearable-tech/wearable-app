@@ -9,6 +9,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIUtils;
 import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -65,26 +66,36 @@ public abstract class HttpRequests {
                 try {
                     response = post(params, path);
                 } catch (URISyntaxException e) {
-                    Log.i("ERROR", "Connection refused 1");
                     e.printStackTrace();
                 }
 
+                String responseString = null;
                 if (response != null && response.getStatusLine().getStatusCode() == 200) {
-                    return "success";
+                    try {
+                        responseString = EntityUtils.toString(response.getEntity());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
+
+                if (responseString != null) {
+                    return responseString;
+                }
+
                 return "fail";
             }
         };
         postTask.execute();
 
+        String result = "fail";
         try {
-            return postTask.get() == "success";
+            result = postTask.get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
 
-        return false;
+        return !result.contains("fail");
     }
 }

@@ -26,6 +26,7 @@ public class RegisterUserActivity extends Activity {
         setContentView(R.layout.activity_register_user);
 
         saveUser(this);
+        cancelRegister(this);
     }
 
     @Override
@@ -68,7 +69,7 @@ public class RegisterUserActivity extends Activity {
 
                 if (HttpRequests.doPost(params, "/user/save")) {
                     Log.i("CREATE_USER", "Create user success");
-                    Intent intent = new Intent(context, MainActivity.class);
+                    Intent intent = new Intent(context, LoginActivity.class);
                     startActivity(intent);
                     Toast.makeText(getApplicationContext(), "Usuário cadastrado!", Toast.LENGTH_LONG).show();
                 }
@@ -76,6 +77,19 @@ public class RegisterUserActivity extends Activity {
                     Log.e("CREATE_USER", "Create user error");
                     Toast.makeText(getApplicationContext(), "Erro, tente novamente!", Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+    }
+
+    private void cancelRegister(final Context context) {
+        Button save = (Button) findViewById(R.id.cancelRegisterUser);
+        save.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Log.i("CANCEL_REGISTER", "Cancel register user");
+                Intent intent = new Intent(context, LoginActivity.class);
+                startActivity(intent);
             }
         });
     }
