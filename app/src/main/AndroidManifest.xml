@@ -72,6 +72,10 @@
             android:name=".MenuActivity"
             android:label="@string/title_activity_menu" >
         </activity>
+        <activity
+            android:name=".ContactLevelActivity"
+            android:label="@string/title_activity_contact_level" >
+        </activity>
     </application>
 
 </manifest>

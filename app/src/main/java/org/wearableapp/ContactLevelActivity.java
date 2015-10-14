@@ -2,29 +2,28 @@ package org.wearableapp;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
-public class MenuActivity extends Activity {
+public class ContactLevelActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu);
+        setContentView(R.layout.activity_contact_level);
 
-        connectPulse(this);
-        monitorContact(this);
+        saveContactLevel(this);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_menu, menu);
+        getMenuInflater().inflate(R.menu.menu_contact_level, menu);
         return true;
     }
 
@@ -43,26 +42,19 @@ public class MenuActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void connectPulse(final Context context) {
-        Button connectPulse = (Button) findViewById(R.id.connectPulse);
-        connectPulse.setOnClickListener(new View.OnClickListener() {
+    private void saveContactLevel(final Context context) {
+        Button saveContactLevel = (Button) findViewById(R.id.saveContactLevel);
+        saveContactLevel.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Log.i("MONITOR_CONTACT", "Calling connect pulse");
-            }
-        });
-    }
+                Log.i("SAVE_CONTACT_LEVEL", "Saving level to contact");
 
-    private void monitorContact(final Context context) {
-        Button monitorContact = (Button) findViewById(R.id.monitorContact);
-        monitorContact.setOnClickListener(new View.OnClickListener() {
+                EditText level = (EditText) findViewById(R.id.levelContact);
+                EditText contactEmail = (EditText) findViewById(R.id.contactEmail);
 
-            @Override
-            public void onClick(View v) {
-                Log.i("MONITOR_CONTACT", "Calling monitor contact");
-                Intent intent = new Intent(context, ContactLevelActivity.class);
-                startActivity(intent);
+                Log.i("CONTACT_LEVEL", level.getText().toString());
+                Log.i("CONTACT_EMAIL", contactEmail.getText().toString());
             }
         });
     }
