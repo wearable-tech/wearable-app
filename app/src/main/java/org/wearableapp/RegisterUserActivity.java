@@ -69,6 +69,7 @@ public class RegisterUserActivity extends Activity {
 
                 if (HttpRequests.doPost(params, "/user/save")) {
                     Log.i("CREATE_USER", "Create user success");
+                    finish();
                     Intent intent = new Intent(context, LoginActivity.class);
                     startActivity(intent);
                     Toast.makeText(getApplicationContext(), "Usuário cadastrado!", Toast.LENGTH_LONG).show();
@@ -88,6 +89,7 @@ public class RegisterUserActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Log.i("CANCEL_REGISTER", "Cancel register user");
+                finish();
                 Intent intent = new Intent(context, LoginActivity.class);
                 startActivity(intent);
             }

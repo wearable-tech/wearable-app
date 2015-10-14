@@ -20,5 +20,7 @@
     <string name="newUser">Novo Usuário</string>
     <string name="email">E-mail</string>
     <string name="password">Senha</string>
+    <string name="title_activity_menu">MenuActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

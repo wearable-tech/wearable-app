@@ -69,7 +69,8 @@ public class LoginActivity extends Activity {
 
                 if (HttpRequests.doPost(params, "/user/get")) {
                     Log.i("LOGIN", "Login success");
-                    Intent intent = new Intent(context, MainActivity.class);
+                    finish();
+                    Intent intent = new Intent(context, MenuActivity.class);
                     startActivity(intent);
                 }
                 else {
@@ -87,6 +88,7 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Log.i("NEW_USER", "Calling new user");
+                finish();
                 Intent intent = new Intent(context, RegisterUserActivity.class);
                 startActivity(intent);
             }
