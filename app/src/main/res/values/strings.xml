@@ -21,7 +21,7 @@
     <string name="email">E-mail</string>
     <string name="password">Senha</string>
     <string name="title_activity_menu">MenuActivity</string>
-    <string name="hello_world">Hello world!</string>
     <string name="title_activity_contact_level">ContactLevelActivity</string>
+    <string name="title_activity_contact_list">ContactListActivity</string>
 
 </resources>

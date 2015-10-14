@@ -68,14 +68,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Menu Activity -->
         <activity
             android:name=".MenuActivity"
             android:label="@string/title_activity_menu" >
         </activity>
+
+        <!-- Contact Level Activity -->
         <activity
             android:name=".ContactLevelActivity"
             android:label="@string/title_activity_contact_level" >
         </activity>
+
+        <!-- Contact List Activity -->
+        <activity
+            android:name=".ContactListActivity"
+            android:label="@string/title_activity_contact_list" >
+        </activity>
+
     </application>
 
 </manifest>
