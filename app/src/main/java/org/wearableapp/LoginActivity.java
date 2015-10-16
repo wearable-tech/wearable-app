@@ -27,7 +27,7 @@ public class LoginActivity extends Activity {
     private Button newUser;
     private Button login;
 
-    private static final String USER_FILE = "user_data";
+    public static final String USER_FILE = "user_data";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

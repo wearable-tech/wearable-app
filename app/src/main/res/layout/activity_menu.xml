@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Conectar Pulseira"
-        android:id="@+id/connectPulse"
+        android:id="@+id/button_connect_bracelet"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="118dp" />
@@ -19,8 +19,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Monitorar Contato"
-        android:id="@+id/monitorContact"
-        android:layout_below="@+id/connectPulse"
+        android:id="@+id/button_monitor_contact"
+        android:layout_below="@+id/button_connect_bracelet"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="121dp" />
 </RelativeLayout>

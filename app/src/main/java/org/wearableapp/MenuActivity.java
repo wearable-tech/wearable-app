@@ -3,6 +3,7 @@ package org.wearableapp;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -14,13 +15,19 @@ import org.wearableapp.bluetooth.BluetoothActivity;
 
 public class MenuActivity extends Activity {
 
+    private Button monitorContact;
+    private Button connectBracelet;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        connectPulse(this);
-        monitorContact(this);
+        monitorContact = (Button) findViewById(R.id.button_monitor_contact);
+        connectBracelet = (Button) findViewById(R.id.button_connect_bracelet);
+
+        monitorContact.setOnClickListener(onClickMonitorContact);
+        connectBracelet.setOnClickListener(onClickConnectBracelet);
     }
 
     @Override
@@ -38,36 +45,52 @@ public class MenuActivity extends Activity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.menu_logout) {
+            logout();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void connectPulse(final Context context) {
-        Button connectPulse = (Button) findViewById(R.id.connectPulse);
-        connectPulse.setOnClickListener(new View.OnClickListener() {
+    View.OnClickListener onClickMonitorContact = new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                Log.i("MONITOR_CONTACT", "Calling connect pulse");
-                Intent intent = new Intent(context, BluetoothActivity.class);
-                startActivity(intent);
-            }
-        });
+        @Override
+        public void onClick(View view) {
+            Log.i("MONITOR_CONTACT", "Calling connect pulse");
+            goToContatctLevel();
+        }
+    };
+
+    View.OnClickListener onClickConnectBracelet = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View view) {
+            Log.i("MONITOR_CONTACT", "Calling connect pulse");
+            goToBluetooth();
+        }
+    };
+
+    private void goToBluetooth() {
+        Intent intent = new Intent(this, BluetoothActivity.class);
+        startActivity(intent);
     }
 
-    private void monitorContact(final Context context) {
-        Button monitorContact = (Button) findViewById(R.id.monitorContact);
-        monitorContact.setOnClickListener(new View.OnClickListener() {
+    private void goToContatctLevel() {
+        Intent intent = new Intent(this, ContactLevelActivity.class);
+        startActivity(intent);
+    }
 
-            @Override
-            public void onClick(View v) {
-                Log.i("MONITOR_CONTACT", "Calling monitor contact");
-                Intent intent = new Intent(context, ContactLevelActivity.class);
-                startActivity(intent);
-            }
-        });
+    private void logout() {
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.USER_FILE, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putBoolean("remembered", false);
+        editor.remove("email");
+        editor.commit();
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
