@@ -1,8 +1,8 @@
 package org.wearableapp;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -27,6 +27,8 @@ public class LoginActivity extends Activity {
     private Button newUser;
     private Button login;
 
+    private static final String USER_FILE = "user_data";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +42,14 @@ public class LoginActivity extends Activity {
 
         login.setOnClickListener(onClickLogin);
         newUser.setOnClickListener(onClickNewUser);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(USER_FILE, MODE_PRIVATE);
+        boolean remembered = sharedPreferences.getBoolean("remembered", false);
+
+        if (remembered) {
+            Log.i("LOGIN", "Doing Login");
+            goToMenu();
+        }
     }
 
     @Override
@@ -86,9 +96,8 @@ public class LoginActivity extends Activity {
         if (HttpRequests.doPost(params, "/user/get")) {
             Log.i("LOGIN", "Login success to user " + email);
 
-            Intent intent = new Intent(this, MenuActivity.class);
-            startActivity(intent);
-            finish();
+            setPreferences(email);
+            goToMenu();
         }
         else {
             Log.e("LOGIN", "Login fail");
@@ -101,5 +110,29 @@ public class LoginActivity extends Activity {
         Intent intent = new Intent(this, RegisterUserActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void goToMenu() {
+        Intent intent = new Intent(this, MenuActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void setPreferences(String email) {
+        SharedPreferences sharedPreferences = getSharedPreferences(USER_FILE, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        if(rememberMe.isChecked()) {
+            Log.i("PREFERENCES", "Saving remember-me");
+            editor.putBoolean("remembered", true);
+            editor.putString("email", email);
+        }
+        else {
+            Log.i("PREFERENCES", "Removing remember-me");
+            editor.putBoolean("remembered", false);
+            editor.remove("email");
+        }
+
+        editor.commit();
     }
 }
