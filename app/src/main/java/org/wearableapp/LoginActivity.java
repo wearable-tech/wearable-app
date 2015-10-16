@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -20,13 +21,25 @@ import java.util.List;
 
 public class LoginActivity extends Activity {
 
+    private EditText email;
+    private EditText password;
+    private CheckBox rememberMe;
+    private Button newUser;
+    private Button login;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        getUser(this);
-        newUser(this);
+        email = (EditText) findViewById(R.id.edittext_email_login);
+        password = (EditText) findViewById(R.id.edittext_password_login);
+        rememberMe = (CheckBox) findViewById(R.id.checkbox_remember_me);
+        newUser = (Button) findViewById(R.id.button_newuser_login);
+        login = (Button) findViewById(R.id.button_login);
+
+        login.setOnClickListener(onClickLogin);
+        newUser.setOnClickListener(onClickNewUser);
     }
 
     @Override
@@ -51,47 +64,42 @@ public class LoginActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void getUser(final Context context) {
-        Button save = (Button) findViewById(R.id.login);
-        save.setOnClickListener(new View.OnClickListener() {
+    View.OnClickListener onClickLogin = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            login(email.getText().toString(), password.getText().toString());
+        }
+    };
 
-            @Override
-            public void onClick(View v) {
-                EditText email = (EditText) findViewById(R.id.emailLogin);
-                EditText password = (EditText) findViewById(R.id.passwordLogin);
+    View.OnClickListener onClickNewUser = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            gotToNewUser();
+        }
+    };
 
-                Log.i("USER_GET", "Email: " + email.getText().toString());
-                Log.i("USER_GET", "Password: " + password.getText().toString());
+    private void login(String email, String password) {
+        List params = new ArrayList();
+        params.add(new BasicNameValuePair("email", email));
+        params.add(new BasicNameValuePair("password", password));
 
-                List params = new ArrayList();
-                params.add(new BasicNameValuePair("email", email.getText().toString()));
-                params.add(new BasicNameValuePair("password", password.getText().toString()));
+        if (HttpRequests.doPost(params, "/user/get")) {
+            Log.i("LOGIN", "Login success to user " + email);
 
-                if (HttpRequests.doPost(params, "/user/get")) {
-                    Log.i("LOGIN", "Login success");
-                    finish();
-                    Intent intent = new Intent(context, MenuActivity.class);
-                    startActivity(intent);
-                }
-                else {
-                    Log.e("LOGIN", "Login fail");
-                    Toast.makeText(getApplicationContext(), "Email e/ou senha inválidos!", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+            Intent intent = new Intent(this, MenuActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        else {
+            Log.e("LOGIN", "Login fail");
+            Toast.makeText(getApplicationContext(), "Email e/ou senha inválidos!", Toast.LENGTH_LONG).show();
+        }
     }
 
-    private void newUser(final Context context) {
-        Button save = (Button) findViewById(R.id.newUser);
-        save.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Log.i("NEW_USER", "Calling new user");
-                finish();
-                Intent intent = new Intent(context, RegisterUserActivity.class);
-                startActivity(intent);
-            }
-        });
+    private void gotToNewUser() {
+        Log.i("NEW_USER", "Calling new user");
+        Intent intent = new Intent(this, RegisterUserActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
