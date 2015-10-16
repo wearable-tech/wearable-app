@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import org.wearableapp.bluetooth.BluetoothActivity;
+
 public class MenuActivity extends Activity {
 
     @Override
@@ -50,6 +52,8 @@ public class MenuActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Log.i("MONITOR_CONTACT", "Calling connect pulse");
+                Intent intent = new Intent(context, BluetoothActivity.class);
+                startActivity(intent);
             }
         });
     }
