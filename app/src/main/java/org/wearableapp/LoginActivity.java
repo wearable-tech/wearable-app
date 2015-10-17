@@ -27,7 +27,7 @@ public class LoginActivity extends Activity {
     private Button newUser;
     private Button login;
 
-    public static final String USER_FILE = "user_data";
+     static final String USER_FILE = "user_data";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,14 +125,13 @@ public class LoginActivity extends Activity {
         if(rememberMe.isChecked()) {
             Log.i("PREFERENCES", "Saving remember-me");
             editor.putBoolean("remembered", true);
-            editor.putString("email", email);
         }
         else {
             Log.i("PREFERENCES", "Removing remember-me");
             editor.putBoolean("remembered", false);
-            editor.remove("email");
         }
 
+        editor.putString("email", email);
         editor.commit();
     }
 }

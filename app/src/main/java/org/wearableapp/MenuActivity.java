@@ -1,7 +1,6 @@
 package org.wearableapp;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -57,8 +56,8 @@ public class MenuActivity extends Activity {
 
         @Override
         public void onClick(View view) {
-            Log.i("MONITOR_CONTACT", "Calling connect pulse");
-            goToContatctLevel();
+            Log.i("MONITOR_CONTACT", "Calling monitor contact");
+            goToContatctList();
         }
     };
 
@@ -66,7 +65,7 @@ public class MenuActivity extends Activity {
 
         @Override
         public void onClick(View view) {
-            Log.i("MONITOR_CONTACT", "Calling connect pulse");
+            Log.i("CONNECT BRACELET", "Calling connect bracelet");
             goToBluetooth();
         }
     };
@@ -76,8 +75,8 @@ public class MenuActivity extends Activity {
         startActivity(intent);
     }
 
-    private void goToContatctLevel() {
-        Intent intent = new Intent(this, ContactLevelActivity.class);
+    private void goToContatctList() {
+        Intent intent = new Intent(this, ContactListActivity.class);
         startActivity(intent);
     }
 

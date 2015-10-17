@@ -1,7 +1,6 @@
 package org.wearableapp.communications;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -19,6 +18,8 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public abstract class HttpRequests {
+
+    private static String response;
 
     /**
      * @param params Params to send request
@@ -87,15 +88,18 @@ public abstract class HttpRequests {
         };
         postTask.execute();
 
-        String result = "fail";
         try {
-            result = postTask.get();
+            response = postTask.get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
 
-        return !result.contains("fail");
+        return !response.contains("fail");
+    }
+
+    public static String getResponse() {
+        return response;
     }
 }

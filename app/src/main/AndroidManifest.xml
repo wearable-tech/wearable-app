@@ -45,7 +45,7 @@
             android:label="@string/title_select_device"
             android:theme="@android:style/Theme.Dialog" />
 
-        <!-- Register User Activity -->
+        <!-- Register Contact Activity -->
         <activity
             android:name=".RegisterUserActivity"
             android:label="@string/title_activity_register_user" >
