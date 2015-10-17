@@ -39,6 +39,10 @@ public class ContactListAdapter extends BaseAdapter {
         return items.get(i).get("email");
     }
 
+    public String getItemLevel(int i) {
+        return items.get(i).get("level");
+    }
+
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if(view == null) {

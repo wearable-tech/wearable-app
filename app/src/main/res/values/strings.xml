@@ -24,5 +24,6 @@
     <string name="title_activity_contact_level">ContactLevelActivity</string>
     <string name="title_activity_contact_list">ContactListActivity</string>
     <string name="logout">Sair</string>
+    <string name="new_contact">Novo Contato</string>
 
 </resources>

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Nível:"
-        android:id="@+id/levelText"
+        android:id="@+id/textview_level_contact"
         android:layout_marginTop="67dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -22,18 +22,18 @@
         android:layout_height="wrap_content"
         android:inputType="numberSigned"
         android:ems="10"
-        android:id="@+id/levelContact"
-        android:layout_alignBottom="@+id/levelText"
-        android:layout_toRightOf="@+id/contactText"
-        android:layout_toEndOf="@+id/contactText" />
+        android:id="@+id/edittext_level_contact"
+        android:layout_alignBottom="@+id/textview_level_contact"
+        android:layout_toRightOf="@+id/textview_email_contact"
+        android:layout_toEndOf="@+id/textview_email_contact" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Contato:"
-        android:id="@+id/contactText"
-        android:layout_below="@+id/levelContact"
+        android:id="@+id/textview_email_contact"
+        android:layout_below="@+id/edittext_level_contact"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="52dp" />
@@ -42,9 +42,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Salvar"
-        android:id="@+id/saveContactLevel"
+        android:id="@+id/button_save_contact"
         android:layout_marginTop="129dp"
-        android:layout_below="@+id/contactText"
+        android:layout_below="@+id/textview_email_contact"
         android:layout_centerHorizontal="true" />
 
     <EditText
@@ -52,11 +52,11 @@
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
-        android:id="@+id/contactEmail"
-        android:layout_above="@+id/saveContactLevel"
-        android:layout_alignLeft="@+id/levelContact"
-        android:layout_alignStart="@+id/levelContact"
-        android:layout_alignRight="@+id/levelContact"
-        android:layout_alignEnd="@+id/levelContact" />
+        android:id="@+id/edittext_email_contact"
+        android:layout_above="@+id/button_save_contact"
+        android:layout_alignLeft="@+id/edittext_level_contact"
+        android:layout_alignStart="@+id/edittext_level_contact"
+        android:layout_alignRight="@+id/edittext_level_contact"
+        android:layout_alignEnd="@+id/edittext_level_contact" />
 
 </RelativeLayout>
