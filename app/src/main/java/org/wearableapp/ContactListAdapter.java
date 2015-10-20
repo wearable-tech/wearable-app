@@ -50,7 +50,10 @@ public class ContactListAdapter extends BaseAdapter {
         }
 
         TextView emailTextView = (TextView) view.findViewById(R.id.textview_email_contact);
+        TextView levelTextView = (TextView) view.findViewById(R.id.textview_level_contact);
+
         emailTextView.setText(getItemEmail(i));
+        levelTextView.setText("Nível: " + getItemLevel(i));
 
         return view;
     }

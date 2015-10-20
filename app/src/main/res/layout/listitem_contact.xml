@@ -15,4 +15,13 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"/>
 
+    <TextView
+        android:id="@+id/textview_level_contact"
+        android:layout_gravity="center_vertical"
+        android:text="Level"
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"/>
+
 </LinearLayout>
