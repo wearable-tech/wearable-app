@@ -6,21 +6,21 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="org.wearableapp.MenuActivity">
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Conectar Pulseira"
-        android:id="@+id/button_connect_bracelet"
-        android:layout_alignParentTop="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Olá, usuário"
+        android:id="@+id/textview_greeting"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="118dp" />
+        android:layout_marginTop="16dp" />
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Monitorar Contato"
-        android:id="@+id/button_monitor_contact"
-        android:layout_below="@+id/button_connect_bracelet"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="121dp" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Selecione no menu de opções"
+        android:id="@+id/textview_text"
+        android:layout_below="@+id/textview_greeting"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

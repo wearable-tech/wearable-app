@@ -9,24 +9,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import org.wearableapp.bluetooth.BluetoothActivity;
 
 public class MenuActivity extends Activity {
-
-    private Button monitorContact;
-    private Button connectBracelet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        monitorContact = (Button) findViewById(R.id.button_monitor_contact);
-        connectBracelet = (Button) findViewById(R.id.button_connect_bracelet);
-
-        monitorContact.setOnClickListener(onClickMonitorContact);
-        connectBracelet.setOnClickListener(onClickConnectBracelet);
+        TextView greetingTextView = (TextView) findViewById(R.id.textview_greeting);
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.USER_FILE, MODE_PRIVATE);
+        String email = sharedPreferences.getString("email", "");
+        Log.i("USER_CONNECTED", "Email is: " + email);
+        if (!email.isEmpty()) {
+            greetingTextView.setText("Olá, " + email);
+        }
     }
 
     @Override
@@ -47,28 +47,16 @@ public class MenuActivity extends Activity {
         if (id == R.id.menu_logout) {
             logout();
             return true;
+        } else if (id == R.id.menu_connect_wearable) {
+            goToBluetooth();
+            return true;
+        } else if (id == R.id.menu_monitor_contact) {
+            goToContatctList();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
-    View.OnClickListener onClickMonitorContact = new View.OnClickListener() {
-
-        @Override
-        public void onClick(View view) {
-            Log.i("MONITOR_CONTACT", "Calling monitor contact");
-            goToContatctList();
-        }
-    };
-
-    View.OnClickListener onClickConnectBracelet = new View.OnClickListener() {
-
-        @Override
-        public void onClick(View view) {
-            Log.i("CONNECT BRACELET", "Calling connect bracelet");
-            goToBluetooth();
-        }
-    };
 
     private void goToBluetooth() {
         Intent intent = new Intent(this, BluetoothActivity.class);

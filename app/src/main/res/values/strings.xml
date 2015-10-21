@@ -25,5 +25,7 @@
     <string name="title_activity_contact_list">ContactListActivity</string>
     <string name="logout">Sair</string>
     <string name="new_contact">Novo Contato</string>
+    <string name="connect_wearable">Conectar Pulseira</string>
+    <string name="monitor_contact">Monitorar Contato</string>
 
 </resources>
