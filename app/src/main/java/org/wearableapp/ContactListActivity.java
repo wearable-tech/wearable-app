@@ -34,6 +34,8 @@ public class ContactListActivity extends Activity {
         ListView userListView = (ListView) findViewById(R.id.contact_list);
         userListView.setAdapter(adapter);
         userListView.setOnItemClickListener(onItemClick);
+
+        getActionBar().setHomeButtonEnabled(true);
     }
 
     @Override
@@ -60,6 +62,18 @@ public class ContactListActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            Intent intent = new Intent(this, MenuActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onMenuItemSelected(featureId, item);
     }
 
     AdapterView.OnItemClickListener onItemClick = new AdapterView.OnItemClickListener() {

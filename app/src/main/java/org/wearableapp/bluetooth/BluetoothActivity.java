@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.wearableapp.MainActivity;
+import org.wearableapp.MenuActivity;
 import org.wearableapp.R;
 
 public class BluetoothActivity extends Activity {
@@ -79,6 +80,8 @@ public class BluetoothActivity extends Activity {
             mlistBtn.setEnabled(false);
             mStatus.setText("Status: disabled");
         }
+
+        getActionBar().setHomeButtonEnabled(true);
     }
 
     @Override
@@ -138,5 +141,18 @@ public class BluetoothActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            Intent intent = new Intent(this, MenuActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onMenuItemSelected(featureId, item);
     }
 }
