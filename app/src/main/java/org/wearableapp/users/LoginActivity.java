@@ -1,4 +1,4 @@
-package org.wearableapp;
+package org.wearableapp.users;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,20 +14,22 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import org.apache.http.message.BasicNameValuePair;
+import org.wearableapp.MenuActivity;
+import org.wearableapp.R;
 import org.wearableapp.communications.HttpRequests;
+import org.wearableapp.users.RegisterUserActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LoginActivity extends Activity {
 
+    public static final String USER_FILE = "user_data";
     private EditText email;
     private EditText password;
     private CheckBox rememberMe;
     private Button newUser;
     private Button login;
-
-    static final String USER_FILE = "user_data";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

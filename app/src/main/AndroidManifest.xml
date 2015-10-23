@@ -47,13 +47,13 @@
 
         <!-- Register Contact Activity -->
         <activity
-            android:name=".RegisterUserActivity"
+            android:name=".users.RegisterUserActivity"
             android:label="@string/title_activity_register_user" >
         </activity>
 
         <!-- Login Activity -->
         <activity
-            android:name=".LoginActivity"
+            android:name=".users.LoginActivity"
             android:label="@string/title_activity_login" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -70,13 +70,13 @@
 
         <!-- Contact Level Activity -->
         <activity
-            android:name=".ContactLevelActivity"
+            android:name=".users.ContactLevelActivity"
             android:label="@string/title_activity_contact_level" >
         </activity>
 
         <!-- Contact List Activity -->
         <activity
-            android:name=".ContactListActivity"
+            android:name=".users.ContactListActivity"
             android:label="@string/title_activity_contact_list" >
         </activity>
 

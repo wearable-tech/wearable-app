@@ -1,4 +1,4 @@
-package org.wearableapp;
+package org.wearableapp.users;
 
 import android.util.Log;
 

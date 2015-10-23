@@ -12,6 +12,8 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import org.wearableapp.bluetooth.BluetoothActivity;
+import org.wearableapp.users.ContactListActivity;
+import org.wearableapp.users.LoginActivity;
 
 public class MenuActivity extends Activity {
 

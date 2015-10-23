@@ -1,7 +1,6 @@
-package org.wearableapp;
+package org.wearableapp.users;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,7 +13,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import org.apache.http.message.BasicNameValuePair;
+import org.wearableapp.R;
 import org.wearableapp.communications.HttpRequests;
+import org.wearableapp.users.ContactListActivity;
+import org.wearableapp.users.LoginActivity;
 
 import java.util.ArrayList;
 import java.util.List;
