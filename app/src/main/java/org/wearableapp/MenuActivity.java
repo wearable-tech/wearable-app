@@ -1,6 +1,5 @@
 package org.wearableapp;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,12 +8,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import org.wearableapp.bluetooth.BluetoothActivity;
 
 public class MenuActivity extends Activity {
+
+    private CompoundButton activateNotifications;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,9 @@ public class MenuActivity extends Activity {
         if (!email.isEmpty()) {
             greetingTextView.setText("Olá, " + email);
         }
+
+        activateNotifications = (CompoundButton) findViewById(R.id.switch_activate_notifications);
+        activateNotifications.setOnClickListener(onClickActivateNotifications);
     }
 
     @Override
@@ -58,6 +62,13 @@ public class MenuActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    View.OnClickListener onClickActivateNotifications = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Log.i("NOFICATIONS", "Notifications are " + activateNotifications.isChecked());
+        }
+    };
 
     private void goToBluetooth() {
         Intent intent = new Intent(this, BluetoothActivity.class);
