@@ -39,7 +39,7 @@ public class Connection {
     }
 
     public void doConnect() {
-        if (mqttClient != null && mqttClient.isConnected()) {
+        if (connectivity == false || (mqttClient != null && mqttClient.isConnected())) {
             return;
         }
 

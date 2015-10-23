@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.wearableapp.MainActivity;
 import org.wearableapp.MenuActivity;
 import org.wearableapp.R;
 
@@ -134,12 +133,6 @@ public class BluetoothActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar to open MQTT connection
-        if (item.getItemId() == R.id.mqtt_connection) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 

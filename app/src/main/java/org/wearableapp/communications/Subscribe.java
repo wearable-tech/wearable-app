@@ -11,7 +11,7 @@ import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.wearableapp.Location;
-import org.wearableapp.MainActivity;
+import org.wearableapp.MenuActivity;
 
 public class Subscribe {
 
@@ -44,13 +44,22 @@ public class Subscribe {
         Log.i("SUBSCRIBE", "SUBSCRIBE FINISHED....");
     }
 
+    public void stopSubscribe(String topic) {
+        IMqttToken token = null;
+        try {
+            token = this.mqttClient.unsubscribe(topic);
+            token.waitForCompletion(5000);
+        } catch (MqttException e) {
+            Log.e("MQTTException", e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     private class MqttEventCallback implements MqttCallback {
         private Context context;
-        private String clientHandle;
 
         public MqttEventCallback(Context context) {
             this.context = context;
-            this.clientHandle = "tcp://10.11.8.98:1883";
         }
 
         @Override
@@ -64,7 +73,7 @@ public class Subscribe {
             Log.i("MESSAGE_ARRIVED", "Message arrived from topic: " + topic);
             Log.i("MESSAGE_ARRIVED", "Messagem: " + msg.toString());
 
-            Intent intent = new Intent(context, MainActivity.class);
+            Intent intent = new Intent(context, MenuActivity.class);
             Notify.notification(context, "vamos la", intent, "titulo");
 
             Log.i("LOCATION", "Send my location");

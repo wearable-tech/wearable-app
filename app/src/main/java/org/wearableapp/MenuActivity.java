@@ -1,6 +1,8 @@
 package org.wearableapp;
 
 import android.app.Activity;
+import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,12 +14,16 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import org.wearableapp.bluetooth.BluetoothActivity;
+import org.wearableapp.services.LocationService;
+import org.wearableapp.services.MqttService;
+import org.wearableapp.services.SubscribeService;
 import org.wearableapp.users.ContactListActivity;
 import org.wearableapp.users.LoginActivity;
 
 public class MenuActivity extends Activity {
 
     private CompoundButton activateNotifications;
+    final Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +40,8 @@ public class MenuActivity extends Activity {
 
         activateNotifications = (CompoundButton) findViewById(R.id.switch_activate_notifications);
         activateNotifications.setOnClickListener(onClickActivateNotifications);
+
+        iniServices();
     }
 
     @Override
@@ -69,6 +77,16 @@ public class MenuActivity extends Activity {
         @Override
         public void onClick(View view) {
             Log.i("NOFICATIONS", "Notifications are " + activateNotifications.isChecked());
+
+            Intent intent = new Intent(context, SubscribeService.class);
+            if (activateNotifications.isChecked()) {
+                startService(intent);
+                Log.i("SUBSCRIBE_SERVICE", "Subscribe Service Created!!!");
+            }
+            else {
+                stopService(intent);
+                Log.i("SUBSCRIBE_SERVICE", "Subscribe Service Destroyed!!!");
+            }
         }
     };
 
@@ -93,5 +111,17 @@ public class MenuActivity extends Activity {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void iniServices() {
+        Intent intent;
+
+        intent = new Intent(this, MqttService.class);
+        startService(intent);
+        Log.i("INIT_SERVICES", "MQTT Service Created!!!");
+
+        intent = new Intent(this, LocationService.class);
+        startService(intent);
+        Log.i("INIT_SERVICES", "Location Service Created!!!");
     }
 }
