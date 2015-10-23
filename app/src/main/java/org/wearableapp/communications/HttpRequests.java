@@ -1,6 +1,7 @@
 package org.wearableapp.communications;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -14,6 +15,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -28,9 +31,14 @@ public abstract class HttpRequests {
      * @throws URISyntaxException createURI process
      */
     private static HttpResponse post(List params, String path) throws URISyntaxException {
-        URI url = URIUtils.createURI(Server.SCHEME_HTTP, Server.HOST, Server.PORT_HTTP,
+        URI uri = URIUtils.createURI(Server.SCHEME_HTTP, Server.HOST, Server.PORT_HTTP,
                 path, null, null);
-        HttpPost post = new HttpPost(url);
+
+        if (!checkConnection(uri)) {
+            throw new URISyntaxException("Connection refused", "Server is not reachable");
+        }
+
+        HttpPost post = new HttpPost(uri);
 
         if (params != null && !params.isEmpty()) {
             try {
@@ -54,12 +62,25 @@ public abstract class HttpRequests {
         return response;
     }
 
+    private static boolean checkConnection(URI uri) {
+        try {
+            URL url = uri.toURL();
+            Log.i("LOGIN", "Trying to connect to: " + url);
+            URLConnection connection = url.openConnection();
+            connection.setConnectTimeout(1000);
+            connection.connect();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     /**
      * @param params Params to send request
      * @param path Path request
      * @return true to connections status 200 e false to others connections
      */
-    public static boolean doPost(final List params, final String path) {
+    public static int doPost(final List params, final String path) {
         AsyncTask<Void, Void, String> postTask = new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... voids) {
@@ -68,6 +89,7 @@ public abstract class HttpRequests {
                     response = post(params, path);
                 } catch (URISyntaxException e) {
                     e.printStackTrace();
+                    return "connection refused";
                 }
 
                 String responseString = null;
@@ -96,7 +118,10 @@ public abstract class HttpRequests {
             e.printStackTrace();
         }
 
-        return !response.contains("fail");
+        if (response.contains("fail")) return 1;
+        if (response.contains("connection refused")) return 2;
+
+        return 0;
     }
 
     public static String getResponse() {

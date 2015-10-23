@@ -47,7 +47,7 @@ public class LoginActivity extends Activity {
         boolean remembered = sharedPreferences.getBoolean("remembered", false);
 
         if (remembered) {
-            Log.i("LOGIN", "Doing Login");
+            Log.i("LOGIN", "Logging in");
             goToMenu();
         }
     }
@@ -89,19 +89,28 @@ public class LoginActivity extends Activity {
     };
 
     private void login(String email, String password) {
+        Log.i("LOGIN", "Email: " + email);
+        Log.i("LOGIN", "Password: " + password);
+
         List params = new ArrayList();
         params.add(new BasicNameValuePair("email", email));
         params.add(new BasicNameValuePair("password", password));
 
-        if (HttpRequests.doPost(params, "/user/get")) {
-            Log.i("LOGIN", "Login success to user " + email);
-
-            setPreferences(email);
-            goToMenu();
-        }
-        else {
-            Log.e("LOGIN", "Login fail");
-            Toast.makeText(getApplicationContext(), "Email e/ou senha inválidos!", Toast.LENGTH_LONG).show();
+        int response = HttpRequests.doPost(params, "/user/get");
+        switch (response) {
+            case 0:
+                Log.i("LOGIN", "Login success to user " + email);
+                setPreferences(email);
+                goToMenu();
+                break;
+            case 1:
+                Log.e("LOGIN", "Login failed");
+                Toast.makeText(getApplicationContext(), "Email e/ou senha inválidos", Toast.LENGTH_LONG).show();
+                break;
+            case 2:
+                Log.e("LOGIN", "Can't connect to server");
+                Toast.makeText(getApplicationContext(), "Não foi possível conectar ao servidor", Toast.LENGTH_LONG).show();
+                break;
         }
     }
 

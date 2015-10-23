@@ -95,7 +95,7 @@ public class ContactLevelActivity extends Activity {
         params.add(new BasicNameValuePair("contact_email", contact_email));
         params.add(new BasicNameValuePair("contact_level", contact_level));
 
-        if (HttpRequests.doPost(params, "/user/add_contact")) {
+        if (HttpRequests.doPost(params, "/user/add_contact") == 0) {
             Log.i("ADD_CONTACT", "Success in add contact " + contact_email);
             goToContacsList();
         }

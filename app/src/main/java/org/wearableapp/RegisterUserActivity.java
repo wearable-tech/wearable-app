@@ -67,7 +67,7 @@ public class RegisterUserActivity extends Activity {
                 params.add(new BasicNameValuePair("email", email.getText().toString()));
                 params.add(new BasicNameValuePair("password", password.getText().toString()));
 
-                if (HttpRequests.doPost(params, "/user/save")) {
+                if (HttpRequests.doPost(params, "/user/save") == 0) {
                     Log.i("CREATE_USER", "Create user success");
                     finish();
                     Intent intent = new Intent(context, LoginActivity.class);

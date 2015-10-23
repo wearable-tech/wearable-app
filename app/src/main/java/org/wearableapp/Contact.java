@@ -22,7 +22,7 @@ public abstract class Contact {
         List params = new ArrayList();
         params.add(new BasicNameValuePair("email", email));
 
-        if (HttpRequests.doPost(params, "/user/contacts.json")) {
+        if (HttpRequests.doPost(params, "/user/contacts.json") == 0) {
             Log.i("JSON LIST", HttpRequests.getResponse());
             try {
                 JSONArray jsonArray = new JSONArray(HttpRequests.getResponse());
