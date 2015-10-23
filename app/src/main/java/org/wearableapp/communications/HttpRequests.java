@@ -7,7 +7,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIUtils;
-import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
@@ -22,12 +21,12 @@ import java.util.concurrent.ExecutionException;
 
 public abstract class HttpRequests {
 
-    private static String response;
+    private static String mResponse;
 
     /**
      * @param params Params to send request
      * @param path Path request
-     * @return request response
+     * @return request mResponse
      * @throws URISyntaxException createURI process
      */
     private static HttpResponse post(List params, String path) throws URISyntaxException {
@@ -40,12 +39,10 @@ public abstract class HttpRequests {
 
         HttpPost post = new HttpPost(uri);
 
-        if (params != null && !params.isEmpty()) {
-            try {
-                post.setEntity(new UrlEncodedFormEntity(params));
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
+        if (params != null && !params.isEmpty()) try {
+            post.setEntity(new UrlEncodedFormEntity(params));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
 
         DefaultHttpClient hc = new DefaultHttpClient();
@@ -53,8 +50,6 @@ public abstract class HttpRequests {
 
         try {
             response = hc.execute(post);
-        } catch (HttpHostConnectException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -78,13 +73,13 @@ public abstract class HttpRequests {
     /**
      * @param params Params to send request
      * @param path Path request
-     * @return true to connections status 200 e false to others connections
+     * @return 0 to connections with status 200, otherwise returns an integer greater than 0
      */
     public static int doPost(final List params, final String path) {
         AsyncTask<Void, Void, String> postTask = new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... voids) {
-                HttpResponse response = null;
+                HttpResponse response;
                 try {
                     response = post(params, path);
                 } catch (URISyntaxException e) {
@@ -111,20 +106,18 @@ public abstract class HttpRequests {
         postTask.execute();
 
         try {
-            response = postTask.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+            mResponse = postTask.get();
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
 
-        if (response.contains("fail")) return 1;
-        if (response.contains("connection refused")) return 2;
+        if (mResponse.contains("fail")) return 1;
+        if (mResponse.contains("connection refused")) return 2;
 
         return 0;
     }
 
     public static String getResponse() {
-        return response;
+        return mResponse;
     }
 }

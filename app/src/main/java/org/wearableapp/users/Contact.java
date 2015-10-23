@@ -14,11 +14,8 @@ import java.util.List;
 
 public abstract class Contact {
 
-    private static ArrayList<HashMap<String, String>> contacts;
-
     public static ArrayList<HashMap<String, String>> list(String email) {
-        contacts = new ArrayList<HashMap<String, String>>();
-
+        ArrayList<HashMap<String, String>> contacts = new ArrayList<>();
         List params = new ArrayList();
         params.add(new BasicNameValuePair("email", email));
 
@@ -33,7 +30,7 @@ public abstract class Contact {
                     String emailContact = object.getString("email");
                     String levelContact = object.getString("level");
 
-                    HashMap<String, String> contact = new HashMap<String, String>();
+                    HashMap<String, String> contact = new HashMap<>();
                     contact.put("email", emailContact);
                     contact.put("level", levelContact);
 
