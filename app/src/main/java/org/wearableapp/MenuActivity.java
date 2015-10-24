@@ -107,7 +107,10 @@ public class MenuActivity extends Activity {
 
         editor.putBoolean("remembered", false);
         editor.remove("email");
+        editor.remove("notifications");
         editor.commit();
+
+        stopServices();
 
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
@@ -124,6 +127,20 @@ public class MenuActivity extends Activity {
         intent = new Intent(this, LocationService.class);
         startService(intent);
         Log.i("INIT_SERVICES", "Location Service Created!!!");
+    }
+
+    private void stopServices() {
+        subscribeServiceController(false);
+
+        Intent intent;
+
+        intent = new Intent(this, MqttService.class);
+        startService(intent);
+        Log.i("STOP_SERVICES", "MQTT Service Destroyed!!!");
+
+        intent = new Intent(this, LocationService.class);
+        startService(intent);
+        Log.i("STOP_SERVICES", "Location Service Destroyed!!!");
     }
 
     private void subscribeServiceController(boolean type) {

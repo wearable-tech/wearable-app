@@ -2,13 +2,22 @@ package org.wearableapp.services;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
 import org.wearableapp.communications.Subscribe;
+import org.wearableapp.users.Contact;
+import org.wearableapp.users.LoginActivity;
 
-public class SubscribeService extends Service{
+import java.util.HashMap;
+import java.util.List;
+
+public class SubscribeService extends Service {
+    private List<HashMap<String, String>> contacts;
+    private String emailConnected;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -17,25 +26,17 @@ public class SubscribeService extends Service{
 
     @Override
     public void onCreate() {
-        Intent intent;
-
-        intent = new Intent(this, MqttService.class);
-        startService(intent);
-        Log.i("INIT_SERVICES", "MQTT Service Created!!!");
-
-        intent = new Intent(this, LocationService.class);
-        startService(intent);
-        Log.i("INIT_SERVICES", "Location Service Created!!!");
-
         Log.i("SUBSCRIBE_SERVICE", "ONCREATE");
-        Subscribe subscribe = new Subscribe(this);
-        subscribe.doSubscribe("test", 2);
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.USER_FILE, MODE_PRIVATE);
+        emailConnected = sharedPreferences.getString("email", "");
+        contacts = Contact.list(emailConnected);
+
+        contactsSubscribe();
     }
 
     @Override
     public void onDestroy() {
-        Subscribe subscribe = new Subscribe(this);
-        subscribe.stopSubscribe("test");
+        contactsStopSubscribe();
         super.onDestroy();
     }
 
@@ -43,5 +44,23 @@ public class SubscribeService extends Service{
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.v("ON_START", "onStartCommand()");
         return START_STICKY;
+    }
+
+    private void contactsSubscribe() {
+        Subscribe subscribe = new Subscribe(this);
+        subscribe.doSubscribe(emailConnected, 2);
+
+        for (HashMap<String, String> c: contacts) {
+            subscribe.doSubscribe(c.get("email"), 2);
+        }
+    }
+
+    private void contactsStopSubscribe() {
+        Subscribe subscribe = new Subscribe(this);
+        subscribe.stopSubscribe(emailConnected);
+
+        for (HashMap<String, String> c: contacts) {
+            subscribe.stopSubscribe(c.get("email"));
+        }
     }
 }
