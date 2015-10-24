@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import org.wearableapp.MenuActivity;
@@ -38,33 +39,10 @@ public class ContactListActivity extends Activity {
         userListView.setAdapter(adapter);
         userListView.setOnItemClickListener(onItemClick);
 
+        ImageButton floatButton = (ImageButton) findViewById(R.id.add_contact);
+        floatButton.setOnClickListener(onClick);
+
         getActionBar().setHomeButtonEnabled(true);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_contact_list, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.menu_new_contact) {
-            Intent intent = new Intent(ContactListActivity.this, ContactLevelActivity.class);
-            intent.putExtra("type", "new");
-            startActivity(intent);
-
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -87,6 +65,16 @@ public class ContactListActivity extends Activity {
             intent.putExtra("contact_email", adapter.getItemEmail(i));
             intent.putExtra("contact_level", adapter.getItemLevel(i));
 
+            startActivity(intent);
+        }
+    };
+
+    View.OnClickListener onClick = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(ContactListActivity.this, ContactLevelActivity.class);
+            intent.putExtra("type", "new");
             startActivity(intent);
         }
     };
