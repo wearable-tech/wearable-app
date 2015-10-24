@@ -23,7 +23,6 @@ import org.wearableapp.users.LoginActivity;
 public class MenuActivity extends Activity {
 
     private CompoundButton activateNotifications;
-    final Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +41,12 @@ public class MenuActivity extends Activity {
         activateNotifications.setOnClickListener(onClickActivateNotifications);
 
         iniServices();
+
+        boolean notifications = sharedPreferences.getBoolean("notifications", false);
+        if (notifications) {
+            activateNotifications.setChecked(true);
+        }
+
     }
 
     @Override
@@ -76,17 +81,13 @@ public class MenuActivity extends Activity {
     View.OnClickListener onClickActivateNotifications = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Log.i("NOFICATIONS", "Notifications are " + activateNotifications.isChecked());
+        Log.i("NOFICATIONS", "Notifications are " + activateNotifications.isChecked());
+        subscribeServiceController(activateNotifications.isChecked());
 
-            Intent intent = new Intent(context, SubscribeService.class);
-            if (activateNotifications.isChecked()) {
-                startService(intent);
-                Log.i("SUBSCRIBE_SERVICE", "Subscribe Service Created!!!");
-            }
-            else {
-                stopService(intent);
-                Log.i("SUBSCRIBE_SERVICE", "Subscribe Service Destroyed!!!");
-            }
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.USER_FILE, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("notifications", activateNotifications.isChecked());
+        editor.commit();
         }
     };
 
@@ -123,5 +124,18 @@ public class MenuActivity extends Activity {
         intent = new Intent(this, LocationService.class);
         startService(intent);
         Log.i("INIT_SERVICES", "Location Service Created!!!");
+    }
+
+    private void subscribeServiceController(boolean type) {
+        Intent intent = new Intent(this, SubscribeService.class);
+
+        if (type) {
+            startService(intent);
+            Log.i("SUBSCRIBE_SERVICE", "Subscribe service started!");
+        }
+        else {
+            stopService(intent);
+            Log.i("SUBSCRIBE_SERVICE", "Subscribe service destroyed!");
+        }
     }
 }
