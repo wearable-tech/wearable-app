@@ -37,6 +37,10 @@ public class ContactListAdapter extends BaseAdapter {
         return 0;
     }
 
+    public String getItemName(int i) {
+        return items.get(i).get("name");
+    }
+
     public String getItemEmail(int i) {
         return items.get(i).get("email");
     }

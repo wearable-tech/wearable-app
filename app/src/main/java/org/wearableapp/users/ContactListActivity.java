@@ -62,6 +62,7 @@ public class ContactListActivity extends Activity {
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             Intent intent = new Intent(ContactListActivity.this, ContactLevelActivity.class);
             intent.putExtra("type", "update");
+            intent.putExtra("contact_name", adapter.getItemName(i));
             intent.putExtra("contact_email", adapter.getItemEmail(i));
             intent.putExtra("contact_level", adapter.getItemLevel(i));
 

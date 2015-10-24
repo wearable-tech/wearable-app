@@ -27,12 +27,10 @@ public abstract class Contact {
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject object = jsonArray.getJSONObject(i);
 
-                    String emailContact = object.getString("email");
-                    String levelContact = object.getString("level");
-
                     HashMap<String, String> contact = new HashMap<>();
-                    contact.put("email", emailContact);
-                    contact.put("level", levelContact);
+                    contact.put("name", object.getString("name"));
+                    contact.put("email", object.getString("email"));
+                    contact.put("level", object.getString("level"));
 
                     contacts.add(contact);
                 }

@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.message.BasicNameValuePair;
@@ -23,8 +24,9 @@ import java.util.List;
 
 public class ContactLevelActivity extends Activity {
 
-    private EditText contactLevel;
     private EditText contactEmail;
+    private EditText contactName;
+    private EditText contactLevel;
     private Button saveContact;
 
     @Override
@@ -32,21 +34,30 @@ public class ContactLevelActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_level);
 
-        contactLevel = (EditText) findViewById(R.id.edittext_level_contact);
-        contactEmail = (EditText) findViewById(R.id.edittext_email_contact);
+        contactName = (EditText) findViewById(R.id.edittext_contact_name);
+        contactEmail = (EditText) findViewById(R.id.edittext_contact_email);
+        contactLevel = (EditText) findViewById(R.id.edittext_contact_level);
         saveContact = (Button) findViewById(R.id.button_save_contact);
 
         String type = (String) getIntent().getExtras().getSerializable("type");
         Log.i("REGISTER", "Type register is: " + type);
 
         if (type.contains("update")) {
+            String contactNameSaved = (String) getIntent().getExtras().getSerializable("contact_name");
             String contactEmailSaved = (String) getIntent().getExtras().getSerializable("contact_email");
             String contacLevelSaved = (String) getIntent().getExtras().getSerializable("contact_level");
             Log.i("REGISTER", "Update contact " + contactEmailSaved);
 
-            contactLevel.setText(contacLevelSaved);
+            contactName.setText(contactNameSaved);
+            contactName.setFocusable(false);
             contactEmail.setText(contactEmailSaved);
             contactEmail.setFocusable(false);
+            contactLevel.setText(contacLevelSaved);
+        }
+        else {
+            TextView contactNameTextView = (TextView) findViewById(R.id.textview_contact_name);
+            contactNameTextView.setVisibility(View.INVISIBLE);
+            contactName.setVisibility(View.INVISIBLE);
         }
 
         saveContact.setOnClickListener(onClickSaveContact);

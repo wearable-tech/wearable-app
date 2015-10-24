@@ -6,57 +6,74 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="org.wearableapp.users.ContactLevelActivity">
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Salvar"
+        android:id="@+id/button_save_contact"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="90dp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Nível:"
-        android:id="@+id/textview_level_contact"
-        android:layout_marginTop="67dp"
+        android:text="Nome:"
+        android:id="@+id/textview_contact_name"
         android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="43dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="E-mail:"
+        android:id="@+id/textview_contact_email"
+        android:layout_below="@+id/textview_contact_name"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="65dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Nivel:"
+        android:id="@+id/textview_contact_level"
+        android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="numberSigned"
-        android:ems="10"
-        android:id="@+id/edittext_level_contact"
-        android:layout_alignBottom="@+id/textview_level_contact"
-        android:layout_toRightOf="@+id/textview_email_contact"
-        android:layout_toEndOf="@+id/textview_email_contact" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Contato:"
-        android:id="@+id/textview_email_contact"
-        android:layout_below="@+id/edittext_level_contact"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="52dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Salvar"
-        android:id="@+id/button_save_contact"
-        android:layout_marginTop="129dp"
-        android:layout_below="@+id/textview_email_contact"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/edittext_contact_name"
+        android:layout_above="@+id/textview_contact_email"
+        android:layout_toRightOf="@+id/textview_contact_name"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <EditText
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:id="@+id/edittext_email_contact"
-        android:layout_above="@+id/button_save_contact"
-        android:layout_alignLeft="@+id/edittext_level_contact"
-        android:layout_alignStart="@+id/edittext_level_contact"
-        android:layout_alignRight="@+id/edittext_level_contact"
-        android:layout_alignEnd="@+id/edittext_level_contact" />
+        android:id="@+id/edittext_contact_email"
+        android:layout_alignBottom="@+id/textview_contact_email"
+        android:layout_alignLeft="@+id/edittext_contact_name"
+        android:layout_alignStart="@+id/edittext_contact_name"
+        android:layout_alignRight="@+id/edittext_contact_name"
+        android:layout_alignEnd="@+id/edittext_contact_name" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edittext_contact_level"
+        android:layout_alignBottom="@+id/textview_contact_level"
+        android:layout_alignLeft="@+id/edittext_contact_email"
+        android:layout_alignStart="@+id/edittext_contact_email"
+        android:layout_alignRight="@+id/edittext_contact_email"
+        android:layout_alignEnd="@+id/edittext_contact_email" />
 
 </RelativeLayout>
