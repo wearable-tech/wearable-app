@@ -17,6 +17,7 @@ android:layout_height="match_parent">
         android:layout_height="65dp"
         android:id="@+id/add_contact"
         android:background="@drawable/oval"
+        android:src="@drawable/ic_add_white_18dp"
         android:elevation="10dp"
         android:layout_marginBottom="65dp"
         android:layout_alignParentBottom="true"
