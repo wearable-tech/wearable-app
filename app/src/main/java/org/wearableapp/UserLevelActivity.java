@@ -36,6 +36,20 @@ public class UserLevelActivity extends Activity {
 
         notificationsLevel = (Button) findViewById(R.id.button_notifications_level);
         notificationsLevel.setOnClickListener(onClickNotificationsLevel);
+
+        getActionBar().setHomeButtonEnabled(true);
+    }
+
+    @Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            Intent intent = new Intent(this, MenuActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onMenuItemSelected(featureId, item);
     }
 
     @Override

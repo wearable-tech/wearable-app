@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -14,10 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.message.BasicNameValuePair;
+import org.wearableapp.MenuActivity;
 import org.wearableapp.R;
 import org.wearableapp.communications.HttpRequests;
-import org.wearableapp.users.ContactListActivity;
-import org.wearableapp.users.LoginActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,25 +40,37 @@ public class ContactLevelActivity extends Activity {
         String type = (String) getIntent().getExtras().getSerializable("type");
         Log.i("REGISTER", "Type register is: " + type);
 
-        if (type.contains("update")) {
+        if (type != null && type.contains("update")) {
             String contactNameSaved = (String) getIntent().getExtras().getSerializable("contact_name");
             String contactEmailSaved = (String) getIntent().getExtras().getSerializable("contact_email");
-            String contacLevelSaved = (String) getIntent().getExtras().getSerializable("contact_level");
+            String contactLevelSaved = (String) getIntent().getExtras().getSerializable("contact_level");
             Log.i("REGISTER", "Update contact " + contactEmailSaved);
 
             contactName.setText(contactNameSaved);
             contactName.setFocusable(false);
             contactEmail.setText(contactEmailSaved);
             contactEmail.setFocusable(false);
-            contactLevel.setText(contacLevelSaved);
-        }
-        else {
+            contactLevel.setText(contactLevelSaved);
+        } else {
             TextView contactNameTextView = (TextView) findViewById(R.id.textview_contact_name);
             contactNameTextView.setVisibility(View.INVISIBLE);
             contactName.setVisibility(View.INVISIBLE);
         }
 
         saveContact.setOnClickListener(onClickSaveContact);
+        getActionBar().setHomeButtonEnabled(true);
+    }
+
+    @Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            Intent intent = new Intent(this, MenuActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onMenuItemSelected(featureId, item);
     }
 
     @Override
@@ -70,23 +80,18 @@ public class ContactLevelActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
     View.OnClickListener onClickSaveContact = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Log.i("CONTACT_LEVEL", "Saving level to contact");
-            addContact(contactEmail.getText().toString(), contactLevel.getText().toString());
+            addContact(contactEmail.getText().toString().trim(), contactLevel.getText().toString());
         }
     };
 
-    private void goToContacsList() {
+    private void goToContactsList() {
         Intent intent = new Intent(this, ContactListActivity.class);
         startActivity(intent);
         finish();
@@ -103,12 +108,10 @@ public class ContactLevelActivity extends Activity {
 
         if (HttpRequests.doPost(params, "/user/add_contact") == 0) {
             Log.i("ADD_CONTACT", "Success in add contact " + contact_email);
-            goToContacsList();
-        }
-        else {
+            goToContactsList();
+        } else {
             Log.i("ADD_CONTACT", "Fail in add contact " + contact_email);
             Toast.makeText(getApplicationContext(), "Não foi possível adicionar este contato", Toast.LENGTH_LONG).show();
         }
     }
-
 }
