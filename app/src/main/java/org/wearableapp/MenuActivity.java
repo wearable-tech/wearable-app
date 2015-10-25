@@ -30,9 +30,11 @@ public class MenuActivity extends Activity {
         TextView greetingTextView = (TextView) findViewById(R.id.textview_greeting);
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.USER_FILE, MODE_PRIVATE);
         String email = sharedPreferences.getString("email", "");
+        String name = sharedPreferences.getString("name", "");
         Log.i("USER_CONNECTED", "Email is: " + email);
+
         if (!email.isEmpty()) {
-            greetingTextView.setText("Olá, " + email);
+            greetingTextView.setText("Olá, " + name + "!");
         }
 
         activateNotifications = (CompoundButton) findViewById(R.id.switch_activate_notifications);
