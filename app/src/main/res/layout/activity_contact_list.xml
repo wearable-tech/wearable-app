@@ -7,8 +7,9 @@ android:layout_height="match_parent">
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="org.wearableapp.users.ContactListActivity"
-        android:id="@+id/contact_list">
+        android:id="@+id/contact_list"
+        android:longClickable="true"
+        tools:context="org.wearableapp.users.ContactListActivity">
 
     </ListView>
 

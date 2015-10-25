@@ -20,7 +20,6 @@ import java.util.List;
 
 public class ContactListActivity extends Activity {
 
-    private List<HashMap<String, String>> contacts;
     private ContactListAdapter adapter;
 
     @Override
@@ -32,12 +31,13 @@ public class ContactListActivity extends Activity {
         String email = sharedPreferences.getString("email", "");
         Log.i("USER_CONNECTED", "Email is: " + email);
 
-        contacts = Contact.list(email);
+        List<HashMap<String, String>> contacts = Contact.list(email);
         adapter = new ContactListAdapter(this, contacts);
 
-        ListView userListView = (ListView) findViewById(R.id.contact_list);
-        userListView.setAdapter(adapter);
-        userListView.setOnItemClickListener(onItemClick);
+        ListView listView = (ListView) findViewById(R.id.contact_list);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(onItemClick);
+        listView.setOnItemLongClickListener(onItemLongClick);
 
         ImageButton floatButton = (ImageButton) findViewById(R.id.add_contact);
         floatButton.setOnClickListener(onClick);
@@ -77,6 +77,26 @@ public class ContactListActivity extends Activity {
             Intent intent = new Intent(ContactListActivity.this, ContactLevelActivity.class);
             intent.putExtra("type", "new");
             startActivity(intent);
+        }
+    };
+
+    AdapterView.OnItemLongClickListener onItemLongClick = new AdapterView.OnItemLongClickListener() {
+
+        @Override
+        public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+            HashMap hm = (HashMap) adapterView.getItemAtPosition(i);
+            String email_contact = hm.get("email").toString();
+
+            SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.USER_FILE, MODE_PRIVATE);
+            String email_user = sharedPreferences.getString("email", "");
+
+            if (Contact.delete(email_user, email_contact)) {
+                Log.i("LONG_CLICK", "Contact removed from list");
+            } else {
+                Log.e("LONG_CLICK", "Error: contact not removed");
+            }
+
+            return true;
         }
     };
 }
