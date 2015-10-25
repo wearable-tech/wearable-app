@@ -10,7 +10,6 @@ import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.wearableapp.Location;
 import org.wearableapp.MenuActivity;
 
 public class Subscribe {
@@ -32,9 +31,8 @@ public class Subscribe {
 
         this.mqttClient.setCallback(new MqttEventCallback(this.context));
 
-        IMqttToken token = null;
         try {
-            token = this.mqttClient.subscribe(topic, qos);
+            IMqttToken token = this.mqttClient.subscribe(topic, qos);
             token.waitForCompletion(5000);
         } catch (MqttException e) {
             Log.e("MQTTException", e.getMessage());
@@ -45,9 +43,8 @@ public class Subscribe {
     }
 
     public void stopSubscribe(String topic) {
-        IMqttToken token = null;
         try {
-            token = this.mqttClient.unsubscribe(topic);
+            IMqttToken token = this.mqttClient.unsubscribe(topic);
             token.waitForCompletion(5000);
         } catch (MqttException e) {
             Log.e("MQTTException", e.getMessage());

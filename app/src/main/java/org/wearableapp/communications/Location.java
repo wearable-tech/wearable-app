@@ -1,4 +1,4 @@
-package org.wearableapp;
+package org.wearableapp.communications;
 
 public abstract class Location {
 

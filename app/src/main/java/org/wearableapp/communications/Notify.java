@@ -1,6 +1,5 @@
 package org.wearableapp.communications;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -30,12 +29,10 @@ public class Notify {
                 .setWhen(when)
                 .setSmallIcon(R.drawable.ic_launcher);
 
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(notificationId, notificationBuilder.build());
         notificationId++;
 
         Log.i("NOTIFICATION", "Notification sended...");
     }
-
-
 }

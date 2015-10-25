@@ -10,10 +10,9 @@
         android:id="@+id/switch_activate_notifications"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Ativar Notificações"
+        android:text="Ativar notificações"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:layout_below="@+id/radiogroup_gender"
         android:checked="false"
         android:textOn="Sim"
         android:textOff="Não"/>
