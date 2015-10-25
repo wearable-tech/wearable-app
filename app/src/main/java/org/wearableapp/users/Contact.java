@@ -42,4 +42,12 @@ public abstract class Contact {
         Log.i("CONTACTS_LIST", "Contacts found: " + contacts.size());
         return contacts;
     }
+
+    public static boolean delete(String email_user, String email_contact) {
+        List params = new ArrayList();
+        params.add(new BasicNameValuePair("email_user", email_user));
+        params.add(new BasicNameValuePair("email_contact", email_contact));
+
+        return HttpRequests.doPost(params, "/user/delete_contact") == 0;
+    }
 }
