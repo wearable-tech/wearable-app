@@ -14,6 +14,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.wearableapp.MenuActivity;
 import org.wearableapp.R;
 import org.wearableapp.communications.HttpRequests;
@@ -98,11 +101,11 @@ public class LoginActivity extends Activity {
         params.add(new BasicNameValuePair("email", email));
         params.add(new BasicNameValuePair("password", password));
 
-        int response = HttpRequests.doPost(params, "/user/get");
+        int response = HttpRequests.doPost(params, "/user/get.json");
         switch (response) {
             case 0:
                 Log.i("LOGIN", "Login success to user " + email);
-                setPreferences(email);
+                setPreferences();
                 goToMenu();
                 break;
             case 1:
@@ -129,20 +132,34 @@ public class LoginActivity extends Activity {
         finish();
     }
 
-    private void setPreferences(String email) {
-        SharedPreferences sharedPreferences = getSharedPreferences(USER_FILE, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+    private void setPreferences() {
+        try {
+            JSONArray jsonArray = new JSONArray(HttpRequests.getResponse());
+            JSONObject object = jsonArray.getJSONObject(0);
 
-        if(rememberMe.isChecked()) {
-            Log.i("PREFERENCES", "Saving remember-me");
-            editor.putBoolean("remembered", true);
-        }
-        else {
-            Log.i("PREFERENCES", "Removing remember-me");
-            editor.putBoolean("remembered", false);
+            SharedPreferences sharedPreferences = getSharedPreferences(USER_FILE, MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            if(rememberMe.isChecked()) {
+                Log.i("PREFERENCES", "Saving remember-me");
+                editor.putBoolean("remembered", true);
+            }
+            else {
+                Log.i("PREFERENCES", "Removing remember-me");
+                editor.putBoolean("remembered", false);
+            }
+
+            Log.i("PREFERENCES", "Name: " + object.getString("name") + " E-mail: " + object.getString("email") +
+                    " Password: " + object.getString("password") + " Level: " + object.getInt("level"));
+
+            editor.putString("name", object.getString("name"));
+            editor.putString("email", object.getString("email"));
+            editor.putString("password", object.getString("password"));
+            editor.putInt("level", object.getInt("level"));
+            editor.commit();
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
-        editor.putString("email", email);
-        editor.commit();
     }
 }

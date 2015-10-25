@@ -1,8 +1,6 @@
 package org.wearableapp;
 
 import android.app.Activity;
-import android.app.IntentService;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -67,11 +65,17 @@ public class MenuActivity extends Activity {
         if (id == R.id.menu_logout) {
             logout();
             return true;
-        } else if (id == R.id.menu_connect_wearable) {
+        }
+        else if (id == R.id.menu_connect_wearable) {
             goToBluetooth();
             return true;
-        } else if (id == R.id.menu_monitor_contact) {
+        }
+        else if (id == R.id.menu_monitor_contact) {
             goToContatctList();
+            return true;
+        }
+        else if (id == R.id.menu_define_user_level) {
+            goToUserLevel();
             return true;
         }
 
@@ -98,6 +102,11 @@ public class MenuActivity extends Activity {
 
     private void goToContatctList() {
         Intent intent = new Intent(this, ContactListActivity.class);
+        startActivity(intent);
+    }
+
+    private void goToUserLevel() {
+        Intent intent = new Intent(this, UserLevelActivity.class);
         startActivity(intent);
     }
 
