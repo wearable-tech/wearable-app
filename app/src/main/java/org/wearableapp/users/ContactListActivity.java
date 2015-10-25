@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -33,6 +32,12 @@ public class ContactListActivity extends Activity {
 
         List<HashMap<String, String>> contacts = Contact.list(email);
         adapter = new ContactListAdapter(this, contacts);
+
+        if (contacts.isEmpty()) {
+            findViewById(R.id.no_contacts).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.no_contacts).setVisibility(View.GONE);
+        }
 
         ListView listView = (ListView) findViewById(R.id.contact_list);
         listView.setAdapter(adapter);
