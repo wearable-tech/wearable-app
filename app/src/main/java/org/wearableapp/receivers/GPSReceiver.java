@@ -8,7 +8,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 
-import org.wearableapp.Location;
+import org.wearableapp.communications.Location;
 
 public class GPSReceiver extends BroadcastReceiver {
 

@@ -16,7 +16,7 @@ public class Connection {
     private volatile IMqttAsyncClient mqttClient;
     private static boolean connectivity;
 
-    private Connection() {};
+    private Connection() {}
 
     public static Connection getConnection() {
         if (connection == null) {
@@ -39,11 +39,11 @@ public class Connection {
     }
 
     public void doConnect() {
-        if (connectivity == false || (mqttClient != null && mqttClient.isConnected())) {
+        if (!connectivity || (mqttClient != null && mqttClient.isConnected())) {
             return;
         }
 
-        Log.i("CONNECT", "Connecting mqtt...");
+        Log.i("CONNECT", "Connecting MQTT...");
 
         MqttConnectOptions options = new MqttConnectOptions();
         options.setCleanSession(true);

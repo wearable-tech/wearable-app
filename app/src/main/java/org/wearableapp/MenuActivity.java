@@ -17,6 +17,7 @@ import org.wearableapp.services.MqttService;
 import org.wearableapp.services.SubscribeService;
 import org.wearableapp.users.ContactListActivity;
 import org.wearableapp.users.LoginActivity;
+import org.wearableapp.users.UserLevelActivity;
 
 public class MenuActivity extends Activity {
 

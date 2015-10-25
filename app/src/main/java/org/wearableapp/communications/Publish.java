@@ -8,13 +8,12 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 public class Publish {
 
-    private Connection connection;
     private IMqttAsyncClient mqttClient;
 
     public Publish() {
-        this.connection = Connection.getConnection();
-        this.connection.doConnect();
-        this.mqttClient = this.connection.getMqttClient();
+        Connection connection = Connection.getConnection();
+        connection.doConnect();
+        this.mqttClient = connection.getMqttClient();
     }
 
     public void doPublish(String topic, String message, int qos) {
