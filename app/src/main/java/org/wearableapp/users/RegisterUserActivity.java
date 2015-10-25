@@ -58,13 +58,27 @@ public class RegisterUserActivity extends Activity {
 
             @Override
             public void onClick(View v) {
+                EditText name = (EditText) findViewById(R.id.nameUser);
                 EditText email = (EditText) findViewById(R.id.emailUser);
                 EditText password = (EditText) findViewById(R.id.passwordUser);
 
+                Log.i("USER_SAVE", "Name: " + name.getText().toString());
                 Log.i("USER_SAVE", "Email: " + email.getText().toString());
                 Log.i("USER_SAVE", "Password: " + password.getText().toString());
 
                 List params = new ArrayList();
+                params.add(name);
+                params.add(email);
+                params.add(password);
+
+                if (!validateUser((ArrayList<EditText>) params)) {
+                    Toast.makeText(getApplicationContext(), "Cheque os campos", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                params.clear();
+
+                params.add(new BasicNameValuePair("name", name.getText().toString()));
                 params.add(new BasicNameValuePair("email", email.getText().toString()));
                 params.add(new BasicNameValuePair("password", password.getText().toString()));
 
@@ -74,13 +88,20 @@ public class RegisterUserActivity extends Activity {
                     Intent intent = new Intent(context, LoginActivity.class);
                     startActivity(intent);
                     Toast.makeText(getApplicationContext(), "Usuário cadastrado!", Toast.LENGTH_LONG).show();
-                }
-                else {
+                } else {
                     Log.e("CREATE_USER", "Create user error");
                     Toast.makeText(getApplicationContext(), "Erro, tente novamente!", Toast.LENGTH_LONG).show();
                 }
             }
         });
+    }
+
+    private boolean validateUser(ArrayList<EditText> user) {
+        if (!UserValidation.name(user.get(0))) return false;
+        if (!UserValidation.email(user.get(1))) return false;
+        if (!UserValidation.password(user.get(2))) return false;
+
+        return true;
     }
 
     private void cancelRegister(final Context context) {

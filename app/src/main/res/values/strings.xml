@@ -27,5 +27,8 @@
     <string name="new_contact">Novo Contato</string>
     <string name="connect_wearable">Conectar Pulseira</string>
     <string name="monitor_contact">Monitorar Contato</string>
+    <string name="email_hint">E-mail</string>
+    <string name="name_hint">Nome</string>
+    <string name="password_hint">Senha</string>
 
 </resources>

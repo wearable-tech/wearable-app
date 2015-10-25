@@ -9,38 +9,53 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/emailUser"
-        android:layout_marginTop="59dp"
+        android:id="@+id/nameUser"
+        android:hint="@string/name_hint"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="20dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:id="@+id/emailUser"
+        android:hint="@string/email_hint"
+        android:layout_below="@+id/nameUser"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="20dp" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
-        android:ems="10"
         android:id="@+id/passwordUser"
+        android:hint="@string/password_hint"
+        android:ems="10"
         android:layout_below="@+id/emailUser"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="65dp" />
+        android:layout_margin="20dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cadastrar"
         android:id="@+id/saveUser"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/passwordUser"
+        android:layout_alignLeft="@+id/passwordUser"
+        android:layout_alignStart="@+id/passwordUser"
+        android:layout_marginTop="35dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Voltar"
         android:id="@+id/cancelRegisterUser"
-        android:layout_below="@+id/saveUser"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="58dp" />
+        android:layout_alignTop="@+id/saveUser"
+        android:layout_alignRight="@+id/passwordUser"
+        android:layout_alignEnd="@+id/passwordUser" />
 
 </RelativeLayout>
