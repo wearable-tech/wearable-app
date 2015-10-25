@@ -30,6 +30,7 @@
 
         <!-- Main Activity -->
 
+
         <!-- Bluetooth Connection -->
         <activity
             android:name=".bluetooth.BluetoothActivity"
@@ -75,7 +76,10 @@
             android:name=".users.ContactListActivity"
             android:label="@string/title_activity_contact_list" >
         </activity>
-
+        <activity
+            android:name=".UserLevelActivity"
+            android:label="@string/title_activity_user_level" >
+        </activity>
     </application>
 
 </manifest>

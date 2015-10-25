@@ -9,6 +9,12 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/menu_define_user_level"
+        android:title="@string/define_user_level"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/menu_monitor_contact"
         android:title="@string/monitor_contact"
         android:orderInCategory="100"

@@ -69,6 +69,8 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:inputType="numberSigned"
+        android:ems="10"
         android:id="@+id/edittext_contact_level"
         android:layout_alignBottom="@+id/textview_contact_level"
         android:layout_alignLeft="@+id/edittext_contact_email"
