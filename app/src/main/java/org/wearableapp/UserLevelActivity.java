@@ -4,13 +4,20 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import org.apache.http.message.BasicNameValuePair;
+import org.wearableapp.communications.HttpRequests;
 import org.wearableapp.users.LoginActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserLevelActivity extends Activity {
 
@@ -56,13 +63,42 @@ public class UserLevelActivity extends Activity {
     View.OnClickListener onClickNotificationsLevel = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            goToMenu();
+            changeLevel();
         }
     };
 
     private void goToMenu() {
-        Intent intent = new Intent(this, UserLevelActivity.class);
+        Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void changeLevel() {
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.USER_FILE, MODE_PRIVATE);
+        String email = sharedPreferences.getString("email", "");
+        String level = notificationsLevelText.getText().toString();
+
+        List params = new ArrayList();
+        params.add(new BasicNameValuePair("email", email));
+        params.add(new BasicNameValuePair("level", level));
+
+        int response = HttpRequests.doPost(params, "/user/define_level");
+        switch (response) {
+            case 0:
+                Log.i("CHANGE_LEVEL", "Level changed to user " + email);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("level", Integer.parseInt(level));
+                editor.commit();
+                goToMenu();
+                break;
+            case 1:
+                Log.e("CHANGE_LEVEL", "Change Level failed");
+                Toast.makeText(getApplicationContext(), "Erro ao mudar nível", Toast.LENGTH_LONG).show();
+                break;
+            case 2:
+                Log.e("CHANGE_LEVEL", "Can't connect to server");
+                Toast.makeText(getApplicationContext(), "Não foi possível conectar ao servidor", Toast.LENGTH_LONG).show();
+                break;
+        }
     }
 }
