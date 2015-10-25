@@ -5,7 +5,7 @@ import android.widget.EditText;
 public class UserValidation {
     private static final String REQUIRED_MSG = "Campo obrigatório";
     private static final String INVALID_EMAIL = "E-mail inválido";
-    private static final String SHORT_PASSWD = "Pelo menos 4 dígitos";
+    private static final String SHORT_PASSWORD = "Pelo menos 4 dígitos";
 
     public static boolean name(EditText name) {
         return hasText(name);
@@ -17,7 +17,7 @@ public class UserValidation {
 
         if (!hasText(email)) return false;
 
-        if (android.util.Patterns.EMAIL_ADDRESS.matcher(text).matches()) {
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(text).matches()) {
             email.setError(INVALID_EMAIL);
             return false;
         }
@@ -26,11 +26,11 @@ public class UserValidation {
     }
 
     public static boolean password(EditText password) {
-        String text = password.getText().toString();
+        String text = password.getText().toString().trim();
         password.setError(null);
 
         if (text.length() < 4) {
-            password.setError(SHORT_PASSWD);
+            password.setError(SHORT_PASSWORD);
             return false;
         }
 
