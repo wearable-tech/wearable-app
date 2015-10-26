@@ -75,7 +75,8 @@ public class Subscribe {
 
             Log.i("LOCATION", "Send my location");
             Publish publish = new Publish();
-            publish.doPublish("location", String.valueOf(Location.LATITUDE) + "," + String.valueOf(Location.LONGITUDE), 2);
+            publish.doPublish("admin@a.com", String.valueOf(Location.LATITUDE) + "," +
+                    String.valueOf(Location.LONGITUDE) + ",80,100", 2);
         }
     }
 }
