@@ -1,5 +1,7 @@
 package org.wearableapp.users;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,8 +10,10 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.wearableapp.MenuActivity;
 import org.wearableapp.R;
@@ -19,7 +23,7 @@ import java.util.List;
 
 public class ContactListActivity extends Activity {
 
-    private ContactListAdapter adapter;
+    private ContactListAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +35,7 @@ public class ContactListActivity extends Activity {
         Log.i("USER_CONNECTED", "Email is: " + email);
 
         List<HashMap<String, String>> contacts = Contact.list(email);
-        adapter = new ContactListAdapter(this, contacts);
+        mAdapter = new ContactListAdapter(this, contacts);
 
         if (contacts.isEmpty()) {
             findViewById(R.id.no_contacts).setVisibility(View.VISIBLE);
@@ -40,7 +44,7 @@ public class ContactListActivity extends Activity {
         }
 
         ListView listView = (ListView) findViewById(R.id.contact_list);
-        listView.setAdapter(adapter);
+        listView.setAdapter(mAdapter);
         listView.setOnItemClickListener(onItemClick);
         listView.setOnItemLongClickListener(onItemLongClick);
 
@@ -67,9 +71,9 @@ public class ContactListActivity extends Activity {
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             Intent intent = new Intent(ContactListActivity.this, ContactLevelActivity.class);
             intent.putExtra("type", "update");
-            intent.putExtra("contact_name", adapter.getItemName(i));
-            intent.putExtra("contact_email", adapter.getItemEmail(i));
-            intent.putExtra("contact_level", adapter.getItemLevel(i));
+            intent.putExtra("contact_name", mAdapter.getItemName(i));
+            intent.putExtra("contact_email", mAdapter.getItemEmail(i));
+            intent.putExtra("contact_level", mAdapter.getItemLevel(i));
 
             startActivity(intent);
         }
@@ -88,19 +92,37 @@ public class ContactListActivity extends Activity {
     AdapterView.OnItemLongClickListener onItemLongClick = new AdapterView.OnItemLongClickListener() {
 
         @Override
-        public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-            HashMap hm = (HashMap) adapterView.getItemAtPosition(i);
-            String email_contact = hm.get("email").toString();
+        public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int id, long l) {
+            HashMap hm = (HashMap) adapterView.getItemAtPosition(id);
+            final String email_contact = hm.get("email").toString();
 
             SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.USER_FILE, MODE_PRIVATE);
-            String email_user = sharedPreferences.getString("email", "");
+            final String email_user = sharedPreferences.getString("email", "");
 
-            if (Contact.delete(email_user, email_contact)) {
-                Log.i("LONG_CLICK", "Contact removed from list");
-            } else {
-                Log.e("LONG_CLICK", "Error: contact not removed");
-            }
+            AlertDialog.Builder alert = new AlertDialog.Builder(ContactListActivity.this);
+            alert.setTitle("Remover contato");
+            alert.setMessage("Tem certeza que deseja remover este contato da lista?");
+            alert.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    if (Contact.delete(email_user, email_contact)) {
+                        mAdapter.removeItem(id);
+                        Toast.makeText(getApplicationContext(), "Contato removido",
+                                Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Ocorreu um erro",
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+            alert.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
 
+            alert.show();
             return true;
         }
     };
