@@ -12,6 +12,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import org.wearableapp.bluetooth.BluetoothActivity;
+import org.wearableapp.communications.Publish;
 import org.wearableapp.services.LocationService;
 import org.wearableapp.services.MqttService;
 import org.wearableapp.services.SubscribeService;
@@ -22,6 +23,7 @@ import org.wearableapp.users.UserLevelActivity;
 public class MenuActivity extends Activity {
 
     private CompoundButton activateNotifications;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +32,7 @@ public class MenuActivity extends Activity {
 
         TextView greetingTextView = (TextView) findViewById(R.id.textview_greeting);
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.USER_FILE, MODE_PRIVATE);
-        String email = sharedPreferences.getString("email", "");
+        email = sharedPreferences.getString("email", "");
         String name = sharedPreferences.getString("name", "");
         Log.i("USER_CONNECTED", "Email is: " + email);
 
@@ -99,6 +101,7 @@ public class MenuActivity extends Activity {
     };
 
     private void goToBluetooth() {
+        initServerSubscribe();
         Intent intent = new Intent(this, BluetoothActivity.class);
         startActivity(intent);
     }
@@ -166,5 +169,10 @@ public class MenuActivity extends Activity {
             stopService(intent);
             Log.i("SUBSCRIBE_SERVICE", "Subscribe service destroyed!");
         }
+    }
+
+    private void initServerSubscribe() {
+        Publish publish = new Publish();
+        publish.doPublish("new_connection", email, 2);
     }
 }
