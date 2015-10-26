@@ -64,7 +64,8 @@
         android:layout_alignLeft="@+id/edittext_contact_name"
         android:layout_alignStart="@+id/edittext_contact_name"
         android:layout_alignRight="@+id/edittext_contact_name"
-        android:layout_alignEnd="@+id/edittext_contact_name" />
+        android:layout_alignEnd="@+id/edittext_contact_name"
+        android:inputType="textEmailAddress" />
 
     <EditText
         android:layout_width="wrap_content"
