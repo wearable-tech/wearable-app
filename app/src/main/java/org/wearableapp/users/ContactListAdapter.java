@@ -63,4 +63,9 @@ public class ContactListAdapter extends BaseAdapter {
 
         return view;
     }
+
+    public void removeItem(int i) {
+        items.remove(i);
+        this.notifyDataSetChanged();
+    }
 }
