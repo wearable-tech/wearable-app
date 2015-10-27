@@ -32,5 +32,8 @@
     <string name="name_hint">Nome</string>
     <string name="password_hint">Senha</string>
     <string name="title_activity_user_level">UserLevelActivity</string>
+    <string name="title_activity_bluetooth_test">BluetoothTestActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 
 </resources>
