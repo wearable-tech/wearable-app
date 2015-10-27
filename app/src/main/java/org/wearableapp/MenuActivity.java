@@ -102,7 +102,7 @@ public class MenuActivity extends Activity {
 
     private void goToBluetooth() {
         initServerSubscribe();
-        Intent intent = new Intent(this, BluetoothActivity.class);
+        Intent intent = new Intent(this, BluetoothTestActivity.class);
         startActivity(intent);
     }
 
