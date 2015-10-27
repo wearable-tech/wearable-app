@@ -26,7 +26,7 @@ public class BluetoothActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_bluetooth);
         mStatus = (TextView) findViewById(R.id.btstatus);
 
         Button onBtn = (Button) findViewById(R.id.turnOn);
@@ -55,10 +55,10 @@ public class BluetoothActivity extends Activity {
                 if (mBluetoothAdapter.isEnabled()) {
                     list(v);
                 } else {
-                    Toast.makeText(getApplicationContext(), "Bluetooth was turned off",
+                    Toast.makeText(getApplicationContext(), "Bluetooth foi desligado",
                             Toast.LENGTH_LONG).show();
                     mlistBtn.setEnabled(false);
-                    mStatus.setText("Status: disabled");
+                    mStatus.setText("Status: desligado");
                 }
             }
         });
@@ -69,15 +69,15 @@ public class BluetoothActivity extends Activity {
             onBtn.setEnabled(false);
             offBtn.setEnabled(false);
             mlistBtn.setEnabled(false);
-            mStatus.setText("Status: BT not supported");
+            mStatus.setText("Status: BT não suportado");
 
             Toast.makeText(getApplicationContext(), "Your device does not support Bluetooth",
                     Toast.LENGTH_LONG).show();
         } else if (mBluetoothAdapter.isEnabled()) {
-            mStatus.setText("Status: enabled");
+            mStatus.setText("Status: ligado");
         } else {
             mlistBtn.setEnabled(false);
-            mStatus.setText("Status: disabled");
+            mStatus.setText("Status: desligado");
         }
 
         getActionBar().setHomeButtonEnabled(true);
@@ -87,12 +87,12 @@ public class BluetoothActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_ENABLE_BT) {
             if (mBluetoothAdapter.isEnabled()) {
-                Toast.makeText(getApplicationContext(), "Bluetooth turned on" ,
+                Toast.makeText(getApplicationContext(), "Bluetooth foi ligado" ,
                         Toast.LENGTH_LONG).show();
                 mlistBtn.setEnabled(true);
-                mStatus.setText("Status: enabled");
+                mStatus.setText("Status: ligado");
             } else {
-                mStatus.setText("Status: disabled");
+                mStatus.setText("Status: desligado");
             }
         }
     }
@@ -103,17 +103,17 @@ public class BluetoothActivity extends Activity {
             startActivityForResult(turnOnIntent, REQUEST_ENABLE_BT);
         } else {
             mlistBtn.setEnabled(true);
-            Toast.makeText(getApplicationContext(), "Bluetooth is already on",
+            Toast.makeText(getApplicationContext(), "Bluetooth já está ligado",
                     Toast.LENGTH_LONG).show();
         }
     }
 
     public void off(View view) {
         mBluetoothAdapter.disable();
-        mStatus.setText("Status: disabled");
+        mStatus.setText("Status: desligado");
         mlistBtn.setEnabled(false);
 
-        Toast.makeText(getApplicationContext(), "Bluetooth turned off",
+        Toast.makeText(getApplicationContext(), "Bluetooth foi desligado",
                 Toast.LENGTH_LONG).show();
     }
 
