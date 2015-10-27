@@ -90,7 +90,7 @@ public class MenuActivity extends Activity {
     View.OnClickListener onClickActivateNotifications = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-        Log.i("NOFICATIONS", "Notifications are " + activateNotifications.isChecked());
+        Log.i("NOTIFICATIONS", "Notifications are " + activateNotifications.isChecked());
         subscribeServiceController(activateNotifications.isChecked());
 
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.USER_FILE, MODE_PRIVATE);
