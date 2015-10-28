@@ -33,7 +33,7 @@ public class BluetoothTestActivity extends Activity {
         if (braceletDevice != null) {
             Log.i("BLUETOOTH_CONNECTOR", "Calling thread to connect bluetooth");
             BluetoothConnector bluetoothConnector = new BluetoothConnector(braceletDevice, bluetoothAdapter);
-            bluetoothConnector.run();
+            bluetoothConnector.start();
         }
     }
 
@@ -94,7 +94,7 @@ public class BluetoothTestActivity extends Activity {
         for (BluetoothDevice device : pairedDevices) {
             Log.i("DEVICE_PAIRED", "Name: " + device.getName() + " Address: " + device.getAddress());
 
-            if (device.getName() == BLUETOOTH_NAME) {
+            if (device.getName().contains(BLUETOOTH_NAME)) {
                 return device;
             }
         }
