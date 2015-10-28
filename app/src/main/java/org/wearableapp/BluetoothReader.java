@@ -2,17 +2,17 @@ package org.wearableapp;
 
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
+
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class BluetoothReader extends Thread {
 
-    private final BluetoothSocket bluetoothSocket;
     private final InputStream inputStream;
 
     public BluetoothReader(BluetoothSocket socket) {
-        bluetoothSocket = socket;
-
         InputStream tmp = null;
 
         try {
@@ -25,24 +25,17 @@ public class BluetoothReader extends Thread {
 
     @Override
     public void run() {
-        byte[] buffer = new byte[10];
-        int bytes;
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
         while (true) {
             try {
                 // Read from the InputStream
-                if(inputStream.available() > 0) {
-                    inputStream.read();
-                }
-                else {
-                    Log.i("Bluetooth", "Antes do read");
-                    bytes = inputStream.read(buffer);
+                Log.i("Bluetooth", "Antes do read");
+                String oxygen = reader.readLine();
+                String pulseRate = reader.readLine();
 
-                    // Send the obtained bytes to the UI activity
-                    Log.i("READER", bytes + " Readed");
-                    String s = new String(buffer);
-                    Log.i("Bluetooth", s);
-                }
+                Log.i("Bluetooth", oxygen);
+                Log.i("Bluetooth", pulseRate);
             } catch (IOException e) {
                 break;
             }
