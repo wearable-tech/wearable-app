@@ -17,6 +17,7 @@ import java.util.List;
 public class SubscribeService extends Service {
     private List<HashMap<String, String>> contacts;
     private String emailConnected;
+    private int levelConnected;
 
     @Nullable
     @Override
@@ -29,6 +30,7 @@ public class SubscribeService extends Service {
         Log.i("SUBSCRIBE_SERVICE", "ONCREATE");
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.USER_FILE, MODE_PRIVATE);
         emailConnected = sharedPreferences.getString("email", "");
+        levelConnected = sharedPreferences.getInt("level", 0);
         contacts = Contact.list(emailConnected);
 
         contactsSubscribe();
@@ -48,19 +50,23 @@ public class SubscribeService extends Service {
 
     private void contactsSubscribe() {
         Subscribe subscribe = new Subscribe(this);
-        subscribe.doSubscribe(emailConnected, 2);
+        Log.i("Subscribe", "to_" + emailConnected + "_" + levelConnected);
+        subscribe.doSubscribe("to_" + emailConnected + "_" + levelConnected, 2);
 
         for (HashMap<String, String> c: contacts) {
-            subscribe.doSubscribe(c.get("email"), 2);
+            Log.i("Subscribe", "to_" + c.get("email") + "_" + c.get("level"));
+            subscribe.doSubscribe("to_" + c.get("email") + "_" + c.get("level"), 2);
         }
     }
 
     private void contactsStopSubscribe() {
         Subscribe subscribe = new Subscribe(this);
-        subscribe.stopSubscribe(emailConnected);
+        Log.i("Unsubscribe", "to_" + emailConnected + "_" + levelConnected);
+        subscribe.stopSubscribe("to_" + emailConnected + "_" + levelConnected);
 
         for (HashMap<String, String> c: contacts) {
-            subscribe.stopSubscribe(c.get("email"));
+            Log.i("Unsubscribe", "to_" + c.get("email") + "_" + c.get("level"));
+            subscribe.stopSubscribe("to_" + c.get("email") + "_" + c.get("level"));
         }
     }
 }
