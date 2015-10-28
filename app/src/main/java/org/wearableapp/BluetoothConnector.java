@@ -10,13 +10,11 @@ import java.util.UUID;
 
 public class BluetoothConnector extends Thread {
 
-    private final BluetoothDevice braceletDevice;
     private final BluetoothSocket bluetoothSocket;
     private final BluetoothAdapter braceletAdapter;
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 
     public BluetoothConnector(BluetoothDevice device, BluetoothAdapter adapter) {
-        braceletDevice = device;
         braceletAdapter = adapter;
         BluetoothSocket tmp = null;
 
