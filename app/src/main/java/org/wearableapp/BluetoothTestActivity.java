@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import java.util.Set;
@@ -18,23 +20,22 @@ import java.util.Set;
 public class BluetoothTestActivity extends Activity {
 
     private static final String BLUETOOTH_NAME = "HC-05";
+    private CompoundButton activeBluetooth;
+    private CompoundButton activeBracelet;
     private BluetoothAdapter bluetoothAdapter;
     private BluetoothDevice braceletDevice;
+    private BluetoothConnector bluetoothConnector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth_test);
 
-        initBluetoothAdapter();
-        activeBluetooth();
-        getBraceletDevice();
+        activeBluetooth = (CompoundButton) findViewById(R.id.switch_activate_bluetooth);
+        activeBracelet = (CompoundButton) findViewById(R.id.switch_activate_bracelet);
 
-        if (braceletDevice != null) {
-            Log.i("BLUETOOTH_CONNECTOR", "Calling thread to connect bluetooth");
-            BluetoothConnector bluetoothConnector = new BluetoothConnector(braceletDevice, bluetoothAdapter);
-            bluetoothConnector.start();
-        }
+        activeBluetooth.setOnClickListener(onClickActiveBluetooth);
+        activeBracelet.setOnClickListener(onClickActiveBracelet);
     }
 
     @Override
@@ -58,17 +59,44 @@ public class BluetoothTestActivity extends Activity {
     protected void onDestroy() {
         unregisterReceiver(mReceiver);
         bluetoothAdapter.cancelDiscovery();
+        bluetoothConnector.cancel();
         super.onDestroy();
     }
 
-    private void initBluetoothAdapter() {
+    View.OnClickListener onClickActiveBluetooth = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (initBluetoothAdapter()) {
+                activeBluetooth();
+                getBraceletDevice();
+
+                if (braceletDevice != null) {
+                    Log.i("BLUETOOTH_CONNECTOR", "Calling thread to connect bluetooth");
+                    bluetoothConnector = new BluetoothConnector(braceletDevice, bluetoothAdapter);
+                    bluetoothConnector.start();
+                }
+            }
+        }
+    };
+
+    View.OnClickListener onClickActiveBracelet = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+        }
+    };
+
+    private boolean initBluetoothAdapter() {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         if (bluetoothAdapter == null) {
             Toast.makeText(getApplicationContext(), "Dispositivo não possui bluetooth!", Toast.LENGTH_LONG).show();
             Log.i("INIT_BLUETOOTH", "Device without bluetooth");
             finish();
+            return false;
         }
+
+        return true;
     }
 
     private void activeBluetooth() {
