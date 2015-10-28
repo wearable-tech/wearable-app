@@ -68,6 +68,14 @@ public class BluetoothTestActivity extends Activity {
         public void onClick(View view) {
             if (initBluetoothAdapter()) {
                 activeBluetooth();
+            }
+        }
+    };
+
+    View.OnClickListener onClickActiveBracelet = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) {
                 getBraceletDevice();
 
                 if (braceletDevice != null) {
@@ -76,13 +84,10 @@ public class BluetoothTestActivity extends Activity {
                     bluetoothConnector.start();
                 }
             }
-        }
-    };
-
-    View.OnClickListener onClickActiveBracelet = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-
+            else {
+                activeBracelet.setChecked(false);
+                Toast.makeText(getApplicationContext(), "Conecte-se ao bluetooth", Toast.LENGTH_LONG).show();
+            }
         }
     };
 
