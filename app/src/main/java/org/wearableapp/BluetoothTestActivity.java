@@ -60,7 +60,12 @@ public class BluetoothTestActivity extends Activity {
 
     @Override
     protected void onDestroy() {
-        unregisterReceiver(mReceiver);
+        try {
+            unregisterReceiver(mReceiver);
+        } catch (Exception e) {
+            Log.e("ERROR", "Unable to unregister mReceiver");
+        }
+
         bluetoothAdapter.cancelDiscovery();
         bluetoothConnector.cancel();
         super.onDestroy();

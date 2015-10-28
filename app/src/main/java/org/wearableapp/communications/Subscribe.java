@@ -71,12 +71,7 @@ public class Subscribe {
             Log.i("MESSAGE_ARRIVED", "Messagem: " + msg.toString());
 
             Intent intent = new Intent(context, MenuActivity.class);
-            Notify.notification(context, "vamos la", intent, "titulo");
-
-            Log.i("LOCATION", "Send my location");
-            Publish publish = new Publish();
-            publish.doPublish("admin@a.com", String.valueOf(Location.LATITUDE) + "," +
-                    String.valueOf(Location.LONGITUDE) + ",80,100", 2);
+            Notify.notification(context, msg.toString(), intent, "titulo");
         }
     }
 }

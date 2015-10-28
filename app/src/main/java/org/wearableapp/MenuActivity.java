@@ -101,7 +101,6 @@ public class MenuActivity extends Activity {
     };
 
     private void goToBluetooth() {
-        initServerSubscribe();
         Intent intent = new Intent(this, BluetoothTestActivity.class);
         startActivity(intent);
     }
@@ -169,10 +168,5 @@ public class MenuActivity extends Activity {
             stopService(intent);
             Log.i("SUBSCRIBE_SERVICE", "Subscribe service destroyed!");
         }
-    }
-
-    private void initServerSubscribe() {
-        Publish publish = new Publish();
-        publish.doPublish("new_connection", email, 2);
     }
 }
