@@ -25,11 +25,14 @@ public class BluetoothTestActivity extends Activity {
     private BluetoothAdapter bluetoothAdapter;
     private BluetoothDevice braceletDevice;
     private BluetoothConnector bluetoothConnector;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth_test);
+
+        this.context = this;
 
         activeBluetooth = (CompoundButton) findViewById(R.id.switch_activate_bluetooth);
         activeBracelet = (CompoundButton) findViewById(R.id.switch_activate_bracelet);
@@ -82,7 +85,7 @@ public class BluetoothTestActivity extends Activity {
 
                     if (braceletDevice != null) {
                         Log.i("BLUETOOTH_CONNECTOR", "Calling thread to connect bluetooth");
-                        bluetoothConnector = new BluetoothConnector(braceletDevice, bluetoothAdapter);
+                        bluetoothConnector = new BluetoothConnector(context, braceletDevice, bluetoothAdapter);
                         bluetoothConnector.start();
                     }
                     else {

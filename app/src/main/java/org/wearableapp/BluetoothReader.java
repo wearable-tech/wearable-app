@@ -1,7 +1,14 @@
 package org.wearableapp;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
+
+import org.wearableapp.communications.Location;
+import org.wearableapp.communications.Publish;
+import org.wearableapp.users.LoginActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,8 +18,12 @@ import java.io.InputStreamReader;
 public class BluetoothReader extends Thread {
 
     private final InputStream inputStream;
+    private final String email;
 
-    public BluetoothReader(BluetoothSocket socket) {
+    public BluetoothReader(Context context, BluetoothSocket socket) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(LoginActivity.USER_FILE, Context.MODE_PRIVATE);
+        email = sharedPreferences.getString("email", "");
+
         InputStream tmp = null;
 
         try {
@@ -34,8 +45,11 @@ public class BluetoothReader extends Thread {
                 String oxygen = reader.readLine();
                 String pulseRate = reader.readLine();
 
-                Log.i("Bluetooth", oxygen);
-                Log.i("Bluetooth", pulseRate);
+                Publish publish = new Publish();
+
+                String message = Location.LATITUDE + "," + Location.LONGITUDE + "," + oxygen + "," + pulseRate;
+                Log.i("Message", message);
+                publish.doPublish("from_" + email, message, 2);
             } catch (IOException e) {
                 break;
             }

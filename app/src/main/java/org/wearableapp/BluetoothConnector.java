@@ -3,6 +3,7 @@ package org.wearableapp;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
 import android.util.Log;
 
 import java.io.IOException;
@@ -13,8 +14,10 @@ public class BluetoothConnector extends Thread {
     private final BluetoothSocket bluetoothSocket;
     private final BluetoothAdapter braceletAdapter;
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
+    private Context context;
 
-    public BluetoothConnector(BluetoothDevice device, BluetoothAdapter adapter) {
+    public BluetoothConnector(Context context, BluetoothDevice device, BluetoothAdapter adapter) {
+        this.context = context;
         braceletAdapter = adapter;
         BluetoothSocket tmp = null;
 
@@ -54,7 +57,7 @@ public class BluetoothConnector extends Thread {
 
     private void manageConnectedSocket() {
         Log.i("BLUETOOTH_READER", "Calling thread to read data from bluetooth");
-        BluetoothReader bluetoothReader = new BluetoothReader(bluetoothSocket);
+        BluetoothReader bluetoothReader = new BluetoothReader(context, bluetoothSocket);
         bluetoothReader.start();
     }
 }
