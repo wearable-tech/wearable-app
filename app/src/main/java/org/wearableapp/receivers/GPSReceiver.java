@@ -17,7 +17,7 @@ public class GPSReceiver extends BroadcastReceiver {
         LocationManager locationManager = (LocationManager) context.getSystemService(context.LOCATION_SERVICE);
 
         boolean gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        Log.i("GPSPROVIDER", "GPS HABILITADO " + gpsEnabled);
+        Log.i("GPSPROVIDER", "GPS is " + gpsEnabled);
 
         if (gpsEnabled) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, new GPSListener());

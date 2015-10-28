@@ -75,18 +75,24 @@ public class BluetoothTestActivity extends Activity {
     View.OnClickListener onClickActiveBracelet = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) {
-                getBraceletDevice();
+            if (activeBracelet.isChecked()) {
 
-                if (braceletDevice != null) {
-                    Log.i("BLUETOOTH_CONNECTOR", "Calling thread to connect bluetooth");
-                    bluetoothConnector = new BluetoothConnector(braceletDevice, bluetoothAdapter);
-                    bluetoothConnector.start();
+                if (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) {
+                    getBraceletDevice();
+
+                    if (braceletDevice != null) {
+                        Log.i("BLUETOOTH_CONNECTOR", "Calling thread to connect bluetooth");
+                        bluetoothConnector = new BluetoothConnector(braceletDevice, bluetoothAdapter);
+                        bluetoothConnector.start();
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(), "Pulseira não encontrada nos dispositivos pareados", Toast.LENGTH_LONG).show();
+                    }
                 }
-            }
-            else {
-                activeBracelet.setChecked(false);
-                Toast.makeText(getApplicationContext(), "Conecte-se ao bluetooth", Toast.LENGTH_LONG).show();
+                else {
+                    activeBracelet.setChecked(false);
+                    Toast.makeText(getApplicationContext(), "Conecte-se ao bluetooth", Toast.LENGTH_LONG).show();
+                }
             }
         }
     };
