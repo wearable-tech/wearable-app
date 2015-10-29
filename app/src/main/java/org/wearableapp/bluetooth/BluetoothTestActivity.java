@@ -16,13 +16,13 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import org.wearableapp.R;
-import org.wearableapp.bluetooth.BluetoothConnector;
 
 import java.util.Set;
 
 public class BluetoothTestActivity extends Activity {
 
     private static final String BLUETOOTH_NAME = "HC-05";
+    private static final int REQUEST_ENABLE_BT = 2;
     private CompoundButton activeBluetooth;
     private CompoundButton activeBracelet;
     private BluetoothAdapter bluetoothAdapter;
@@ -35,12 +35,14 @@ public class BluetoothTestActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth_test);
 
-        this.context = this;
+        context = this;
+        isBluetoothSupported();
 
         activeBluetooth = (CompoundButton) findViewById(R.id.switch_activate_bluetooth);
-        activeBracelet = (CompoundButton) findViewById(R.id.switch_activate_bracelet);
-
         activeBluetooth.setOnClickListener(onClickActiveBluetooth);
+        activeBluetooth.setChecked(bluetoothAdapter.isEnabled());
+
+        activeBracelet = (CompoundButton) findViewById(R.id.switch_activate_bracelet);
         activeBracelet.setOnClickListener(onClickActiveBracelet);
     }
 
@@ -61,27 +63,43 @@ public class BluetoothTestActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onDestroy() {
-        try {
-            unregisterReceiver(mReceiver);
-        } catch (Exception e) {
-            Log.e("ERROR", "Unable to unregister mReceiver");
-        }
-
-        bluetoothAdapter.cancelDiscovery();
-        bluetoothConnector.cancel();
-        super.onDestroy();
-    }
-
     View.OnClickListener onClickActiveBluetooth = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (initBluetoothAdapter()) {
+            if (activeBluetooth.isChecked()) {
                 activeBluetooth();
+            } else {
+                disableBluetooth();
             }
         }
     };
+
+    private boolean isBluetoothSupported() {
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        if (bluetoothAdapter == null) {
+            Toast.makeText(getApplicationContext(), "Dispositivo não suporta bluetooth!", Toast.LENGTH_LONG).show();
+            finish();
+            return false;
+        }
+
+        return true;
+    }
+
+    private void activeBluetooth() {
+        if (!bluetoothAdapter.isEnabled() && isBluetoothSupported()) {
+            Log.i("ACTIVE_BLUETOOTH", "Starting bluetooth");
+            Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBluetooth, REQUEST_ENABLE_BT);
+        }
+    }
+
+    private void disableBluetooth() {
+        if (bluetoothAdapter.isEnabled()) {
+            bluetoothAdapter.disable();
+            activeBracelet.setChecked(false);
+        }
+    }
 
     View.OnClickListener onClickActiveBracelet = new View.OnClickListener() {
         @Override
@@ -95,37 +113,21 @@ public class BluetoothTestActivity extends Activity {
                         Log.i("BLUETOOTH_CONNECTOR", "Calling thread to connect bluetooth");
                         bluetoothConnector = new BluetoothConnector(context, braceletDevice, bluetoothAdapter);
                         bluetoothConnector.start();
-                    }
-                    else {
+                    } else {
                         Toast.makeText(getApplicationContext(), "Pulseira não encontrada nos dispositivos pareados", Toast.LENGTH_LONG).show();
                     }
-                }
-                else {
+                } else {
                     activeBracelet.setChecked(false);
-                    Toast.makeText(getApplicationContext(), "Conecte-se ao bluetooth", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Bluetooth desligado", Toast.LENGTH_LONG).show();
                 }
             }
         }
     };
 
-    private boolean initBluetoothAdapter() {
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        if (bluetoothAdapter == null) {
-            Toast.makeText(getApplicationContext(), "Dispositivo não possui bluetooth!", Toast.LENGTH_LONG).show();
-            Log.i("INIT_BLUETOOTH", "Device without bluetooth");
-            finish();
-            return false;
-        }
-
-        return true;
-    }
-
-    private void activeBluetooth() {
-        if (!bluetoothAdapter.isEnabled()) {
-            Log.i("ACTIVE_BLUETOOTH", "Starting bluetooth");
-            Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBluetooth, 0);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_ENABLE_BT) {
+            activeBluetooth.setChecked(bluetoothAdapter.isEnabled());
         }
     }
 
@@ -172,4 +174,17 @@ public class BluetoothTestActivity extends Activity {
             }
         }
     };
+
+    @Override
+    protected void onDestroy() {
+        try {
+            unregisterReceiver(mReceiver);
+            bluetoothConnector.cancel();
+        } catch (Exception ignored) {}
+
+        if (bluetoothAdapter.isDiscovering()) {
+            bluetoothAdapter.cancelDiscovery();
+        }
+        super.onDestroy();
+    }
 }

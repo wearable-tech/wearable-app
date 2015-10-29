@@ -136,7 +136,6 @@ public class BluetoothActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
