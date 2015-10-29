@@ -1,4 +1,4 @@
-package org.wearableapp;
+package org.wearableapp.bluetooth;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -14,6 +14,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
+
+import org.wearableapp.R;
+import org.wearableapp.bluetooth.BluetoothConnector;
 
 import java.util.Set;
 

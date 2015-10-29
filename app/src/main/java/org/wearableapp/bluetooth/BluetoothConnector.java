@@ -1,4 +1,4 @@
-package org.wearableapp;
+package org.wearableapp.bluetooth;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;

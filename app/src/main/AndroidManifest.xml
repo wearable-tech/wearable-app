@@ -31,6 +31,9 @@
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_select_device"
             android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".bluetooth.BluetoothTestActivity"
+            android:label="@string/title_activity_bluetooth_test" />
 
         <!-- Register Contact Activity -->
         <activity
@@ -65,10 +68,6 @@
         <activity
             android:name=".users.UserLevelActivity"
             android:label="@string/title_activity_user_level" />
-        <activity
-            android:name=".BluetoothTestActivity"
-            android:label="@string/title_activity_bluetooth_test" >
-        </activity>
     </application>
 
 </manifest>
