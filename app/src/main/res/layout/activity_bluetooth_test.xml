@@ -21,7 +21,7 @@
         android:id="@+id/switch_activate_bracelet"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Ativar Bluetooth"
+        android:text="Ativar Conexão"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="200dp"
         android:checked="false"

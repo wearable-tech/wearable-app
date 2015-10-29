@@ -22,7 +22,6 @@ import org.wearableapp.users.UserLevelActivity;
 public class MenuActivity extends Activity {
 
     private CompoundButton activateNotifications;
-    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +30,7 @@ public class MenuActivity extends Activity {
 
         TextView greetingTextView = (TextView) findViewById(R.id.textview_greeting);
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.USER_FILE, MODE_PRIVATE);
-        email = sharedPreferences.getString("email", "");
+        String email = sharedPreferences.getString("email", "");
         String name = sharedPreferences.getString("name", "");
         Log.i("USER_CONNECTED", "Email is: " + email);
 
@@ -89,13 +88,13 @@ public class MenuActivity extends Activity {
     View.OnClickListener onClickActivateNotifications = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-        Log.i("NOTIFICATIONS", "Notifications are " + activateNotifications.isChecked());
-        subscribeServiceController(activateNotifications.isChecked());
+            Log.i("NOTIFICATIONS", "Notifications are " + activateNotifications.isChecked());
+            subscribeServiceController(activateNotifications.isChecked());
 
-        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.USER_FILE, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("notifications", activateNotifications.isChecked());
-        editor.commit();
+            SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.USER_FILE, MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("notifications", activateNotifications.isChecked());
+            editor.commit();
         }
     };
 
