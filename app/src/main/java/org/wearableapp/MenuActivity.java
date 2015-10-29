@@ -11,8 +11,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import org.wearableapp.bluetooth.BluetoothActivity;
-import org.wearableapp.communications.Publish;
+import org.wearableapp.bluetooth.BluetoothTestActivity;
 import org.wearableapp.services.LocationService;
 import org.wearableapp.services.MqttService;
 import org.wearableapp.services.SubscribeService;
