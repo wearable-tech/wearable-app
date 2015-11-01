@@ -16,23 +16,10 @@
         android:checked="false"
         android:textOn="Sim"
         android:textOff="Não"/>
-    
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Olá, usuário"
-        android:id="@+id/textview_greeting"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Selecione no menu de opções"
-        android:id="@+id/textview_text"
-        android:layout_below="@+id/textview_greeting"
-        android:layout_centerHorizontal="true" />
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

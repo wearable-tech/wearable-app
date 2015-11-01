@@ -1,15 +1,16 @@
 package org.wearableapp;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.TextView;
 
 import org.wearableapp.bluetooth.BluetoothTestActivity;
 import org.wearableapp.services.LocationService;
@@ -19,7 +20,7 @@ import org.wearableapp.users.ContactListActivity;
 import org.wearableapp.users.LoginActivity;
 import org.wearableapp.users.UserLevelActivity;
 
-public class MenuActivity extends Activity {
+public class MenuActivity extends FragmentActivity {
 
     private CompoundButton activateNotifications;
 
@@ -28,15 +29,9 @@ public class MenuActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        TextView greetingTextView = (TextView) findViewById(R.id.textview_greeting);
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.USER_FILE, MODE_PRIVATE);
         String email = sharedPreferences.getString("email", "");
-        String name = sharedPreferences.getString("name", "");
         Log.i("USER_CONNECTED", "Email is: " + email);
-
-        if (!email.isEmpty()) {
-            greetingTextView.setText("Olá, " + name + "!");
-        }
 
         activateNotifications = (CompoundButton) findViewById(R.id.switch_activate_notifications);
         activateNotifications.setOnClickListener(onClickActivateNotifications);
@@ -48,6 +43,7 @@ public class MenuActivity extends Activity {
             activateNotifications.setChecked(true);
         }
 
+        loadGraph();
     }
 
     @Override
@@ -97,6 +93,14 @@ public class MenuActivity extends Activity {
             editor.commit();
         }
     };
+
+    private void loadGraph() {
+        Fragment fragment = new Graph();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, fragment)
+                .commit();
+    }
 
     private void goToBluetooth() {
         Intent intent = new Intent(this, BluetoothTestActivity.class);
