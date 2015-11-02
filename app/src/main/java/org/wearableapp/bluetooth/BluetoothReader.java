@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import org.wearableapp.Measurement;
 import org.wearableapp.communications.Location;
 import org.wearableapp.communications.Publish;
 import org.wearableapp.users.LoginActivity;
@@ -44,6 +45,10 @@ public class BluetoothReader extends Thread {
                 Log.i("Bluetooth", "Antes do read");
                 String oxygen = reader.readLine();
                 String pulseRate = reader.readLine();
+
+                Measurement.OXYGEN = Double.parseDouble(oxygen);
+                Measurement.PULSE_RATE = Double.parseDouble(pulseRate);
+                Measurement.REMEASUREMENT = true;
 
                 Publish publish = new Publish();
 
