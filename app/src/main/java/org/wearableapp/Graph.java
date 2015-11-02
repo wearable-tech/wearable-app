@@ -1,5 +1,6 @@
 package org.wearableapp;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -17,8 +18,8 @@ public class Graph extends Fragment {
     private final Handler mHandler = new Handler();
     private Runnable mTimer1;
     private Runnable mTimer2;
-    private LineGraphSeries<DataPoint> mSeries1;
-    private LineGraphSeries<DataPoint> mSeries2;
+    private LineGraphSeries<DataPoint> oxygenSeries;
+    private LineGraphSeries<DataPoint> pulseSeries;
     private double graph2LastXValue = 5d;
 
     @Override
@@ -26,16 +27,27 @@ public class Graph extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_graph, container, false);
 
-        GraphView graph = (GraphView) rootView.findViewById(R.id.oxygen);
-        mSeries1 = new LineGraphSeries<DataPoint>(generateData());
-        graph.addSeries(mSeries1);
+        GraphView oxygenGraph = (GraphView) rootView.findViewById(R.id.oxygen);
+        oxygenGraph.getViewport().setYAxisBoundsManual(true);
+        oxygenGraph.getViewport().setMinY(0);
+        oxygenGraph.getViewport().setMaxY(100);
+        oxygenGraph.setTitle("Oxigenação Sanguínea");
+        oxygenGraph.getGridLabelRenderer().setHorizontalLabelsVisible(false);
 
-        GraphView graph2 = (GraphView) rootView.findViewById(R.id.pulse);
-        mSeries2 = new LineGraphSeries<>();
-        graph2.addSeries(mSeries2);
-        graph2.getViewport().setXAxisBoundsManual(true);
-        graph2.getViewport().setMinX(0);
-        graph2.getViewport().setMaxX(40);
+        oxygenSeries = new LineGraphSeries<>();
+        oxygenSeries.setColor(Color.RED);
+        oxygenGraph.addSeries(oxygenSeries);
+
+        GraphView pulseGraph = (GraphView) rootView.findViewById(R.id.pulse);
+        pulseGraph.getViewport().setYAxisBoundsManual(true);
+        pulseGraph.getViewport().setMinY(0);
+        pulseGraph.getViewport().setMaxY(200);
+        pulseGraph.setTitle("Frequência Cardíaca");
+        pulseGraph.getGridLabelRenderer().setHorizontalLabelsVisible(false);
+
+        pulseSeries = new LineGraphSeries<>();
+        pulseSeries.setColor(Color.RED);
+        pulseGraph.addSeries(pulseSeries);
 
         return rootView;
     }
@@ -46,7 +58,7 @@ public class Graph extends Fragment {
         mTimer1 = new Runnable() {
             @Override
             public void run() {
-                mSeries1.resetData(generateData());
+                oxygenSeries.resetData(generateData());
                 mHandler.postDelayed(this, 300);
             }
         };
@@ -56,7 +68,7 @@ public class Graph extends Fragment {
             @Override
             public void run() {
                 graph2LastXValue += 1d;
-                mSeries2.appendData(new DataPoint(graph2LastXValue, getRandom()), true, 40);
+                pulseSeries.appendData(new DataPoint(graph2LastXValue, getRandom()), true, 40);
                 mHandler.postDelayed(this, 200);
             }
         };
@@ -71,21 +83,36 @@ public class Graph extends Fragment {
     }
 
     private DataPoint[] generateData() {
-        int count = 30;
+        double mLastRandom = 80;
+        int count = 3;
         DataPoint[] values = new DataPoint[count];
+        int sinal = -1;
         for (int i=0; i<count; i++) {
             double x = i;
-            double f = mRand.nextDouble()*0.15+0.3;
-            double y = Math.sin(i*f+2) + mRand.nextDouble()*0.3;
+            double y = mLastRandom + mRand.nextDouble() * 5.5 * sinal;
+            if (sinal == 1) {
+                sinal = -1;
+            }
+            else {
+                sinal = 1;
+            }
             DataPoint v = new DataPoint(x, y);
             values[i] = v;
         }
         return values;
     }
 
-    double mLastRandom = 2;
+    double mLastRandom = 80;
+    int sinal = -1;
     Random mRand = new Random();
+
     private double getRandom() {
-        return mLastRandom += mRand.nextDouble()*0.5 - 0.25;
+        if (sinal == 1) {
+            sinal = -1;
+        }
+        else {
+            sinal = 1;
+        }
+        return mLastRandom += mRand.nextDouble() * 20.5 * sinal;
     }
 }
