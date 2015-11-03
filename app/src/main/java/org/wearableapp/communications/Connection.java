@@ -1,5 +1,8 @@
 package org.wearableapp.communications;
 
+import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import org.eclipse.paho.client.mqttv3.IMqttAsyncClient;
@@ -9,16 +12,21 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttSecurityException;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
-
-import java.util.UUID;
+import org.wearableapp.App;
+import org.wearableapp.users.LoginActivity;
 
 public class Connection {
     private static Connection connection;
-    private static final String DEVICE_ID = UUID.randomUUID().toString();
+    private static String clientId;
     private volatile IMqttAsyncClient mqttClient;
     private static boolean connectivity;
 
-    private Connection() {}
+    private Connection() {
+        Context context = App.getContext();
+        SharedPreferences sharedPreferences = context.getSharedPreferences(LoginActivity.USER_FILE, Context.MODE_PRIVATE);
+        clientId = sharedPreferences.getString("email", "");
+        Log.i("CONNECTION", "CLIENT ID " + clientId);
+    }
 
     public static Connection getConnection() {
         if (connection == null) {
@@ -52,7 +60,7 @@ public class Connection {
 
         try {
             mqttClient = new MqttAsyncClient(Server.SCHEME_MQTT + "://" + Server.HOST + ":" +
-                    Server.PORT_MQTT, DEVICE_ID, new MemoryPersistence());
+                    Server.PORT_MQTT, clientId, new MemoryPersistence());
             IMqttToken token = mqttClient.connect();
             token.waitForCompletion(3500);
         } catch (MqttSecurityException e) {
