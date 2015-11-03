@@ -54,7 +54,7 @@ public class BluetoothReader extends Thread {
 
                 String message = Location.LATITUDE + "," + Location.LONGITUDE + "," + oxygen + "," + pulseRate;
                 Log.i("Message", message);
-                publish.doPublish("from_" + email, message, 2);
+                publish.doPublish("from_" + email, message, 0);
             } catch (IOException e) {
                 break;
             }
