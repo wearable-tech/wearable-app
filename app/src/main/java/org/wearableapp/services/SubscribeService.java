@@ -49,7 +49,7 @@ public class SubscribeService extends Service {
     }
 
     private void contactsSubscribe() {
-        Subscribe subscribe = new Subscribe(this);
+        Subscribe subscribe = new Subscribe();
         Log.i("Subscribe", "to_" + emailConnected + "_" + levelConnected);
         subscribe.doSubscribe("to_" + emailConnected + "_" + levelConnected, 0);
 
@@ -60,7 +60,7 @@ public class SubscribeService extends Service {
     }
 
     private void contactsStopSubscribe() {
-        Subscribe subscribe = new Subscribe(this);
+        Subscribe subscribe = new Subscribe();
         Log.i("Unsubscribe", "to_" + emailConnected + "_" + levelConnected);
         subscribe.stopSubscribe("to_" + emailConnected + "_" + levelConnected);
 

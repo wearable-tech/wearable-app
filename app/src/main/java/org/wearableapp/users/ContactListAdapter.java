@@ -1,12 +1,12 @@
 package org.wearableapp.users;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import org.wearableapp.App;
 import org.wearableapp.R;
 
 import java.util.HashMap;
@@ -14,11 +14,9 @@ import java.util.List;
 
 public class ContactListAdapter extends BaseAdapter {
 
-    private Context context;
     private List<HashMap<String, String>> items;
 
-    public ContactListAdapter(Context context, List<HashMap<String, String>> contacts) {
-        this.context = context;
+    public ContactListAdapter(List<HashMap<String, String>> contacts) {
         this.items = contacts;
     }
 
@@ -52,7 +50,7 @@ public class ContactListAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if (view == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.listitem_contact, null);
+            view = LayoutInflater.from(App.getContext()).inflate(R.layout.listitem_contact, null);
         }
 
         TextView emailTextView = (TextView) view.findViewById(R.id.textview_email_contact);

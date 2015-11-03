@@ -35,7 +35,7 @@ public class ContactListActivity extends Activity {
         Log.i("USER_CONNECTED", "Email is: " + email);
 
         List<HashMap<String, String>> contacts = Contact.list(email);
-        mAdapter = new ContactListAdapter(this, contacts);
+        mAdapter = new ContactListAdapter(contacts);
 
         if (contacts.isEmpty()) {
             findViewById(R.id.no_contacts).setVisibility(View.VISIBLE);

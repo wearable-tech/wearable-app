@@ -9,21 +9,22 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.util.Log;
 
+import org.wearableapp.App;
 import org.wearableapp.R;
 
 public class Notify {
     private static int notificationId = 0;
 
-    public static void notification(Context context, String message, Intent intent, String title) {
+    public static void notification(String message, Intent intent, String title) {
         Log.i("NOTIFICATION", "Calling notification.....");
 
         long when = System.currentTimeMillis();
         String ticker = title + " " + message;
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(App.getContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Builder notificationBuilder = new Builder(context);
+        Builder notificationBuilder = new Builder(App.getContext());
         notificationBuilder.setAutoCancel(true)
                 .setContentTitle(title)
                 .setContentIntent(pendingIntent)
@@ -33,7 +34,7 @@ public class Notify {
                 .setSound(alarmSound)
                 .setSmallIcon(R.drawable.ic_launcher);
 
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) App.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(notificationId, notificationBuilder.build());
         notificationId++;
 
