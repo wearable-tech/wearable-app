@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.message.BasicNameValuePair;
+import org.wearableapp.App;
 import org.wearableapp.MenuActivity;
 import org.wearableapp.R;
 import org.wearableapp.communications.HttpRequests;
@@ -98,8 +99,7 @@ public class ContactLevelActivity extends Activity {
     }
 
     private void addContact(String contact_email, String contact_level) {
-        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.USER_FILE, MODE_PRIVATE);
-        String user_email = sharedPreferences.getString("email", "");
+        String user_email = App.getPreferences().getString("email", "");
 
         if (user_email.equals(contact_email)) {
             Toast.makeText(getApplicationContext(), "Este é o seu e-mail", Toast.LENGTH_LONG).show();

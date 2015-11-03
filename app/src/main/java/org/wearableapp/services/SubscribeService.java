@@ -7,6 +7,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import org.wearableapp.App;
 import org.wearableapp.communications.Subscribe;
 import org.wearableapp.users.Contact;
 import org.wearableapp.users.LoginActivity;
@@ -28,9 +29,8 @@ public class SubscribeService extends Service {
     @Override
     public void onCreate() {
         Log.i("SUBSCRIBE_SERVICE", "ONCREATE");
-        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.USER_FILE, MODE_PRIVATE);
-        emailConnected = sharedPreferences.getString("email", "");
-        levelConnected = sharedPreferences.getInt("level", 0);
+        emailConnected = App.getPreferences().getString("email", "");
+        levelConnected = App.getPreferences().getInt("level", 0);
         contacts = Contact.list(emailConnected);
 
         contactsSubscribe();

@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import org.wearableapp.App;
 import org.wearableapp.MenuActivity;
 import org.wearableapp.R;
 
@@ -30,8 +31,7 @@ public class ContactListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_list);
 
-        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.USER_FILE, MODE_PRIVATE);
-        String email = sharedPreferences.getString("email", "");
+        String email = App.getPreferences().getString("email", "");
         Log.i("USER_CONNECTED", "Email is: " + email);
 
         List<HashMap<String, String>> contacts = Contact.list(email);
@@ -95,9 +95,7 @@ public class ContactListActivity extends Activity {
         public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int id, long l) {
             HashMap hm = (HashMap) adapterView.getItemAtPosition(id);
             final String email_contact = hm.get("email").toString();
-
-            SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.USER_FILE, MODE_PRIVATE);
-            final String email_user = sharedPreferences.getString("email", "");
+            final String email_user = App.getPreferences().getString("email", "");
 
             AlertDialog.Builder alert = new AlertDialog.Builder(ContactListActivity.this);
             alert.setTitle("Remover contato");

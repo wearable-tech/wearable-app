@@ -29,8 +29,7 @@ public class MenuActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.USER_FILE, MODE_PRIVATE);
-        String email = sharedPreferences.getString("email", "");
+        String email = App.getPreferences().getString("email", "");
         Log.i("USER_CONNECTED", "Email is: " + email);
 
         activateNotifications = (CompoundButton) findViewById(R.id.switch_activate_notifications);
@@ -38,7 +37,7 @@ public class MenuActivity extends FragmentActivity {
 
         initServices();
 
-        boolean notifications = sharedPreferences.getBoolean("notifications", false);
+        boolean notifications = App.getPreferences().getBoolean("notifications", false);
         if (notifications) {
             activateNotifications.setChecked(true);
         }
@@ -87,8 +86,7 @@ public class MenuActivity extends FragmentActivity {
             Log.i("NOTIFICATIONS", "Notifications are " + activateNotifications.isChecked());
             subscribeServiceController(activateNotifications.isChecked());
 
-            SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.USER_FILE, MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
+            SharedPreferences.Editor editor = App.getPreferences().edit();
             editor.putBoolean("notifications", activateNotifications.isChecked());
             editor.commit();
         }
@@ -118,8 +116,7 @@ public class MenuActivity extends FragmentActivity {
     }
 
     private void logout() {
-        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.USER_FILE, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        SharedPreferences.Editor editor = App.getPreferences().edit();
 
         editor.putBoolean("remembered", false);
         editor.remove("email");
