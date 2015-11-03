@@ -14,10 +14,8 @@ public class BluetoothConnector extends Thread {
     private final BluetoothSocket bluetoothSocket;
     private final BluetoothAdapter braceletAdapter;
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
-    private Context context;
 
-    public BluetoothConnector(Context context, BluetoothDevice device, BluetoothAdapter adapter) {
-        this.context = context;
+    public BluetoothConnector(BluetoothDevice device, BluetoothAdapter adapter) {
         braceletAdapter = adapter;
         BluetoothSocket tmp = null;
 
@@ -57,7 +55,7 @@ public class BluetoothConnector extends Thread {
 
     private void manageConnectedSocket() {
         Log.i("BLUETOOTH_READER", "Calling thread to read data from bluetooth");
-        BluetoothReader bluetoothReader = new BluetoothReader(context, bluetoothSocket);
+        BluetoothReader bluetoothReader = new BluetoothReader(bluetoothSocket);
         bluetoothReader.start();
     }
 }

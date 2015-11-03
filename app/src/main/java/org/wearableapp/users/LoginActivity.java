@@ -17,17 +17,16 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.wearableapp.App;
 import org.wearableapp.MenuActivity;
 import org.wearableapp.R;
 import org.wearableapp.communications.HttpRequests;
-import org.wearableapp.users.RegisterUserActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LoginActivity extends Activity {
 
-    public static final String USER_FILE = "user_data";
     private EditText email;
     private EditText password;
     private CheckBox rememberMe;
@@ -48,8 +47,7 @@ public class LoginActivity extends Activity {
         login.setOnClickListener(onClickLogin);
         newUser.setOnClickListener(onClickNewUser);
 
-        SharedPreferences sharedPreferences = getSharedPreferences(USER_FILE, MODE_PRIVATE);
-        boolean remembered = sharedPreferences.getBoolean("remembered", false);
+        boolean remembered = App.getPreferences().getBoolean("remembered", false);
 
         if (remembered) {
             Log.i("LOGIN", "Logging in");
@@ -137,8 +135,7 @@ public class LoginActivity extends Activity {
             JSONArray jsonArray = new JSONArray(HttpRequests.getResponse());
             JSONObject object = jsonArray.getJSONObject(0);
 
-            SharedPreferences sharedPreferences = getSharedPreferences(USER_FILE, MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
+            SharedPreferences.Editor editor = App.getPreferences().edit();
 
             if(rememberMe.isChecked()) {
                 Log.i("PREFERENCES", "Saving remember-me");

@@ -111,7 +111,7 @@ public class BluetoothTestActivity extends Activity {
 
                     if (braceletDevice != null) {
                         Log.i("BLUETOOTH_CONNECTOR", "Calling thread to connect bluetooth");
-                        bluetoothConnector = new BluetoothConnector(context, braceletDevice, bluetoothAdapter);
+                        bluetoothConnector = new BluetoothConnector(braceletDevice, bluetoothAdapter);
                         bluetoothConnector.start();
                     } else {
                         Toast.makeText(getApplicationContext(), "Pulseira não encontrada nos dispositivos pareados", Toast.LENGTH_LONG).show();

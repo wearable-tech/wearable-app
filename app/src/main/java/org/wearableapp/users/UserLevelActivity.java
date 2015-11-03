@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import org.apache.http.message.BasicNameValuePair;
+import org.wearableapp.App;
 import org.wearableapp.MenuActivity;
 import org.wearableapp.R;
 import org.wearableapp.communications.HttpRequests;
@@ -31,8 +32,7 @@ public class UserLevelActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_level);
 
-        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.USER_FILE, MODE_PRIVATE);
-        int level = sharedPreferences.getInt("level", 0);
+        int level = App.getPreferences().getInt("level", 0);
         notificationsLevelText = (EditText) findViewById(R.id.edittext_notifications_level);
         notificationsLevelText.setText(String.valueOf(level));
 
@@ -90,8 +90,7 @@ public class UserLevelActivity extends Activity {
     }
 
     private void changeLevel() {
-        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.USER_FILE, MODE_PRIVATE);
-        String email = sharedPreferences.getString("email", "");
+        String email = App.getPreferences().getString("email", "");
         String level = notificationsLevelText.getText().toString();
 
         List params = new ArrayList();
@@ -102,7 +101,7 @@ public class UserLevelActivity extends Activity {
         switch (response) {
             case 0:
                 Log.i("CHANGE_LEVEL", "Level changed to user " + email);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
+                SharedPreferences.Editor editor = App.getPreferences().edit();
                 editor.putInt("level", Integer.parseInt(level));
                 editor.commit();
                 goToMenu();

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import org.wearableapp.App;
 import org.wearableapp.Measurement;
 import org.wearableapp.communications.Location;
 import org.wearableapp.communications.Publish;
@@ -21,9 +22,8 @@ public class BluetoothReader extends Thread {
     private final InputStream inputStream;
     private final String email;
 
-    public BluetoothReader(Context context, BluetoothSocket socket) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(LoginActivity.USER_FILE, Context.MODE_PRIVATE);
-        email = sharedPreferences.getString("email", "");
+    public BluetoothReader(BluetoothSocket socket) {
+        email = App.getPreferences().getString("email", "");
 
         InputStream tmp = null;
 

@@ -22,9 +22,7 @@ public class Connection {
     private static boolean connectivity;
 
     private Connection() {
-        Context context = App.getContext();
-        SharedPreferences sharedPreferences = context.getSharedPreferences(LoginActivity.USER_FILE, Context.MODE_PRIVATE);
-        clientId = sharedPreferences.getString("email", "");
+        clientId = App.getPreferences().getString("email", "");
         Log.i("CONNECTION", "CLIENT ID " + clientId);
     }
 
