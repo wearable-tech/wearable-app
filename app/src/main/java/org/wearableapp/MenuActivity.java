@@ -36,7 +36,7 @@ public class MenuActivity extends FragmentActivity {
         activateNotifications = (CompoundButton) findViewById(R.id.switch_activate_notifications);
         activateNotifications.setOnClickListener(onClickActivateNotifications);
 
-        iniServices();
+        initServices();
 
         boolean notifications = sharedPreferences.getBoolean("notifications", false);
         if (notifications) {
@@ -133,7 +133,7 @@ public class MenuActivity extends FragmentActivity {
         finish();
     }
 
-    private void iniServices() {
+    private void initServices() {
         Intent intent;
 
         intent = new Intent(this, MqttService.class);
