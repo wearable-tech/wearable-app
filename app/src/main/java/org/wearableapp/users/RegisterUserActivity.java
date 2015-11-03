@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import org.apache.http.message.BasicNameValuePair;
+import org.wearableapp.App;
 import org.wearableapp.R;
 import org.wearableapp.communications.HttpRequests;
 
@@ -26,8 +27,8 @@ public class RegisterUserActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
 
-        saveUser(this);
-        cancelRegister(this);
+        saveUser();
+        cancelRegister();
     }
 
     @Override
@@ -52,7 +53,7 @@ public class RegisterUserActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void saveUser(final Context context) {
+    private void saveUser() {
         Button save = (Button) findViewById(R.id.saveUser);
         save.setOnClickListener(new View.OnClickListener() {
 
@@ -85,7 +86,7 @@ public class RegisterUserActivity extends Activity {
                 if (HttpRequests.doPost(params, "/user/save") == 0) {
                     Log.i("CREATE_USER", "Create user success");
                     finish();
-                    Intent intent = new Intent(context, LoginActivity.class);
+                    Intent intent = new Intent(App.getContext(), LoginActivity.class);
                     startActivity(intent);
                     Toast.makeText(getApplicationContext(), "Usuário cadastrado!", Toast.LENGTH_LONG).show();
                 } else {
@@ -104,7 +105,7 @@ public class RegisterUserActivity extends Activity {
         return true;
     }
 
-    private void cancelRegister(final Context context) {
+    private void cancelRegister() {
         Button save = (Button) findViewById(R.id.cancelRegisterUser);
         save.setOnClickListener(new View.OnClickListener() {
 
@@ -112,7 +113,7 @@ public class RegisterUserActivity extends Activity {
             public void onClick(View v) {
                 Log.i("CANCEL_REGISTER", "Cancel register user");
                 finish();
-                Intent intent = new Intent(context, LoginActivity.class);
+                Intent intent = new Intent(App.getContext(), LoginActivity.class);
                 startActivity(intent);
             }
         });

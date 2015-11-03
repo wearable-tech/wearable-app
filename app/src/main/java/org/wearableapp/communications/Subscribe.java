@@ -1,6 +1,5 @@
 package org.wearableapp.communications;
 
-import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
@@ -10,17 +9,16 @@ import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.wearableapp.App;
 import org.wearableapp.MenuActivity;
 
 public class Subscribe {
 
     private IMqttAsyncClient mqttClient;
-    private Context context;
 
-    public Subscribe(Context context) {
+    public Subscribe() {
         Connection connection = Connection.getConnection();
         connection.doConnect();
-        this.context = context;
         this.mqttClient = connection.getMqttClient();
     }
 
@@ -29,7 +27,7 @@ public class Subscribe {
             return;
         }
 
-        this.mqttClient.setCallback(new MqttEventCallback(this.context));
+        this.mqttClient.setCallback(new MqttEventCallback());
 
         try {
             IMqttToken token = this.mqttClient.subscribe(topic, qos);
@@ -53,12 +51,6 @@ public class Subscribe {
     }
 
     private class MqttEventCallback implements MqttCallback {
-        private Context context;
-
-        public MqttEventCallback(Context context) {
-            this.context = context;
-        }
-
         @Override
         public void connectionLost(Throwable arg0) { }
 
@@ -70,8 +62,8 @@ public class Subscribe {
             Log.i("MESSAGE_ARRIVED", "Message arrived from topic: " + topic);
             Log.i("MESSAGE_ARRIVED", "Messagem: " + msg.toString());
 
-            Intent intent = new Intent(context, MenuActivity.class);
-            Notify.notification(context, msg.toString(), intent, "titulo");
+            Intent intent = new Intent(App.getContext(), MenuActivity.class);
+            Notify.notification(msg.toString(), intent, "titulo");
         }
     }
 }

@@ -28,14 +28,12 @@ public class BluetoothTestActivity extends Activity {
     private BluetoothAdapter bluetoothAdapter;
     private BluetoothDevice braceletDevice;
     private BluetoothConnector bluetoothConnector;
-    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth_test);
 
-        context = this;
         isBluetoothSupported();
 
         activeBluetooth = (CompoundButton) findViewById(R.id.switch_activate_bluetooth);
