@@ -51,11 +51,11 @@ public class SubscribeService extends Service {
     private void contactsSubscribe() {
         Subscribe subscribe = new Subscribe(this);
         Log.i("Subscribe", "to_" + emailConnected + "_" + levelConnected);
-        subscribe.doSubscribe("to_" + emailConnected + "_" + levelConnected, 2);
+        subscribe.doSubscribe("to_" + emailConnected + "_" + levelConnected, 0);
 
         for (HashMap<String, String> c: contacts) {
             Log.i("Subscribe", "to_" + c.get("email") + "_" + c.get("level"));
-            subscribe.doSubscribe("to_" + c.get("email") + "_" + c.get("level"), 2);
+            subscribe.doSubscribe("to_" + c.get("email") + "_" + c.get("level"), 0);
         }
     }
 

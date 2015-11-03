@@ -10,9 +10,11 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttSecurityException;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
+import java.util.UUID;
+
 public class Connection {
     private static Connection connection;
-    private static final String DEVICE_ID = "TEST";
+    private static final String DEVICE_ID = UUID.randomUUID().toString();
     private volatile IMqttAsyncClient mqttClient;
     private static boolean connectivity;
 
