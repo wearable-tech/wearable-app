@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
+import org.wearableapp.MenuActivity;
 import org.wearableapp.R;
 
 import java.util.Set;
@@ -42,6 +43,8 @@ public class BluetoothTestActivity extends Activity {
 
         activeBracelet = (CompoundButton) findViewById(R.id.switch_activate_bracelet);
         activeBracelet.setOnClickListener(onClickActiveBracelet);
+
+        getActionBar().setHomeButtonEnabled(true);
     }
 
     @Override
@@ -113,6 +116,7 @@ public class BluetoothTestActivity extends Activity {
                         bluetoothConnector.start();
                     } else {
                         Toast.makeText(getApplicationContext(), "Pulseira não encontrada nos dispositivos pareados", Toast.LENGTH_LONG).show();
+                        activeBracelet.setChecked(false);
                     }
                 } else {
                     activeBracelet.setChecked(false);
@@ -164,7 +168,7 @@ public class BluetoothTestActivity extends Activity {
             String action = intent.getAction();
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                Log.i("DEVICE_FOND", "Name: " + device.getName() + " Address: " + device.getAddress());
+                Log.i("DEVICE_FOUND", "Name: " + device.getName() + " Address: " + device.getAddress());
 
                 if (device.getName() == BLUETOOTH_NAME) {
                     braceletDevice = device;
@@ -172,6 +176,18 @@ public class BluetoothTestActivity extends Activity {
             }
         }
     };
+
+    @Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            Intent intent = new Intent(this, MenuActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onMenuItemSelected(featureId, item);
+    }
 
     @Override
     protected void onDestroy() {
