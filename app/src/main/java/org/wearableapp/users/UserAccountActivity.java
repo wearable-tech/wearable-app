@@ -38,13 +38,13 @@ public class UserAccountActivity extends Activity {
         String email = App.getPreferences().getString("email", "");
         Integer level = App.getPreferences().getInt("level", 0);
 
-        etName = (EditText) findViewById(R.id.name);
-        etEmail= (EditText) findViewById(R.id.email);
+        etName = (EditText) findViewById(R.id.edittext_name_new_user);
+        etEmail= (EditText) findViewById(R.id.edittext_email_new_user);
         etLevel = (EditText) findViewById(R.id.level);
         etCurrentPassword = (EditText) findViewById(R.id.currentPassword);
         etNewPassword = (EditText) findViewById(R.id.newPassword);
 
-        Button save = (Button) findViewById(R.id.updateUser);
+        Button save = (Button) findViewById(R.id.button_new_user);
         save.setOnClickListener(onClickUpdateUser);
 
         etName.setText(name);

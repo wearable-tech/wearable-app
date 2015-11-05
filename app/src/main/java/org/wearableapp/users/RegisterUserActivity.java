@@ -1,18 +1,14 @@
 package org.wearableapp.users;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import org.apache.http.message.BasicNameValuePair;
-import org.wearableapp.App;
 import org.wearableapp.R;
 import org.wearableapp.communications.HttpRequests;
 
@@ -21,80 +17,54 @@ import java.util.List;
 
 public class RegisterUserActivity extends Activity {
 
+    private Button saveNewUser;
+    private Button cancelNewUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
 
-        saveUser();
-        cancelRegister();
+        cancelNewUser = (Button) findViewById(R.id.button_cancel_new_user);
+        saveNewUser = (Button) findViewById(R.id.button_new_user);
+
+        cancelNewUser.setOnClickListener(onClickCancel);
+        saveNewUser.setOnClickListener(onClickSave);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_register_user, menu);
-        return true;
-    }
+    View.OnClickListener onClickSave = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            EditText name = (EditText) findViewById(R.id.edittext_name_new_user);
+            EditText email = (EditText) findViewById(R.id.edittext_email_new_user);
+            EditText password = (EditText) findViewById(R.id.edittext_password_new_user);
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+            List params = new ArrayList();
+            params.add(name);
+            params.add(email);
+            params.add(password);
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void saveUser() {
-        Button save = (Button) findViewById(R.id.updateUser);
-        save.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                EditText name = (EditText) findViewById(R.id.name);
-                EditText email = (EditText) findViewById(R.id.email);
-                EditText password = (EditText) findViewById(R.id.passwordUser);
-
-                Log.i("USER_SAVE", "Name: " + name.getText().toString());
-                Log.i("USER_SAVE", "Email: " + email.getText().toString());
-                Log.i("USER_SAVE", "Password: " + password.getText().toString());
-
-                List params = new ArrayList();
-                params.add(name);
-                params.add(email);
-                params.add(password);
-
-                if (!validateUser((ArrayList<EditText>) params)) {
-                    Toast.makeText(getApplicationContext(), "Cheque os campos", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                params.clear();
-
-                params.add(new BasicNameValuePair("name", name.getText().toString()));
-                params.add(new BasicNameValuePair("email", email.getText().toString()));
-                params.add(new BasicNameValuePair("password", password.getText().toString()));
-
-                if (HttpRequests.doPost(params, "/user/save") == 0) {
-                    Log.i("CREATE_USER", "Create user success");
-                    finish();
-                    Intent intent = new Intent(App.getContext(), LoginActivity.class);
-                    startActivity(intent);
-                    Toast.makeText(getApplicationContext(), "Usuário cadastrado!", Toast.LENGTH_LONG).show();
-                } else {
-                    Log.e("CREATE_USER", "Create user error");
-                    Toast.makeText(getApplicationContext(), "Erro, tente novamente!", Toast.LENGTH_LONG).show();
-                }
+            if (!validateUser((ArrayList<EditText>) params)) {
+                Toast.makeText(getApplicationContext(), "Cheque os campos", Toast.LENGTH_LONG).show();
+                return;
             }
-        });
-    }
+
+            params.clear();
+            params.add(new BasicNameValuePair("name", name.getText().toString()));
+            params.add(new BasicNameValuePair("email", email.getText().toString()));
+            params.add(new BasicNameValuePair("password", password.getText().toString()));
+
+            if (HttpRequests.doPost(params, "/user/save") == 0) {
+                Log.i("CREATE_USER", "Create user success");
+                Toast.makeText(getApplicationContext(), "Usuário cadastrado!", Toast.LENGTH_LONG).show();
+                finish();
+            }
+            else {
+                Log.e("CREATE_USER", "Create user error");
+                Toast.makeText(getApplicationContext(), "Erro, tente novamente!", Toast.LENGTH_LONG).show();
+            }
+        }
+    };
 
     private boolean validateUser(ArrayList<EditText> user) {
         if (!UserValidation.name(user.get(0))) return false;
@@ -104,17 +74,10 @@ public class RegisterUserActivity extends Activity {
         return true;
     }
 
-    private void cancelRegister() {
-        Button save = (Button) findViewById(R.id.cancelRegisterUser);
-        save.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Log.i("CANCEL_REGISTER", "Cancel register user");
-                finish();
-                Intent intent = new Intent(App.getContext(), LoginActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
+    View.OnClickListener onClickCancel = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            finish();
+        }
+    };
 }
