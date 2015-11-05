@@ -53,7 +53,7 @@ public class RegisterUserActivity extends Activity {
     }
 
     private void saveUser() {
-        Button save = (Button) findViewById(R.id.saveUser);
+        Button save = (Button) findViewById(R.id.updateUser);
         save.setOnClickListener(new View.OnClickListener() {
 
             @Override
