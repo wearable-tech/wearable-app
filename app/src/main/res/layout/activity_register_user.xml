@@ -43,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cadastrar"
-        android:id="@+id/saveUser"
+        android:id="@+id/updateUser"
         android:layout_below="@+id/passwordUser"
         android:layout_alignLeft="@+id/passwordUser"
         android:layout_alignStart="@+id/passwordUser"
@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:text="Voltar"
         android:id="@+id/cancelRegisterUser"
-        android:layout_alignTop="@+id/saveUser"
+        android:layout_alignTop="@+id/updateUser"
         android:layout_alignRight="@+id/passwordUser"
         android:layout_alignEnd="@+id/passwordUser" />
 
