@@ -2,7 +2,6 @@ package org.wearableapp.users;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -35,7 +34,7 @@ public class ContactLevelActivity extends Activity {
 
         contactName = (EditText) findViewById(R.id.edittext_contact_name);
         contactEmail = (EditText) findViewById(R.id.edittext_contact_email);
-        contactLevel = (EditText) findViewById(R.id.edittext_contact_level);
+        contactLevel = (EditText) findViewById(R.id.level);
         saveContact = (Button) findViewById(R.id.button_save_contact);
 
         String type = (String) getIntent().getExtras().getSerializable("type");
