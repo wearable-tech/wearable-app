@@ -61,28 +61,6 @@ public class ContactLevelActivity extends Activity {
         getActionBar().setHomeButtonEnabled(true);
     }
 
-    @Override
-    public boolean onMenuItemSelected(int featureId, MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            Intent intent = new Intent(this, MenuActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            return true;
-        }
-
-        return super.onMenuItemSelected(featureId, item);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        return id == R.id.action_settings || super.onOptionsItemSelected(item);
-    }
-
     View.OnClickListener onClickSaveContact = new View.OnClickListener() {
         @Override
         public void onClick(View view) {

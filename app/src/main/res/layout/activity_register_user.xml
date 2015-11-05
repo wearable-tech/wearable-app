@@ -9,7 +9,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/name"
+        android:id="@+id/edittext_name_new_user"
         android:hint="@string/name_hint"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -20,9 +20,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
-        android:id="@+id/email"
+        android:id="@+id/edittext_email_new_user"
         android:hint="@string/email_hint"
-        android:layout_below="@+id/name"
+        android:layout_below="@+id/edittext_name_new_user"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_margin="20dp" />
@@ -31,10 +31,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
-        android:id="@+id/passwordUser"
+        android:id="@+id/edittext_password_new_user"
         android:hint="@string/password_hint"
         android:ems="10"
-        android:layout_below="@+id/email"
+        android:layout_below="@+id/edittext_email_new_user"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_margin="20dp" />
@@ -43,19 +43,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cadastrar"
-        android:id="@+id/updateUser"
-        android:layout_below="@+id/passwordUser"
-        android:layout_alignLeft="@+id/passwordUser"
-        android:layout_alignStart="@+id/passwordUser"
-        android:layout_marginTop="35dp" />
+        android:id="@+id/button_new_user"
+        android:layout_marginTop="52dp"
+        android:layout_below="@+id/edittext_password_new_user"
+        android:layout_alignRight="@+id/edittext_password_new_user"
+        android:layout_alignEnd="@+id/edittext_password_new_user" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Voltar"
-        android:id="@+id/cancelRegisterUser"
-        android:layout_alignTop="@+id/updateUser"
-        android:layout_alignRight="@+id/passwordUser"
-        android:layout_alignEnd="@+id/passwordUser" />
+        android:id="@+id/button_cancel_new_user"
+        android:layout_alignTop="@+id/button_new_user"
+        android:layout_alignLeft="@+id/edittext_password_new_user"
+        android:layout_alignStart="@+id/edittext_password_new_user" />
 
 </RelativeLayout>
