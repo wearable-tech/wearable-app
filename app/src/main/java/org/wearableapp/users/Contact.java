@@ -43,10 +43,10 @@ public abstract class Contact {
         return contacts;
     }
 
-    public static boolean delete(String email_user, String email_contact) {
+    public static boolean delete(String user_email, String contact_email) {
         List params = new ArrayList();
-        params.add(new BasicNameValuePair("email_user", email_user));
-        params.add(new BasicNameValuePair("email_contact", email_contact));
+        params.add(new BasicNameValuePair("user_email", user_email));
+        params.add(new BasicNameValuePair("contact_email", contact_email));
 
         return HttpRequests.doPost(params, "/user/delete_contact") == 0;
     }
