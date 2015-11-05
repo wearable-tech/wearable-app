@@ -1,6 +1,7 @@
 package org.wearableapp.services;
 
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
@@ -12,6 +13,8 @@ import org.wearableapp.receivers.InternetReceiver;
 
 public class MqttService extends Service {
 
+    private BroadcastReceiver internetReceiver;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -21,12 +24,19 @@ public class MqttService extends Service {
     @Override
     public void onCreate() {
         Log.i("MQTT_SERVICE", "ONCREATE");
-        registerReceiver(new InternetReceiver(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        internetReceiver = new InternetReceiver();
+        registerReceiver(internetReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.v("ON_START", "onStartCommand()");
         return START_STICKY;
+    }
+
+    @Override
+    public void onDestroy() {
+        unregisterReceiver(internetReceiver);
+        super.onDestroy();
     }
 }

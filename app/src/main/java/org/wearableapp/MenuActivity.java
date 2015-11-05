@@ -148,11 +148,11 @@ public class MenuActivity extends FragmentActivity {
         Intent intent;
 
         intent = new Intent(this, MqttService.class);
-        startService(intent);
+        stopService(intent);
         Log.i("STOP_SERVICES", "MQTT Service Destroyed!!!");
 
         intent = new Intent(this, LocationService.class);
-        startService(intent);
+        stopService(intent);
         Log.i("STOP_SERVICES", "Location Service Destroyed!!!");
     }
 
