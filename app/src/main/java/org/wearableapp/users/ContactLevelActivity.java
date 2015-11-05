@@ -93,6 +93,7 @@ public class ContactLevelActivity extends Activity {
 
     private void goToContactsList() {
         Intent intent = new Intent(this, ContactListActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
     }

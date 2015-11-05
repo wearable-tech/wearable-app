@@ -163,7 +163,7 @@ public class UserAccountActivity extends Activity {
 
     private void deleteAccount() {
         List params = new ArrayList();
-        params.add(new BasicNameValuePair("email_user", currentEmail));
+        params.add(new BasicNameValuePair("email", currentEmail));
 
         if (HttpRequests.doPost(params, "/user/delete") == 0) {
             Toast.makeText(getApplicationContext(), "Usuário apagado", Toast.LENGTH_LONG).show();
