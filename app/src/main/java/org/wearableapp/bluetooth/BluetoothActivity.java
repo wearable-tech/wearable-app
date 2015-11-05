@@ -123,20 +123,6 @@ public class BluetoothActivity extends Activity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu items for use in the action bar
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle presses on the action bar to open MQTT connection
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             Intent intent = new Intent(this, MenuActivity.class);
