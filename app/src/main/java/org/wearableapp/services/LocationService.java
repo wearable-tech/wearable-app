@@ -12,6 +12,7 @@ import android.util.Log;
 import org.wearableapp.receivers.GPSReceiver;
 
 public class LocationService extends Service {
+    private GPSReceiver gpsReceiver;
 
     @Nullable
     @Override
@@ -26,12 +27,19 @@ public class LocationService extends Service {
         filter.addAction(LocationManager.PROVIDERS_CHANGED_ACTION);
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
 
-        registerReceiver(new GPSReceiver(), filter);
+        gpsReceiver = new GPSReceiver();
+        registerReceiver(gpsReceiver, filter);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.v("ON_START", "onStartCommand()");
         return START_STICKY;
+    }
+
+    @Override
+    public void onDestroy() {
+        unregisterReceiver(gpsReceiver);
+        super.onDestroy();
     }
 }

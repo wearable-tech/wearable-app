@@ -17,6 +17,9 @@ import org.wearableapp.App;
 import org.wearableapp.MenuActivity;
 import org.wearableapp.R;
 import org.wearableapp.communications.HttpRequests;
+import org.wearableapp.services.LocationService;
+import org.wearableapp.services.MqttService;
+import org.wearableapp.services.SubscribeService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -159,6 +162,49 @@ public class UserAccountActivity extends Activity {
 
 
     private void deleteAccount() {
-        // TODO
+        List params = new ArrayList();
+        params.add(new BasicNameValuePair("email_user", currentEmail));
+
+        if (HttpRequests.doPost(params, "/user/delete") == 0) {
+            Toast.makeText(getApplicationContext(), "Usuário apagado", Toast.LENGTH_LONG).show();
+            logout();
+        } else {
+            Toast.makeText(getApplicationContext(), "Ocorreu um erro", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void logout() {
+        SharedPreferences.Editor editor = App.getPreferences().edit();
+
+        editor.putBoolean("remembered", false);
+        editor.remove("email");
+        editor.remove("notifications");
+        editor.commit();
+
+        stopServices();
+        goToLogin();
+    }
+
+
+    private void goToLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void stopServices() {
+        Intent intent;
+
+        intent = new Intent(this, MqttService.class);
+        stopService(intent);
+        Log.i("SUBSCRIBE_SERVICE", "Subscribe service destroyed!");
+
+        intent = new Intent(this, SubscribeService.class);
+        stopService(intent);
+        Log.i("STOP_SERVICES", "MQTT Service Destroyed!!!");
+
+        intent = new Intent(this, LocationService.class);
+        stopService(intent);
+        Log.i("STOP_SERVICES", "Location Service Destroyed!!!");
     }
 }
