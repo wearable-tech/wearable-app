@@ -33,5 +33,7 @@
     <string name="password_hint">Senha</string>
     <string name="title_activity_user_level">UserLevelActivity</string>
     <string name="title_activity_bluetooth_test">BluetoothTestActivity</string>
+    <string name="title_activity_account">AccountActivity</string>
+    <string name="delete_account">Apagar conta</string>
 
 </resources>
