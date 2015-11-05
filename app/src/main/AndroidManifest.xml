@@ -70,7 +70,7 @@
             android:name=".users.UserLevelActivity"
             android:label="@string/title_activity_user_level" />
         <activity
-            android:name=".users.AccountActivity"
+            android:name=".users.UserAccountActivity"
             android:label="@string/title_activity_account" >
         </activity>
     </application>

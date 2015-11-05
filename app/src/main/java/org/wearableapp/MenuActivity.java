@@ -18,6 +18,7 @@ import org.wearableapp.services.MqttService;
 import org.wearableapp.services.SubscribeService;
 import org.wearableapp.users.ContactListActivity;
 import org.wearableapp.users.LoginActivity;
+import org.wearableapp.users.UserAccountActivity;
 import org.wearableapp.users.UserLevelActivity;
 
 public class MenuActivity extends FragmentActivity {
@@ -73,7 +74,7 @@ public class MenuActivity extends FragmentActivity {
             return true;
         }
         else if (id == R.id.menu_define_user_level) {
-            goToUserLevel();
+            goToUserAccount();
             return true;
         }
 
@@ -110,8 +111,8 @@ public class MenuActivity extends FragmentActivity {
         startActivity(intent);
     }
 
-    private void goToUserLevel() {
-        Intent intent = new Intent(this, UserLevelActivity.class);
+    private void goToUserAccount() {
+        Intent intent = new Intent(this, UserAccountActivity.class);
         startActivity(intent);
     }
 

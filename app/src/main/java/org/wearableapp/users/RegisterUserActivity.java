@@ -1,7 +1,6 @@
 package org.wearableapp.users;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -59,8 +58,8 @@ public class RegisterUserActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                EditText name = (EditText) findViewById(R.id.nameUser);
-                EditText email = (EditText) findViewById(R.id.emailUser);
+                EditText name = (EditText) findViewById(R.id.name);
+                EditText email = (EditText) findViewById(R.id.email);
                 EditText password = (EditText) findViewById(R.id.passwordUser);
 
                 Log.i("USER_SAVE", "Name: " + name.getText().toString());

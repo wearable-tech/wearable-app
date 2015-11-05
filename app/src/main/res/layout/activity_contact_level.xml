@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:text="Salvar"
         android:id="@+id/button_save_contact"
-        android:layout_below="@+id/edittext_contact_level"
+        android:layout_below="@+id/level"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp" />
 
@@ -74,7 +74,7 @@
         android:layout_height="wrap_content"
         android:inputType="numberSigned"
         android:ems="10"
-        android:id="@+id/edittext_contact_level"
+        android:id="@+id/level"
         android:layout_alignBottom="@+id/textview_contact_level"
         android:layout_alignLeft="@+id/edittext_contact_email"
         android:layout_alignStart="@+id/edittext_contact_email"

@@ -15,7 +15,7 @@
         android:layout_marginTop="16dp"
         android:checked="false"
         android:textOn="Sim"
-        android:textOff="Não"/>
+        android:textOff="Não" />
 
     <FrameLayout
         android:id="@+id/container"
