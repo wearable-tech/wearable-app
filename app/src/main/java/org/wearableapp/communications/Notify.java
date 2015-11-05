@@ -1,5 +1,6 @@
 package org.wearableapp.communications;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -10,19 +11,23 @@ import android.support.v4.app.NotificationCompat.Builder;
 import android.util.Log;
 
 import org.wearableapp.App;
+import org.wearableapp.MenuActivity;
 import org.wearableapp.R;
 
 public class Notify {
     private static int notificationId = 0;
 
-    public static void notification(String message, Intent intent, String title) {
+    public static void notification(String title, String message) {
         Log.i("NOTIFICATION", "Calling notification.....");
 
         long when = System.currentTimeMillis();
         String ticker = title + " " + message;
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(App.getContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent intent = new Intent(App.getContext(), MenuActivity.class);
+        intent.putExtra("notification", message);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(App.getContext(), 0, intent, 0);
 
         Builder notificationBuilder = new Builder(App.getContext());
         notificationBuilder.setAutoCancel(true)

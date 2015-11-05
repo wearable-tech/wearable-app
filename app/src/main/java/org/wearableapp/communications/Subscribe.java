@@ -62,8 +62,7 @@ public class Subscribe {
             Log.i("MESSAGE_ARRIVED", "Message arrived from topic: " + topic);
             Log.i("MESSAGE_ARRIVED", "Messagem: " + msg.toString());
 
-            Intent intent = new Intent(App.getContext(), MenuActivity.class);
-            Notify.notification(msg.toString(), intent, "titulo");
+            Notify.notification("titulo", msg.toString());
         }
     }
 }
