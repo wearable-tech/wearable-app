@@ -30,7 +30,7 @@ public class MenuActivity extends FragmentActivity {
         setContentView(R.layout.activity_menu);
 
         String email = App.getPreferences().getString("email", "");
-        Log.i("USER_CONNECTED", "Email is: " + email);
+        Log.i("USER_CONNECTED", "Email: " + email);
 
         activateNotifications = (CompoundButton) findViewById(R.id.switch_activate_notifications);
         activateNotifications.setOnClickListener(onClickActivateNotifications);
@@ -83,7 +83,7 @@ public class MenuActivity extends FragmentActivity {
     View.OnClickListener onClickActivateNotifications = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Log.i("NOTIFICATIONS", "Notifications are " + activateNotifications.isChecked());
+            Log.i("NOTIFICATIONS", "Notifications: " + activateNotifications.isChecked());
             subscribeServiceController(activateNotifications.isChecked());
 
             SharedPreferences.Editor editor = App.getPreferences().edit();

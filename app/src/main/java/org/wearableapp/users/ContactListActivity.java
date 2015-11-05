@@ -32,7 +32,7 @@ public class ContactListActivity extends Activity {
         setContentView(R.layout.activity_contact_list);
 
         String email = App.getPreferences().getString("email", "");
-        Log.i("USER_CONNECTED", "Email is: " + email);
+        Log.i("USER_CONNECTED", "Email: " + email);
 
         List<HashMap<String, String>> contacts = Contact.list(email);
         mAdapter = new ContactListAdapter(contacts);
