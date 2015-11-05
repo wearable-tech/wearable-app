@@ -29,6 +29,12 @@ public class MenuActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+        if (getIntent().getExtras() != null) {
+            if (getIntent().getExtras().getBoolean("logout")) {
+                logout();
+            }
+        }
+
         String email = App.getPreferences().getString("email", "");
         Log.i("USER_CONNECTED", "Email: " + email);
 
