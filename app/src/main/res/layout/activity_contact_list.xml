@@ -24,7 +24,6 @@
         android:visibility="visible" />
 
     <ImageButton
-
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:id="@+id/add_contact"
