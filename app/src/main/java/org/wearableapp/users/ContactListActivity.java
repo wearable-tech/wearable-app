@@ -92,8 +92,8 @@ public class ContactListActivity extends Activity {
         @Override
         public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int id, long l) {
             HashMap hm = (HashMap) adapterView.getItemAtPosition(id);
-            final String email_contact = hm.get("email").toString();
-            final String email_user = App.getPreferences().getString("email", "");
+            final String contact_email = hm.get("email").toString();
+            final String user_email = App.getPreferences().getString("email", "");
 
             AlertDialog.Builder alert = new AlertDialog.Builder(ContactListActivity.this);
             alert.setTitle("Remover contato");
@@ -101,7 +101,7 @@ public class ContactListActivity extends Activity {
             alert.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    if (Contact.delete(email_user, email_contact)) {
+                    if (Contact.delete(user_email, contact_email)) {
                         mAdapter.removeItem(id);
                         Toast.makeText(getApplicationContext(), "Contato removido",
                                 Toast.LENGTH_LONG).show();
