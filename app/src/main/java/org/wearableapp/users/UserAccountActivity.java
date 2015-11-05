@@ -1,6 +1,7 @@
 package org.wearableapp.users;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
@@ -97,6 +98,7 @@ public class UserAccountActivity extends Activity {
         List params = new ArrayList();
         params.add(etName);
         params.add(etEmail);
+        params.add(etCurrentPassword);
         params.add(etNewPassword);
 
         if (!validateUser((ArrayList<EditText>) params)) {
@@ -110,30 +112,46 @@ public class UserAccountActivity extends Activity {
         params.add(new BasicNameValuePair("current_email", currentEmail));
         params.add(new BasicNameValuePair("new_email", etEmail.getText().toString().trim()));
         params.add(new BasicNameValuePair("level", etLevel.getText().toString()));
-        params.add(new BasicNameValuePair("password", etNewPassword.getText().toString()));
+        if (etCurrentPassword.getText().length() > 0) {
+            params.add(new BasicNameValuePair("password", etNewPassword.getText().toString()));
+        }
 
         BasicNameValuePair email = (BasicNameValuePair) params.get(2);
 
         if (HttpRequests.doPost(params, "/user/update") == 0) {
             Log.i("UPDATE_USER", "Success to update user: " + email.getValue());
             Toast.makeText(getApplicationContext(), "Dados alterados com sucesso", Toast.LENGTH_LONG).show();
-            goHome();
+            updatePreferences((List<BasicNameValuePair>) params);
+            goToMenu();
         } else {
             Log.i("UPDATE_USER", "Failed to update user: " + email.getValue());
             Toast.makeText(getApplicationContext(), "Ocorreu um erro", Toast.LENGTH_LONG).show();
         }
     }
 
+    private void updatePreferences(List<BasicNameValuePair> params) {
+        SharedPreferences.Editor editor = App.getPreferences().edit();
+        editor.putString("name", params.get(0).getValue());
+        editor.putString("email", params.get(2).getValue());
+        editor.putInt("level", Integer.parseInt(params.get(3).getValue()));
+
+        if (params.size() > 4) {
+            editor.putString("password", params.get(4).getValue());
+        }
+
+        editor.commit();
+    }
+
     private boolean validateUser(ArrayList<EditText> user) {
         if (!UserValidation.name(user.get(0))) return false;
         if (!UserValidation.email(user.get(1))) return false;
         if (user.get(2).getText().length() == 0) return true;
-        if (!UserValidation.password(user.get(2))) return false;
+        if (!UserValidation.comparePasswords(user.get(2), user.get(3))) return false;
 
         return true;
     }
 
-    private void goHome() {
+    private void goToMenu() {
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
         finish();

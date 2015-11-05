@@ -67,9 +67,6 @@
             android:name=".users.ContactListActivity"
             android:label="@string/title_activity_contact_list" />
         <activity
-            android:name=".users.UserLevelActivity"
-            android:label="@string/title_activity_user_level" />
-        <activity
             android:name=".users.UserAccountActivity"
             android:label="@string/title_activity_account" >
         </activity>
