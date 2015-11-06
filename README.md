@@ -1,2 +1,2 @@
 # wearable-app
-Android App to receive data from bluetooth
+Android App to receive data from Arduino by bluetooth
