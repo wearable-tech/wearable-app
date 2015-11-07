@@ -50,10 +50,10 @@ public class BluetoothReader extends Thread {
                 Measurement.PULSE_RATE = Double.parseDouble(pulseRate);
                 Measurement.REMEASUREMENT = true;
 
-                Publish publish = new Publish();
-
                 String message = Location.LATITUDE + "," + Location.LONGITUDE + "," + oxygen + "," + pulseRate;
                 Log.i("Message", message);
+
+                Publish publish = new Publish();
                 publish.doPublish("from_" + email, message, 0);
             } catch (IOException e) {
                 break;
