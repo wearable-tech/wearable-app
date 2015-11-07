@@ -39,7 +39,7 @@ public class Graph extends Fragment {
         GraphView pulseGraph = (GraphView) rootView.findViewById(R.id.pulse);
         pulseGraph.getViewport().setYAxisBoundsManual(true);
         pulseGraph.getViewport().setMinY(0);
-        pulseGraph.getViewport().setMaxY(200);
+        pulseGraph.getViewport().setMaxY(1024);
         pulseGraph.setTitle("Frequência Cardíaca");
         pulseGraph.getGridLabelRenderer().setHorizontalLabelsVisible(false);
 
