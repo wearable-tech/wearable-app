@@ -1,126 +1,130 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="org.wearableapp.users.UserAccountActivity">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        tools:context="org.wearableapp.users.UserAccountActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Nome:"
-        android:id="@+id/tvName"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="40dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Nome:"
+            android:id="@+id/tvName"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="40dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="E-mail:"
-        android:id="@+id/tvEmail"
-        android:layout_alignBottom="@+id/edittext_email_new_user"
-        android:layout_alignStart="@id/tvName" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="E-mail:"
+            android:id="@+id/tvEmail"
+            android:layout_alignBottom="@+id/edittext_email_new_user"
+            android:layout_alignStart="@id/tvName" />
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Nível:"
-        android:id="@+id/tvLevel"
-        android:layout_above="@+id/currentPassword"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Nível:"
+            android:id="@+id/tvLevel"
+            android:layout_above="@+id/currentPassword"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Senha Atual"
-        android:id="@+id/tvCurrentPassword"
-        android:layout_above="@+id/newPassword"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@id/tvName" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Senha\nAtual"
+            android:id="@+id/tvCurrentPassword"
+            android:layout_above="@+id/newPassword"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignEnd="@id/tvName" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Nova Senha"
-        android:id="@+id/tvNewPassword"
-        android:layout_alignBottom="@+id/newPassword"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@id/tvName" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Nova\nSenha"
+            android:id="@+id/tvNewPassword"
+            android:layout_alignBottom="@+id/newPassword"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignEnd="@id/tvName" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/edittext_name_new_user"
-        android:layout_alignBottom="@+id/tvName"
-        android:layout_toRightOf="@+id/tvName"
-        android:layout_marginLeft="10dp" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edittext_name_new_user"
+            android:layout_alignBottom="@+id/tvName"
+            android:layout_toRightOf="@+id/tvName"
+            android:layout_marginLeft="10dp" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:id="@+id/edittext_email_new_user"
-        android:layout_below="@+id/edittext_name_new_user"
-        android:layout_marginTop="20dp"
-        android:layout_alignLeft="@+id/edittext_name_new_user" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:id="@+id/edittext_email_new_user"
+            android:layout_below="@+id/edittext_name_new_user"
+            android:layout_marginTop="20dp"
+            android:layout_alignLeft="@+id/edittext_name_new_user" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="numberSigned"
-        android:ems="10"
-        android:id="@+id/level"
-        android:layout_below="@+id/edittext_email_new_user"
-        android:layout_marginTop="20dp"
-        android:layout_alignLeft="@+id/edittext_email_new_user"
-        android:layout_alignParentRight="false"
-        android:layout_alignParentEnd="false" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberSigned"
+            android:ems="10"
+            android:id="@+id/level"
+            android:layout_below="@+id/edittext_email_new_user"
+            android:layout_marginTop="20dp"
+            android:layout_alignLeft="@+id/edittext_email_new_user"
+            android:layout_alignParentRight="false"
+            android:layout_alignParentEnd="false" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:id="@+id/currentPassword"
-        android:ems="10"
-        android:layout_below="@+id/level"
-        android:layout_marginTop="40dp"
-        android:layout_alignLeft="@+id/level"
-        android:layout_alignStart="@+id/level"
-        android:layout_alignRight="@+id/level"
-        android:layout_alignEnd="@+id/level" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:id="@+id/currentPassword"
+            android:ems="10"
+            android:layout_below="@+id/level"
+            android:layout_marginTop="40dp"
+            android:layout_alignLeft="@+id/level"
+            android:layout_alignStart="@+id/level"
+            android:layout_alignRight="@+id/level"
+            android:layout_alignEnd="@+id/level" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:id="@+id/newPassword"
-        android:ems="10"
-        android:layout_below="@+id/currentPassword"
-        android:layout_marginTop="40dp"
-        android:layout_alignLeft="@+id/currentPassword"
-        android:layout_alignStart="@+id/currentPassword"
-        android:layout_alignRight="@+id/currentPassword"
-        android:layout_alignEnd="@+id/currentPassword" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:id="@+id/newPassword"
+            android:ems="10"
+            android:layout_below="@+id/currentPassword"
+            android:layout_marginTop="40dp"
+            android:layout_alignLeft="@+id/currentPassword"
+            android:layout_alignStart="@+id/currentPassword"
+            android:layout_alignRight="@+id/currentPassword"
+            android:layout_alignEnd="@+id/currentPassword" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Salvar"
-        android:id="@+id/button_new_user"
-        android:layout_below="@+id/newPassword"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="68dp" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Salvar"
+            android:id="@+id/button_new_user"
+            android:layout_below="@+id/newPassword"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="68dp" />
 
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

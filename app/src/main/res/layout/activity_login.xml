@@ -66,7 +66,7 @@
             android:id="@+id/button_newuser_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Novo usuário"
+            android:text="Cadastre-se"
             android:layout_weight="1" />
 
         <Button
