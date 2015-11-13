@@ -1,16 +1,12 @@
 package org.wearableapp.bluetooth;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothSocket;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import org.wearableapp.App;
 import org.wearableapp.Measurement;
 import org.wearableapp.communications.Location;
 import org.wearableapp.communications.Publish;
-import org.wearableapp.users.LoginActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -42,7 +38,7 @@ public class BluetoothReader extends Thread {
         while (true) {
             try {
                 // Read from the InputStream
-                Log.i("Bluetooth", "Antes do read");
+                Log.i("Bluetooth", "Before read");
                 String oxygen = reader.readLine();
                 String pulseRate = reader.readLine();
 

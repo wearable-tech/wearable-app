@@ -32,7 +32,6 @@ public class BluetoothConnector extends Thread {
     @Override
     public void run() {
         braceletAdapter.cancelDiscovery();
-
         try {
             bluetoothSocket.connect();
         }
