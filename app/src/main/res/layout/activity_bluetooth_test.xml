@@ -4,7 +4,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="org.wearableapp.bluetooth.BluetoothTestActivity">
+    tools:context="org.wearableapp.bluetooth.BluetoothActivity">
 
     <Switch
         android:id="@+id/switch_activate_bluetooth"
@@ -18,7 +18,7 @@
         android:textOff="Não"/>
 
     <Switch
-        android:id="@+id/switch_activate_bracelet"
+        android:id="@+id/switch_activate_werable"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="Ativar Conexão"

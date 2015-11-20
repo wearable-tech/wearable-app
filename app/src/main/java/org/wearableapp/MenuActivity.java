@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 
-import org.wearableapp.bluetooth.BluetoothTestActivity;
+import org.wearableapp.bluetooth.BluetoothActivity;
 import org.wearableapp.services.LocationService;
 import org.wearableapp.services.MqttService;
 import org.wearableapp.services.SubscribeService;
@@ -107,7 +107,7 @@ public class MenuActivity extends FragmentActivity {
     }
 
     private void goToBluetooth() {
-        Intent intent = new Intent(this, BluetoothTestActivity.class);
+        Intent intent = new Intent(this, BluetoothActivity.class);
         startActivity(intent);
     }
 
