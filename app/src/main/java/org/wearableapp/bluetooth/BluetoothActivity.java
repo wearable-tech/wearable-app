@@ -110,29 +110,26 @@ public class BluetoothActivity extends Activity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(App.getContext(), BluetoothService.class);
+            if (activeWerable.isChecked() && activeBluetooth.isChecked() && bluetoothAdapter != null && bluetoothAdapter.isEnabled()) {
+                setBluetoothDevice();
 
-            if (activeWerable.isChecked() && activeBluetooth.isChecked()) {
-
-                if (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) {
-                    setBluetoothDevice();
-
-                    if (bluetoothDevice != null) {
-                        startService(intent);
-                        setWearableStatus(true);
-                    }
-                    else {
-                        stopService(intent);
-                        setWearableStatus(false);
-                        Toast.makeText(getApplicationContext(), "Pulseira não encontrada nos dispositivos pareados", Toast.LENGTH_LONG).show();
-                        activeWerable.setChecked(false);
-                    }
+                if (bluetoothDevice != null) {
+                    startService(intent);
+                    setWearableStatus(true);
                 }
                 else {
                     stopService(intent);
                     setWearableStatus(false);
+                    Toast.makeText(getApplicationContext(), "Pulseira não encontrada nos dispositivos pareados", Toast.LENGTH_LONG).show();
                     activeWerable.setChecked(false);
-                    Toast.makeText(getApplicationContext(), "Bluetooth desligado", Toast.LENGTH_LONG).show();
                 }
+            }
+            else {
+                Log.i("ACTIVE_WERABLE", "Bluetooth disconected");
+                stopService(intent);
+                setWearableStatus(false);
+                activeWerable.setChecked(false);
+                Toast.makeText(getApplicationContext(), "Bluetooth desligado", Toast.LENGTH_LONG).show();
             }
         }
     };
