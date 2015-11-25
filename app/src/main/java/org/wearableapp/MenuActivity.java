@@ -47,9 +47,16 @@ public class MenuActivity extends FragmentActivity {
         if (notifications) {
             activateNotifications.setChecked(true);
         }
+    }
 
-        if (App.getPreferences().getBoolean("werableStatus", false))
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (App.getPreferences().getBoolean("wearableStatus", false)) {
+            Log.i("MENU_ACTIVITY", "Load graph!");
             loadGraph();
+        }
     }
 
     @Override

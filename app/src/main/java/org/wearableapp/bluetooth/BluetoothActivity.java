@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -25,7 +24,7 @@ public class BluetoothActivity extends Activity {
     private static final String BLUETOOTH_NAME = "HC-05";
     private static final int REQUEST_ENABLE_BT = 2;
     private CompoundButton activeBluetooth;
-    private CompoundButton activeWerable;
+    private CompoundButton activeWearable;
     private static BluetoothAdapter bluetoothAdapter;
     private static BluetoothDevice bluetoothDevice;
 
@@ -40,12 +39,12 @@ public class BluetoothActivity extends Activity {
         activeBluetooth.setOnClickListener(onClickActiveBluetooth);
         activeBluetooth.setChecked(bluetoothAdapter.isEnabled());
 
-        activeWerable = (CompoundButton) findViewById(R.id.switch_activate_werable);
-        activeWerable.setOnClickListener(onClickActiveWearable);
+        activeWearable = (CompoundButton) findViewById(R.id.switch_activate_wearable);
+        activeWearable.setOnClickListener(onClickActiveWearable);
 
         getActionBar().setHomeButtonEnabled(true);
 
-        activeWerable.setChecked(App.getPreferences().getBoolean("werableStatus", false));
+        activeWearable.setChecked(App.getPreferences().getBoolean("wearableStatus", false));
     }
 
     @Override
@@ -101,8 +100,7 @@ public class BluetoothActivity extends Activity {
     private void disableBluetooth() {
         if (bluetoothAdapter.isEnabled()) {
             bluetoothAdapter.disable();
-            activeWerable.setChecked(false);
-            setWearableStatus(false);
+            activeWearable.setChecked(false);
         }
     }
 
@@ -110,38 +108,26 @@ public class BluetoothActivity extends Activity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(App.getContext(), BluetoothService.class);
-            if (activeWerable.isChecked() && activeBluetooth.isChecked() && bluetoothAdapter != null && bluetoothAdapter.isEnabled()) {
+            if (activeWearable.isChecked() && activeBluetooth.isChecked() && bluetoothAdapter != null && bluetoothAdapter.isEnabled()) {
                 setBluetoothDevice();
 
                 if (bluetoothDevice != null) {
                     startService(intent);
-                    setWearableStatus(true);
                 }
                 else {
                     stopService(intent);
-                    setWearableStatus(false);
                     Toast.makeText(getApplicationContext(), "Pulseira não encontrada nos dispositivos pareados", Toast.LENGTH_LONG).show();
-                    activeWerable.setChecked(false);
+                    activeWearable.setChecked(false);
                 }
             }
             else {
                 Log.i("ACTIVE_WERABLE", "Bluetooth disconected");
                 stopService(intent);
-                setWearableStatus(false);
-                activeWerable.setChecked(false);
+                activeWearable.setChecked(false);
                 Toast.makeText(getApplicationContext(), "Bluetooth desligado", Toast.LENGTH_LONG).show();
             }
         }
     };
-
-    private void setWearableStatus(boolean status) {
-        SharedPreferences.Editor editor = App.getPreferences().edit();
-        if (status)
-            editor.putBoolean("werableStatus", status);
-        else
-            editor.remove("werableStatus");
-        editor.commit();
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

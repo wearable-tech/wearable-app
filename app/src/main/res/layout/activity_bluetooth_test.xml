@@ -18,7 +18,7 @@
         android:textOff="Não"/>
 
     <Switch
-        android:id="@+id/switch_activate_werable"
+        android:id="@+id/switch_activate_wearable"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="Ativar Conexão"
