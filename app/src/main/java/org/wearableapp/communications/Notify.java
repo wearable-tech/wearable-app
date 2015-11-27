@@ -1,6 +1,5 @@
 package org.wearableapp.communications;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;

@@ -122,7 +122,7 @@ public class UserAccountActivity extends Activity {
             Log.i("UPDATE_USER", "Success to update user: " + email.getValue());
             Toast.makeText(getApplicationContext(), "Dados alterados com sucesso", Toast.LENGTH_LONG).show();
             updatePreferences((List<BasicNameValuePair>) params);
-            goToMenu();
+            finish();
         } else {
             Log.i("UPDATE_USER", "Failed to update user: " + email.getValue());
             Toast.makeText(getApplicationContext(), "Ocorreu um erro", Toast.LENGTH_LONG).show();
@@ -151,7 +151,7 @@ public class UserAccountActivity extends Activity {
         return true;
     }
 
-    private void goToMenu() {
+    private void goToLogin() {
         Intent intent = new Intent(this, MenuActivity.class);
         intent.putExtra("logout", true);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -166,7 +166,7 @@ public class UserAccountActivity extends Activity {
 
         if (HttpRequests.doPost(params, "/user/delete") == 0) {
             Toast.makeText(getApplicationContext(), "Usuário apagado", Toast.LENGTH_LONG).show();
-            goToMenu();
+            goToLogin();
         } else {
             Toast.makeText(getApplicationContext(), "Ocorreu um erro", Toast.LENGTH_LONG).show();
         }
