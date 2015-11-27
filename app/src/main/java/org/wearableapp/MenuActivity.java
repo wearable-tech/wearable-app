@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 
 import org.wearableapp.bluetooth.BluetoothActivity;
 import org.wearableapp.services.LocationService;
@@ -23,6 +24,7 @@ import org.wearableapp.users.UserAccountActivity;
 public class MenuActivity extends FragmentActivity {
 
     private CompoundButton activateNotifications;
+    private TextView welcome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,9 @@ public class MenuActivity extends FragmentActivity {
         if (notifications) {
             activateNotifications.setChecked(true);
         }
+
+        welcome = (TextView) findViewById(R.id.welcome_textView);
+        welcome.setText("Bem Vindo " + App.getPreferences().getString("name", ""));
     }
 
     @Override
@@ -55,7 +60,11 @@ public class MenuActivity extends FragmentActivity {
 
         if (App.getPreferences().getBoolean("wearableStatus", false)) {
             Log.i("MENU_ACTIVITY", "Load graph!");
+            welcome.setVisibility(View.INVISIBLE);
             loadGraph();
+        }
+        else {
+            welcome.setVisibility(View.VISIBLE);
         }
     }
 

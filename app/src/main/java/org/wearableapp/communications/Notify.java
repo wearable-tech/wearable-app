@@ -13,8 +13,7 @@ import org.wearableapp.App;
 import org.wearableapp.MenuActivity;
 import org.wearableapp.R;
 
-public class Notify {
-    private static int notificationId = 0;
+public abstract class Notify {
 
     public static void notification(String title, String message) {
         Log.i("NOTIFICATION", "Calling notification.....");
@@ -26,7 +25,7 @@ public class Notify {
         Intent intent = new Intent(App.getContext(), MenuActivity.class);
         intent.putExtra("notification", message);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(App.getContext(), 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(App.getContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Builder notificationBuilder = new Builder(App.getContext());
         notificationBuilder.setAutoCancel(true)
@@ -39,8 +38,7 @@ public class Notify {
                 .setSmallIcon(R.drawable.ic_launcher);
 
         NotificationManager notificationManager = (NotificationManager) App.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(notificationId, notificationBuilder.build());
-        notificationId++;
+        notificationManager.notify(0, notificationBuilder.build());
 
         Log.i("NOTIFICATION", "Notification sended...");
     }
