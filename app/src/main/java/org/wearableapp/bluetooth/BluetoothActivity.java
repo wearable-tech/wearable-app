@@ -36,7 +36,7 @@ public class BluetoothActivity extends Activity {
 
         activeBluetooth = (CompoundButton) findViewById(R.id.switch_activate_bluetooth);
         activeBluetooth.setOnClickListener(onClickActiveBluetooth);
-        activeBluetooth.setChecked(bluetoothAdapter.isEnabled());
+        activeBluetooth.setChecked(bluetoothAdapter != null && bluetoothAdapter.isEnabled());
 
         activeWearable = (CompoundButton) findViewById(R.id.switch_activate_wearable);
         activeWearable.setOnClickListener(onClickActiveWearable);

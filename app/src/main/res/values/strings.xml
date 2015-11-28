@@ -35,5 +35,8 @@
     <string name="title_activity_bluetooth_test">BluetoothTestActivity</string>
     <string name="title_activity_account">AccountActivity</string>
     <string name="delete_account">Apagar conta</string>
+    <string name="title_activity_notification">NotificationActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 
 </resources>

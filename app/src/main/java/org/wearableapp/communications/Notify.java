@@ -10,7 +10,7 @@ import android.support.v4.app.NotificationCompat.Builder;
 import android.util.Log;
 
 import org.wearableapp.App;
-import org.wearableapp.MenuActivity;
+import org.wearableapp.NotificationActivity;
 import org.wearableapp.R;
 
 public abstract class Notify {
@@ -22,7 +22,7 @@ public abstract class Notify {
         String ticker = title + " " + message;
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-        Intent intent = new Intent(App.getContext(), MenuActivity.class);
+        Intent intent = new Intent(App.getContext(), NotificationActivity.class);
         intent.putExtra("notification", message);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(App.getContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);

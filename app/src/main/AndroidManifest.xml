@@ -63,6 +63,10 @@
             android:name=".users.UserAccountActivity"
             android:label="@string/title_activity_account" >
         </activity>
+        <activity
+            android:name=".NotificationActivity"
+            android:label="@string/title_activity_notification" >
+        </activity>
     </application>
 
 </manifest>
