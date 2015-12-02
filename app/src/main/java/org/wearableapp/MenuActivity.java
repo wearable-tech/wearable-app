@@ -51,7 +51,7 @@ public class MenuActivity extends FragmentActivity {
         }
 
         welcome = (TextView) findViewById(R.id.welcome_textView);
-        welcome.setText("Bem Vindo " + App.getPreferences().getString("name", ""));
+        welcome.setText("Bem-vindo, " + App.getPreferences().getString("name", "") + ".");
     }
 
     @Override
