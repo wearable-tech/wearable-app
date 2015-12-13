@@ -36,24 +36,36 @@ public class BluetoothReader extends Thread {
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
         while (true) {
+            String oxygen = "";
+            String pulseRate = "";
+
             try {
                 // Read from the InputStream
                 Log.i("Bluetooth", "Before read");
-                String oxygen = reader.readLine();
-                String pulseRate = reader.readLine();
+                oxygen = reader.readLine();
+                pulseRate = reader.readLine();
 
-                Measurement.OXYGEN = Double.parseDouble(oxygen);
-                Measurement.PULSE_RATE = Double.parseDouble(pulseRate);
-                Measurement.REMEASUREMENT = true;
+                Log.i("OXYGEN", oxygen);
+                Log.i("PULSE", pulseRate);
 
-                String message = Location.LATITUDE + "," + Location.LONGITUDE + "," + oxygen + "," + pulseRate;
-                Log.i("Message", message);
-
-                Publish publish = new Publish();
-                publish.doPublish("from_" + email, message, 0);
             } catch (IOException e) {
                 break;
             }
+
+            try {
+                Measurement.OXYGEN = Double.parseDouble(oxygen);
+                Measurement.PULSE_RATE = Double.parseDouble(pulseRate);
+                Measurement.REMEASUREMENT = true;
+            } catch (NumberFormatException e) {
+                Log.e("DOUBLE_PARSER", "Double Parser " + e.toString());
+                continue;
+            }
+
+            String message = Location.LATITUDE + "," + Location.LONGITUDE + "," + oxygen + "," + pulseRate;
+            Log.i("Message", message);
+
+            Publish publish = new Publish();
+            publish.doPublish("from_" + email, message, 0);
         }
     }
 }
